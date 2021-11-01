@@ -12,29 +12,22 @@ import UserDetail from '../my-app/screens/UserDetail';
 
 import LogIn from './components/Login';
 import Home from "./components/Home";
+import Register from './components/Register';
+import AddUserDetail from './components/AddUserDetail';
 
+import BottomTabScreen from './Navigation/BottomTab';
 
 const Stack = createStackNavigator();
 function Mystack(){
   return  (
-    <Stack.Navigator>
-      <Stack.Screen options={{ headerShown: false }} name="Login" component={LogIn} />
-        <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="AddUserScreen" component={AddUserScreen}
-          options={{
-            title: 'Add User'
-          }} />
-      <Stack.Screen name="UserScreen" component={UserScreen}
-          options={{
-            title: 'User Screen'
-          }} />
-      <Stack.Screen name="UserDetail" component={UserDetail}
-          options={{
-            title: 'User Detail'
-          }} />
+    <Stack.Navigator initialRouteName={BottomTabScreen}>
+      <Stack.Screen options={{ headerShown: false }} name="LogIn" component={LogIn} />
+      <Stack.Screen options={{ headerShown: false }} name="Register" component={Register} />
+      <Stack.Screen options={{ headerShown: false }} name="AddUserDetail" component={AddUserDetail} />
+      <Stack.Screen options={{ headerShown: false }} name="BottomTabScreen" component={BottomTabScreen} />
      </Stack.Navigator>
+  
   )
-
 }
 
 export default function App() {
@@ -42,7 +35,12 @@ export default function App() {
     <NavigationContainer>
       <Mystack />
     </NavigationContainer>
+    
   )
+
+  // return <Navigator />;
+
+
   // return (
   //   <NavigationContainer>
   //     <Stack.Navigator>
