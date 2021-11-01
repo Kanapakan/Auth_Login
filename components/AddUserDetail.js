@@ -19,6 +19,7 @@ const AddUserDetail = ({navigation, route}) => {
         if (gender == '' || age <= 0 || height <= 0 || weight <= 0 || activity == '') {
             alert('กรุณาใส่ข้อมูลให้ครบทุกช่อง');
         } else {
+            console.log(dbRef.key);
             setisLoading(true);
             dbRef.add({
                 userId: auth.currentUser?.uid,
@@ -35,7 +36,7 @@ const AddUserDetail = ({navigation, route}) => {
                 setActivity(""),
                 setisLoading(false)
 
-                navigation.navigate('Home')
+                navigation.navigate('BottomTabScreen', {userKey: dbRef.key})
             }).catch((err) => {
                 console.log('Error found: ', err);
                 setisLoading(false)

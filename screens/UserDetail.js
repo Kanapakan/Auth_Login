@@ -16,6 +16,7 @@ const UserDetail = ({navigation, route}, props) => {
         const dbRef = db.collection('react-native-code').doc(userKey);
         dbRef.get().then((res) => {
             //check ว่ามีข้อมูลอยู่ใน Doc ไหม
+            console.log(userKey);
             if (res.exists){
                 const user = res.data();
                 setKey(res.id)
@@ -83,6 +84,7 @@ const UserDetail = ({navigation, route}, props) => {
         return (
             <View style={styles.preloader}>
                 <ActivityIndicator size="large" color="gray" />
+                
             </View>
         )
     }
