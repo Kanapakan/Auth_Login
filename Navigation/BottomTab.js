@@ -9,9 +9,6 @@ import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 
-// import AddUserScreen from '../screens/AddUserScreen';
-// import UserScreen from '../my-app/screens/UserScreen';
-// import UserDetail from '../my-app/screens/UserDetail';
 // import LogIn from './components/Login';
 import Home from "../components/Home";
 // import Register from './components/Register';
@@ -19,7 +16,7 @@ import Home from "../components/Home";
 import AddUserScreen  from '../screens/AddUserScreen';
 import UserScreen from '../screens/UserScreen';
 import UserDetail from '../screens/UserDetail';
-
+import UserProfile from  '../screens/UserProfile';
 
 // const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -92,7 +89,7 @@ function UserNavigator() {
               fontSize:  "25px",
             },
              }}>
-            <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+            <Stack.Screen options={{ headerShown: false }} name="UserProfile" component={UserProfile} />
         </Stack.Navigator>
     )
 }

@@ -6,9 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { AntDesign } from "@expo/vector-icons";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import AddUserScreen from '../my-app/screens/AddUserScreen';
-import UserScreen from '../my-app/screens/UserScreen';
-import UserDetail from '../my-app/screens/UserDetail';
+
+import UserDetail from './screens/UserDetail';
 
 import LogIn from './components/Login';
 import Home from "./components/Home";
@@ -16,6 +15,7 @@ import Register from './components/Register';
 import AddUserDetail from './components/AddUserDetail';
 
 import BottomTabScreen from './Navigation/BottomTab';
+import UserProfile from './screens/UserProfile';
 
 const Stack = createStackNavigator();
 function Mystack(){
@@ -38,18 +38,9 @@ export default function App() {
     
   )
 
-  // return <Navigator />;
+  // return <UserProfile />;
 
 
-  // return (
-  //   <NavigationContainer>
-  //     <Stack.Navigator>
-  //       <Stack.Screen options={{ headerShown: false }} name="Login" component={LogIn} />
-  //       <Stack.Screen name="Home" component={Home} />
-        
-  //     </Stack.Navigator>
-  //   </NavigationContainer>
-  // );
 }
 
 const styles = StyleSheet.create({
