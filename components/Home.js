@@ -12,11 +12,10 @@ const HomeScreen = () => {
     auth
       .signOut()
       .then(() => {
-        navigation.replace("Login")
+        navigation.replace("LogIn")
       })
       .catch(error => alert(error.message))
   }
-
 
   return (
     <View style={styles.container}>

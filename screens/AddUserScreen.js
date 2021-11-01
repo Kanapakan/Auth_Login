@@ -36,11 +36,11 @@ const AddUserScreen = ({navigation, route}) => {
     if(isLoading) {
         return (
             <View style={styles.preloader}>
-                <ActivityIndicator size="large" color="gray" />
+                <ActivityIndicator size="large" color="#547F53" />
             </View>
         )
-
     }
+
     return(
         <ThemeProvider theme={theme}>
             <ScrollView style={styles.container}>
