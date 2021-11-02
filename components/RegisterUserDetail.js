@@ -4,7 +4,9 @@ import { auth } from '../database/Auth'
 import  db from '../database/firebaseDb'
 import {Picker} from '@react-native-picker/picker';
 
-const AddUserDetail = ({navigation, route}) => {
+const RegisterUserDetail = ({navigation, route}) => {
+    // const password = route.params.password;
+    // const email = route.params.email;
     const dbRef = db.collection('userDetail');
     const[userId, setUserId] = useState("");
     const[gender, setGender] = useState("");
@@ -13,21 +15,27 @@ const AddUserDetail = ({navigation, route}) => {
     const[weight, setWeight] = useState(0);
     const[activity, setActivity] = useState("");
     const[isLoading, setisLoading] = useState(false);
+    
+    
 
 
     const storeUser = () => {
         if (gender == '' || age <= 0 || height <= 0 || weight <= 0 || activity == '') {
             alert('กรุณาใส่ข้อมูลให้ครบทุกช่อง');
         } else {
-            console.log(dbRef.key);
             setisLoading(true);
+            auth
+                .createUserWithEmailAndPassword(route.params.email, route.params.password)
+                .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log('Registered with:', user.email);
             dbRef.add({
                 userId: auth.currentUser?.uid,
                 gender: gender,
                 age: age,
                 height: height,
                 weight: weight,
-                activity: activity,
+                activity: activity
             }).then((res) => {
                 setGender(""),
                 setAge(0),
@@ -35,8 +43,11 @@ const AddUserDetail = ({navigation, route}) => {
                 setWeight(0),
                 setActivity(""),
                 setisLoading(false)
-
-                navigation.navigate('BottomTabScreen', {userKey: dbRef.key})
+                navigation.navigate('BottomTabScreen');
+                //สร้างบัญชีผู้ใช้
+                // navigation.navigate('BottomTabScreen', {userKey: dbRef.key})
+            })
+                
             }).catch((err) => {
                 console.log('Error found: ', err);
                 setisLoading(false)
@@ -46,7 +57,8 @@ const AddUserDetail = ({navigation, route}) => {
     if(isLoading) {
         return (
             <View style={styles.preloader}>
-                <ActivityIndicator size="large" color="gray" />
+                <ActivityIndicator size="large" color="#547F53" />
+                <Text>กำลังเข้าสู่ระบบ</Text>
             </View>
         )
     }
@@ -65,15 +77,15 @@ const AddUserDetail = ({navigation, route}) => {
     
                 <View style={styles.pickerBorder}>
                     <Picker
-                        // selectedValue={selectedValue}
+                        selectedValue={gender}
                         style={styles.pickerdropdown}
                         onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
                     
                     >
                     {/* อย่าลืม disable  และจัดให้ตรงกลาง*/}
                         <Picker.Item label="เพศ" />
-                        <Picker.Item label="ชาย" value="male" />
-                        <Picker.Item label="หญิง" value="femaile" />
+                        <Picker.Item label="ชาย" value="ชาย" />
+                        <Picker.Item label="หญิง" value="หญิง" />
                     </Picker>
                 </View>
                 
@@ -101,7 +113,7 @@ const AddUserDetail = ({navigation, route}) => {
     
                 <View style={styles.pickerBorder2}>
                     <Picker
-                        // selectedValue={selectedValue}
+                        selectedValue={activity}
                         style={styles.pickerdropdown}
                         onValueChange={(itemValue, itemIndex) => setActivity(itemValue)}
                     
@@ -225,4 +237,4 @@ const styles = StyleSheet.create({
       
 });
   
-export default AddUserDetail;
+export default RegisterUserDetail;

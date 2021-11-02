@@ -11,7 +11,7 @@ const Register = ({navigation, route}) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
           if (user) {
-            navigation.navigate('AddUserDetail');
+            navigation.navigate('RegisterUserDetail');
           }
         })
         return unsubscribe
@@ -19,14 +19,15 @@ const Register = ({navigation, route}) => {
     //สมัคร
     const handleSignUp = () => {
         setisLoading(true);
-        auth
-        .createUserWithEmailAndPassword(email, password)
-        .then(userCredentials => {
-            const user = userCredentials.user;
-            console.log('Registered with:', user.email);
-            navigation.navigate('AddUserDetail');
-        })
-        .catch(error => alert(error.message))
+        navigation.navigate('RegisterUserDetail', {email:  email, password:  password});
+        // auth
+        // .createUserWithEmailAndPassword(email, password)
+        // .then(userCredentials => {
+        //     const user = userCredentials.user;
+        //     console.log('Registered with:', user.email);
+        //     navigation.navigate('RegisterUserDetail', {email: email, password: password});
+        // })
+        // .catch(error => alert(error.message))
     }
     
     if(isLoading) {
@@ -37,12 +38,12 @@ const Register = ({navigation, route}) => {
         )
     }
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={{alignItems: "center", marginTop: 50}}>
                 <Image style={styles.diet} source={require("../assets/Diet.gif")}/>
             </View>
 
-            <View style={{alignItems: "center" , marginTop: 30,}}>
+            <KeyboardAvoidingView style={{alignItems: "center" , marginTop: 30,}}>
                 <TextInput
                     style={styles.Box}
                     placeholder="อีเมล"
@@ -66,7 +67,7 @@ const Register = ({navigation, route}) => {
                     onChangeText={text => setConfirmpass(text)}
 
                 />
-            </View>
+            </KeyboardAvoidingView>
     
             <View style={{alignItems: "center" , marginTop: 50,}}>
                 <TouchableOpacity 
@@ -86,7 +87,7 @@ const Register = ({navigation, route}) => {
                     </TouchableOpacity>
                 
             </View>
-        </View>
+        </ScrollView>
       );
     };
 

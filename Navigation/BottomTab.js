@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationContainer } from '@react-navigation/native'; // v.6.x
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
 
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons';
@@ -16,7 +16,8 @@ import Home from "../components/Home";
 import AddUserScreen  from '../screens/AddUserScreen';
 import UserScreen from '../screens/UserScreen';
 import UserDetail from '../screens/UserDetail';
-import UserProfile from  '../screens/UserProfile';
+import MyProfile from  '../screens/MyProfile';
+import ChangeUserDetail from "../components/ChangeUserDetail";
 
 // const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -31,9 +32,9 @@ export default function BottomTab() {
 }
 
 const customTabBarStyle = {
-    activeTintColor: '#fffff', //เปลี่ยนเป็นสีเขียวตามงานเรา
-    inactiveTintColor: 'gray',
-    // style: {backgroundColor: '#E4EFE3' },
+    activeTintColor: '#ffffff', //เปลี่ยนเป็นสีเขียวตามงานเรา
+    inactiveTintColor: '#bdbdbd',
+    keyboardHidesTabBar: true,
 }
 
 //Navigators หลัก
@@ -41,7 +42,7 @@ function MainNavigator() {
     return (
       <Tab.Navigator 
       tabBarOptions={customTabBarStyle}
-      shifting="false" screenOptions={{   headerStyle: { backgroundColor: "#8EC18D", },  headerTintColor: "white",  headerShown: false}}>
+      shifting="false" screenOptions={{ headerStyle: { backgroundColor: "#8EC18D", },  headerTintColor: "white",  headerShown: false}}>
         <Tab.Screen name="Home" component={HomeNavigator}
           options={{
             tabBarActiveBackgroundColor: "#8EC18D",
@@ -86,10 +87,14 @@ function UserNavigator() {
             headerTintColor: "#547F53",
             headerTitleStyle: {
               fontWeight: 'bold',
-              fontSize:  "25px",
+              // fontSize:  "25px",
             },
              }}>
-            <Stack.Screen options={{ headerShown: false }} name="UserProfile" component={UserProfile} />
+            <Stack.Screen options={{ headerShown: false }} name="MyProfile" component={MyProfile} />
+            <Stack.Screen name="ChangeUserDetail" component={ChangeUserDetail} 
+            options={{
+              title: 'แก้ไขโปร์ไฟล์'
+          }} />
         </Stack.Navigator>
     )
 }
@@ -100,12 +105,12 @@ function HomeNavigator() {
             // headerShown: false,
             headerStyle: { backgroundColor: "#E4EFE3"},
             headerTintColor: "#547F53",
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize:  "25px",
-            },
+            // headerTitleStyle: {
+            //   fontWeight: 'bold',
+            //   fontSize:  "25px",
+            // },
              }}>
-            <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+            {/* <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} /> */}
             <Stack.Screen name="AddUserScreen" component={AddUserScreen}
           options={{
             title: 'Add User'
@@ -130,7 +135,7 @@ function SearchNavigator() {
             headerTintColor: "#547F53",
             headerTitleStyle: {
               fontWeight: 'bold',
-              fontSize:  "25px",
+              // fontSize:  "25px",
             },
              }}>
             <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
@@ -146,7 +151,7 @@ function FavNavigator() {
             headerTintColor: "#547F53",
             headerTitleStyle: {
               fontWeight: 'bold',
-              fontSize:  "25px",
+              // fontSize:  "25px",
             },
              }}>
             <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />

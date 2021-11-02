@@ -4,7 +4,7 @@ import  db from '../database/firebaseDb'
 import { ThemeProvider, Button, Input, Image } from "react-native-elements";
 import  Icon  from "react-native-vector-icons/FontAwesome";
 
-const UserDetail = ({navigation, route}, props) => {
+const UserDetail = ({navigation, route}) => {
     const[key, setKey] = useState("");
     const[name, setname] = useState("");
     const[email, setemail] = useState("");
@@ -50,7 +50,8 @@ const UserDetail = ({navigation, route}, props) => {
                 setisLoading(false)
                 console.log("แก้ไขสำเร็จ");
                 navigation.navigate('UserScreen');
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 console.log("Error:", err),
                 setisLoading(false)
             })
@@ -83,7 +84,7 @@ const UserDetail = ({navigation, route}, props) => {
     if (isLoading) {
         return (
             <View style={styles.preloader}>
-                <ActivityIndicator size="large" color="gray" />
+                <ActivityIndicator size="large" color="#547F53" />
                 
             </View>
         )
