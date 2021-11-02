@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Image,  ActivityIndicator} from 'react-native'
 import { auth } from '../database/Auth'
 
+
 const LoginScreen = ({navigation, route}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -29,7 +30,14 @@ const LoginScreen = ({navigation, route}) => {
         const user = userCredentials.user;
         console.log('Logged in with:', user.email);
       })
-      .catch(error => alert(error.message))
+      .catch(error => {
+        navigation.navigate('LogIn');
+        
+        setisLoading(false);
+        setEmail('');
+        alert(error.message);
+        
+      })
   }
 
   if(isLoading) {
@@ -55,7 +63,7 @@ const LoginScreen = ({navigation, route}) => {
       </View>
 
       {/* input */}
-      <View style={{alignItems: "center" , marginTop: 40,}}>
+      <KeyboardAvoidingView style={{alignItems: "center" , marginTop: 40,}}>
         <TextInput
           style={styles.userNameBox}
           placeholder="อีเมล"
@@ -70,7 +78,7 @@ const LoginScreen = ({navigation, route}) => {
           onChangeText={text => setPassword(text)}
           secureTextEntry
         />
-      </View>
+      </KeyboardAvoidingView>
 
       {/* Buttons */}
       <View style={{alignItems: "center" , marginTop: 50,}}>
@@ -97,7 +105,7 @@ export default LoginScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF",
     // justifyContent: 'center',
     // alignItems: 'center',
   },
@@ -172,13 +180,13 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: 20,
-    color: "#fff",
+    color: "#FFFFFF",
     fontWeight: "bold",
     alignSelf: "center",
   },
   btnNewText: {
     fontSize: 20,
-    color: "#000",
+    color: "#000000",
     fontWeight: "bold",
     alignSelf: "center",
   }

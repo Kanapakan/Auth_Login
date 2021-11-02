@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from "react";
 import { StyleSheet, ScrollView, ActivityIndicator, View,Text } from "react-native";
 import  db from '../database/firebaseDb'
-import { ListItem, Button, Input, Image, Badge } from "react-native-elements";
-import  Icon  from "react-native-vector-icons/FontAwesome";
+import { ListItem, Button, Input, Badge } from "react-native-elements";
+// import  Icon  from "react-native-vector-icons/FontAwesome";
 
 
-const UserScreen = ({navigation, route}, props) => {
+const UserScreen = ({navigation, route}) => {
     const firestoreRef = db.collection('react-native-code');
     const[isLoading, setisLoading] = useState(true);
     const[userArr, setUserArr] = useState([]);
@@ -44,7 +44,7 @@ const UserScreen = ({navigation, route}, props) => {
     if(isLoading) {
         return (
             <View style={styles.preloader}>
-                <ActivityIndicator size="large" color="gray"/>
+                <ActivityIndicator size="large" color="#547F53"/>
             </View>
         )
     }

@@ -1,45 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native";
-import { ListItem, Button, Input, Badge } from "react-native-elements";
-import  Icon  from "react-native-vector-icons/FontAwesome";
+
 import  db from '../database/firebaseDb'
 import { auth } from '../database/Auth';
 
 const MyProfile = ({navigation, route}) => {
   const firestoreRef = db.collection('userDetail');
-  // const[key, setKey] = useState("");
-  // const[userId, setUserId] = useState("");
-  // const[gender, setGender] = useState("");
-  // const[age, setAge] = useState(0);
-  // const[height, setHeight] = useState(0);
-  // const[weight, setWeight] = useState(0);
-  // const[activity, setActivity] = useState("");
   const[isLoading, setisLoading] = useState(true);
   const[userArr, setUserArr] = useState([]);
   const[docId, setDocId] = useState("");
 
-  // useEffect(() => {
-  //   const dbRef = db.collection('userDetail').doc(userKey);
-  //   dbRef.get().then((res) => {
-  //       //check ว่ามีข้อมูลอยู่ใน Doc ไหม
-  //       if (res.exists){
-  //           const user = res.data();
-  //           setKey(res.id)
-  //           setGender(user.gender),
-  //           setAge(user.age),
-  //           setHeight(user.height),
-  //           setWeight(user.weight),
-  //           setActivity(user.activity),
-  //           setisLoading(false)
-  //       } else {
-  //           console.log('Document does not exist!');
-  //       }
-  //   })
-  //       return () => {
-  //           // unsubscribe();
-            
-  //       }
-  // }, []);
 
   useEffect(() => {
 
@@ -58,20 +28,21 @@ const MyProfile = ({navigation, route}) => {
       console.log('Total users: ', querySnapshot.size)
       querySnapshot.forEach(documentSnapshot => {
         if(auth.currentUser?.uid === documentSnapshot.data().userId){
-          console.log('Doc ID: ', documentSnapshot.id, documentSnapshot.data());
+          // console.log('Doc ID: ', documentSnapshot.id, documentSnapshot.data());
           setDocId(documentSnapshot.id)
           userArr.push(documentSnapshot.data())
-          console.log(userArr)
+          // console.log(userArr)
           setisLoading(false);
         }
       });
   });
 }
 
+//ตัวโหลดหน้า
    if (isLoading) {
         return (
             <View style={styles.preloader}>
-                <ActivityIndicator size="large" color="gray" />
+                <ActivityIndicator size="large" color="#547F53" />
             </View>
         )
     }
@@ -90,17 +61,17 @@ const MyProfile = ({navigation, route}) => {
 
             <View style={{alignItems: "center" , marginTop: -50,}}>
                 <TouchableOpacity 
-                    // onPress={} 
+                    onPress={() => {
+                      navigation.navigate("ChangeUserDetail", {userKey: docId})
+                    }}
                     style={styles.btnContainer}>
                     <Text style={styles.btnText}>แก้ไขโปรไฟล์</Text>
                 </TouchableOpacity>
             </View>
         </View>
 
-
-        <Text>Email: {auth.currentUser?.email}</Text>
         
-        <ScrollView style={[styles.item2, {flex:3}]}>
+        <View style={[styles.item2, {flex:3}]}>
             <Text style={styles.btnTextAll}>เพศ</Text>
 
             <View style={styles.btnContainerAll}>
@@ -134,7 +105,7 @@ const MyProfile = ({navigation, route}) => {
                 <Text style={styles.calorieText3}>แคลอรี่ไม่ควรต่ำกว่า</Text>
                 <Text style={styles.calorieText4}>1421 Kcal.</Text>
             </View>
-        </ScrollView>
+        </View>
          
         
     </View>
