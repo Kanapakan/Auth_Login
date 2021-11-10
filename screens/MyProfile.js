@@ -25,12 +25,14 @@ const MyProfile = ({navigation, route}) => {
     firestoreRef
     .get()
     .then(querySnapshot   => {
-      console.log('Total users: ', querySnapshot.size)
+      // console.log('Total users: ', querySnapshot.size)
       querySnapshot.forEach(documentSnapshot => {
         if(auth.currentUser?.uid === documentSnapshot.data().userId){
           // console.log('Doc ID: ', documentSnapshot.id, documentSnapshot.data());
+          const userArr2 = [];
           setDocId(documentSnapshot.id)
-          userArr.push(documentSnapshot.data())
+          userArr2.push(documentSnapshot.data())
+          setUserArr([...userArr2]),
           // console.log(userArr)
           setisLoading(false);
         }
@@ -54,8 +56,8 @@ const MyProfile = ({navigation, route}) => {
             </Text>
 
             <View style={{alignItems: "center"}}>
-                <Image style={styles.profile} source={require("../assets/Eyes-amico-removebg.png")}/>
-                {/* <Image style={styles.profile} source={require("../assets/Eyes-pana-removebg.png")}/> */}
+                <Image style={styles.profile} source={((userArr[0].gender == 'หญิง') ? require("../assets/Eyes-amico-removebg.png") : require("../assets/Eyes-pana-removebg.png"))}/>
+                
             </View>
             
 
@@ -101,9 +103,9 @@ const MyProfile = ({navigation, route}) => {
             <View style={styles.circle}>
                 <Text style={styles.calorieText}>แคลอรี่ {"\n"}</Text>
                 <Text style={styles.calorieText2}>ที่ควรได้รับ/วัน</Text>
-                <Text style={styles.KcalText}>1705 Kcal.</Text>
+                <Text style={styles.KcalText}>{userArr[0].TDEE} Kcal.</Text>
                 <Text style={styles.calorieText3}>แคลอรี่ไม่ควรต่ำกว่า</Text>
-                <Text style={styles.calorieText4}>1421 Kcal.</Text>
+                <Text style={styles.calorieText4}>{userArr[0].BMR} Kcal.</Text>
             </View>
         </View>
          
