@@ -4,6 +4,11 @@ import { auth } from '../database/Auth'
 import  db from '../database/firebaseDb'
 import {Picker} from '@react-native-picker/picker';
 
+
+
+ 
+
+
 const RegisterUserDetail = ({navigation, route}) => {
 
     const dbRef = db.collection('userDetail');
@@ -15,6 +20,7 @@ const RegisterUserDetail = ({navigation, route}) => {
     const[activity, setActivity] = useState("");
 
     const[isLoading, setisLoading] = useState(false);
+
 
     
     let bmr;

@@ -1,24 +1,65 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { Text, View, StyleSheet, Platform, Animated, ScrollView, Image,TouchableOpacity, Dimensions} from 'react-native';
 
 import { VictoryPie, VictoryBar , VictoryChart, VictoryGroup, VictoryAxis, VictoryLegend, VictoryTheme} from "victory-native";
-
+import  db from '../database/firebaseDb'
+import { auth } from '../database/Auth';
+import { useDispatch } from 'react-redux';
+import { toggleUsers } from "../store/actions/UserAction";
 
 const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 100
+const firestoreRef = db.collection('userDetail');
+
+
 
 class Home extends Component {
     
 
   constructor() {
+    
+    
     super();
-
+    this.state ={
+        userArr: [],
+      }
     this.scrollYAnimatedValue = new Animated.Value(0);
+    
+
+
+    firestoreRef
+        .get()
+        .then(querySnapshot   => {
+          querySnapshot.forEach(documentSnapshot => {
+
+            // const dispatch = useDispatch();
+            // const toggleUserHandler = (UsersData) => {
+              
+            //   console.log(UsersData)
+            //   dispatch(toggleUsers(UsersData));
+            // }
+            if(auth.currentUser?.uid === documentSnapshot.data().userId){
+                
+              const userArr2 = [];
+              userArr2.push(documentSnapshot.data())
+              this.setState({userArr: userArr2[0]})
+            //   console.log(userArr2)
+
+            // toggleUserHandler(userArr2)
+            }
+          });
+      })
+      
+     
+
   }
   
 
 
   render() {
+    
+   
+
     const { navigation } = this.props;
     const headerHeight = this.scrollYAnimatedValue.interpolate(
       {
@@ -208,9 +249,9 @@ class Home extends Component {
         <Animated.View style={[styles.animatedHeaderContainer, { height: headerHeight}]}>
            
             <View style={styles.item}>
-
+                {/* แอดค่า cal แล้ว */}
                 <View style={styles.left}>
-                    <Text style={styles.hearderText}>1705</Text>
+                    <Text style={styles.hearderText}>{this.state.userArr.TDEE}</Text>
                     <Text style={styles.hearderText2}>แคลอรี่ที่ควรได้รับ</Text>
                 </View>
 
@@ -352,7 +393,7 @@ const styles = StyleSheet.create(
       },
       piefade:{
         fontSize: 16,
-        color: "#adacac",
+        color: "#adacaf",
         marginLeft: 10,
         marginBottom: 10
       },
