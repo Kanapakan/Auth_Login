@@ -11,7 +11,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 // import LogIn from './components/Login';
 import Logout from "../components/Logout";
-import Home from "../screens/Home";
+import HomeScreen from "../screens/HomeScreen";
 import Breakfast from "../screens/Breakfast";
 import MenuDetail from "../screens/MenuDetail";
 import MyProfile from  '../screens/MyProfile';
@@ -113,7 +113,7 @@ function HomeNavigator() {
             // },
              }}>
             {/* <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} /> */}
-            <Stack.Screen name="Home" options={{ headerShown: false }} component={Home}/>
+            <Stack.Screen name="HomeScreen" options={{ headerShown: false }} component={HomeScreen}/>
             <Stack.Screen name="Breakfast"  component={Breakfast} options={{
               title: 'อาหารเช้า'
           }}/>
