@@ -10,12 +10,10 @@ import { FontAwesome } from '@expo/vector-icons';
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 
 // import LogIn from './components/Login';
-import Home from "../components/Home";
-// import Register from './components/Register';
-// import AddUserDetail from './components/AddUserDetail';
-import AddUserScreen  from '../screens/AddUserScreen';
-import UserScreen from '../screens/UserScreen';
-import UserDetail from '../screens/UserDetail';
+import Logout from "../components/Logout";
+import Home from "../screens/Home";
+import Breakfast from "../screens/Breakfast";
+import MenuDetail from "../screens/MenuDetail";
 import MyProfile from  '../screens/MyProfile';
 import ChangeUserDetail from "../components/ChangeUserDetail";
 
@@ -111,18 +109,12 @@ function HomeNavigator() {
             // },
              }}>
             {/* <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} /> */}
-            <Stack.Screen name="AddUserScreen" component={AddUserScreen}
-          options={{
-            title: 'Add User'
-          }} />
-        <Stack.Screen name="UserScreen" component={UserScreen}
-            options={{
-                title: 'User Screen'
-            }} />
-        <Stack.Screen name="UserDetail" component={UserDetail}
-            options={{
-                title: 'User Detail'
-            }} />
+            <Stack.Screen name="Home" options={{ headerShown: false }} component={Home}/>
+            <Stack.Screen name="Breakfast"  component={Breakfast} options={{
+              title: 'อาหารเช้า'
+          }}/>
+          <Stack.Screen name="MenuDetail" options={{ headerShown: false }} component={MenuDetail}/>
+
         </Stack.Navigator>
     )
 }
@@ -138,7 +130,7 @@ function SearchNavigator() {
               // fontSize:  "25px",
             },
              }}>
-            <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+            <Stack.Screen options={{ headerShown: false }} name="Logout" component={Logout} />
         </Stack.Navigator>
     )
 }
@@ -154,7 +146,7 @@ function FavNavigator() {
               // fontSize:  "25px",
             },
              }}>
-            <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+            <Stack.Screen options={{ headerShown: false }} name="Logout" component={Logout} />
         </Stack.Navigator>
     )
 }

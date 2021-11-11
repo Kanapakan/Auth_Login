@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import UserDetail from './screens/UserDetail';
 
 import LogIn from './components/Login';
-import Home from "./components/Home";
+// import Home from "./components/Home";
 import Register from './components/Register';
 import RegisterUserDetail from './components/RegisterUserDetail';
 
