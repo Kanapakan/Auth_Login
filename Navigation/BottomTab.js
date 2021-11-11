@@ -17,6 +17,8 @@ import MenuDetail from "../screens/MenuDetail";
 import MyProfile from  '../screens/MyProfile';
 import ChangeUserDetail from "../components/ChangeUserDetail";
 
+import FindRecipe from "../screens/FindRecipe";
+
 // const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,6 +36,8 @@ const customTabBarStyle = {
     inactiveTintColor: '#bdbdbd',
     keyboardHidesTabBar: true,
 }
+
+
 
 //Navigators หลัก
 function MainNavigator() { 
@@ -113,7 +117,7 @@ function HomeNavigator() {
             <Stack.Screen name="Breakfast"  component={Breakfast} options={{
               title: 'อาหารเช้า'
           }}/>
-          <Stack.Screen name="MenuDetail" options={{ headerShown: false }} component={MenuDetail}/>
+          <Stack.Screen name="MenuDetail" component={MenuDetail} />
 
         </Stack.Navigator>
     )
@@ -130,7 +134,7 @@ function SearchNavigator() {
               // fontSize:  "25px",
             },
              }}>
-            <Stack.Screen options={{ headerShown: false }} name="Logout" component={Logout} />
+            <Stack.Screen  name="FindRecipe" component={FindRecipe} />
         </Stack.Navigator>
     )
 }

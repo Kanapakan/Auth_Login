@@ -3,11 +3,8 @@ import React, { useState, useEffect } from 'react';
 import {  StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AntDesign } from "@expo/vector-icons";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 
-import UserDetail from './screens/UserDetail';
 
 import LogIn from './components/Login';
 // import Home from "./components/Home";
@@ -15,7 +12,6 @@ import Register from './components/Register';
 import RegisterUserDetail from './components/RegisterUserDetail';
 
 import BottomTabScreen from './Navigation/BottomTab';
-import UserProfile from './screens/MyProfile';
 
 const Stack = createStackNavigator();
 function Mystack(){
