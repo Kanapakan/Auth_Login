@@ -7,7 +7,9 @@ import firebaseConfig from "./config";
   
   
   // Initialize Firebase
-  const firebaseApp = firebase.initializeApp(firebaseConfig);
+  if (!firebase.app.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
 
-  const db = firebaseApp.firestore();
+  const db = firebase.firestore();
   export default db;
