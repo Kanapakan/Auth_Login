@@ -1,8 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native";
-
 import  db from '../database/firebaseDb'
 import { auth } from '../database/Auth';
+// import { useDispatch } from 'react-redux';
+// import { toggleUsers } from "../store/actions/UserAction";
+
 
 const MyProfile = ({navigation, route}) => {
   const firestoreRef = db.collection('userDetail');
@@ -10,6 +12,12 @@ const MyProfile = ({navigation, route}) => {
   const[userArr, setUserArr] = useState([]);
   const[docId, setDocId] = useState("");
 
+  // const dispatch = useDispatch();
+  // const toggleUserHandler = (UsersData) => {
+    
+  //   console.log(UsersData)
+  //   dispatch(toggleUsers(UsersData));
+  // }
 
   useEffect(() => {
 
@@ -33,8 +41,8 @@ const MyProfile = ({navigation, route}) => {
           setDocId(documentSnapshot.id)
           userArr2.push(documentSnapshot.data())
           setUserArr([...userArr2]),
-          // console.log(userArr)
           setisLoading(false);
+          // toggleUserHandler(userArr[0])
         }
       });
   });

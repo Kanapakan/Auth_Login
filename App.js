@@ -3,17 +3,24 @@ import React, { useState, useEffect } from 'react';
 import {  StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux'
 
 
 import LogIn from './components/Login';
-// import Home from "./components/Home";
 import Register from './components/Register';
 import RegisterUserDetail from './components/RegisterUserDetail';
-
 import BottomTabScreen from './Navigation/BottomTab';
+import UserReducer from './store/reducers/UserReducer';
 
 const Stack = createStackNavigator();
+
+const rootReducer = combineReducers({
+  users: UserReducer
+  })
+
+  const store = createStore(rootReducer);
+
 function Mystack(){
   return  (
     <Stack.Navigator initialRouteName={BottomTabScreen}>
@@ -28,10 +35,11 @@ function Mystack(){
 
 export default function App() {
   return(
-    <NavigationContainer>
-      <Mystack />
-    </NavigationContainer>
-    
+    <Provider store={store}>
+      <NavigationContainer>
+        <Mystack />
+      </NavigationContainer>
+    </Provider>
   )
 
   // return <UserProfile />;
