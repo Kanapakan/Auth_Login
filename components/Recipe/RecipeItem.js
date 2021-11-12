@@ -10,7 +10,7 @@ const RecipeItem = (props) => {
                   <Image style={styles.food} source={{ uri: props.image }}/>
 
                   <View style={styles.foodBox}>
-                      <Text style={styles.foodName}>{props.name}</Text>
+                      <Text numberOfLines={1} style={styles.foodName}>{props.name}</Text>
                       <View style={styles.foodTime}>
                           <MaterialIcons name="access-time" size={26} color="black"/>
                           <Text style={styles.timeText}>{props.time} นาที</Text>
@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   foodName:{
-    fontSize: 22,
+    width: 230 ,
+    fontSize: 20,
     fontWeight: "bold",
     flex: 2,
     marginLeft: 10,
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   foodCal:{
     fontSize: 20,
     fontWeight: "bold",
-    marginTop: 10,
+    marginTop: 60,
     flex: 1,
   },
   foodTime:{
