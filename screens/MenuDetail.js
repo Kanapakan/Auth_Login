@@ -274,7 +274,7 @@ const styles = StyleSheet.create(
         fontSize: 25,
         fontWeight: "bold",
         textAlign: "center",
-        marginTop: 20
+        marginTop: 17
       },
       left:{
           backgroundColor: "#e4efe3",
