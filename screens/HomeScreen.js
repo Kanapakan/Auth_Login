@@ -4,8 +4,8 @@ import { Text, View, StyleSheet, Platform, Animated, ScrollView, Image,Touchable
 import { VictoryPie, VictoryBar , VictoryChart, VictoryGroup, VictoryAxis, VictoryLegend, VictoryTheme} from "victory-native";
 import  db from '../database/firebaseDb'
 import { auth } from '../database/Auth';
-import { useDispatch } from 'react-redux';
-import { toggleUsers } from "../store/actions/UserAction";
+// import { useDispatch } from 'react-redux';
+// import { toggleUsers } from "../store/actions/UserAction";
 
 const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 100
@@ -32,26 +32,14 @@ class Home extends Component {
         .then(querySnapshot   => {
           querySnapshot.forEach(documentSnapshot => {
 
-            // const dispatch = useDispatch();
-            // const toggleUserHandler = (UsersData) => {
-              
-            //   console.log(UsersData)
-            //   dispatch(toggleUsers(UsersData));
-            // }
             if(auth.currentUser?.uid === documentSnapshot.data().userId){
                 
               const userArr2 = [];
               userArr2.push(documentSnapshot.data())
               this.setState({userArr: userArr2[0]})
-            //   console.log(userArr2)
-
-            // toggleUserHandler(userArr2)
             }
           });
       })
-      
-     
-
   }
   
 

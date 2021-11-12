@@ -16,7 +16,7 @@ import UserReducer from './store/reducers/UserReducer';
 const Stack = createStackNavigator();
 
 const rootReducer = combineReducers({
-  users: UserReducer
+  user: UserReducer
   })
 
   const store = createStore(rootReducer);
@@ -42,7 +42,7 @@ export default function App() {
     </Provider>
   )
 
-  // return <UserProfile />;
+  // return <Try />;
 
 
 }

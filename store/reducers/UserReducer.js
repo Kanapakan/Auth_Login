@@ -1,18 +1,19 @@
-import { TOGGLE_USERS } from "../actions/UserAction"
+// import { TOGGLE_USERS } from "../actions/UserAction"
 
 const initialState ={
     // meals: MEALS,
-    users: [],
+    user: []
 }
 
 const UserReducer = (state= initialState, action) => {
     switch (action.type) {
-        case TOGGLE_USERS :
-            const updateUser = [...state.users]
-            console.log(state.users)
-            return {...state, users: updateUser}
-            
+        case "TOGGLE_USERS" :
+            // const updateUser = [...state.users]
+            // console.log('user in reducer' + state.users)
+            return state.concat([action.user]);
+        default:
+            return state
     }
-    return state
+    
 }
 export default UserReducer;
