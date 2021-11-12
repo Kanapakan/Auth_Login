@@ -3,13 +3,13 @@ import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, Text, TextInput, T
 import { auth } from '../database/Auth'
 import  db from '../database/firebaseDb'
 import {Picker} from '@react-native-picker/picker';
-
+// import {connect} from 'react-redux';
 
 
  
 
 
-const RegisterUserDetail = ({navigation, route}) => {
+const RegisterUserDetail = ({navigation, route}, props) => {
 
     const dbRef = db.collection('userDetail');
     const[userId, setUserId] = useState("");
@@ -65,6 +65,7 @@ const RegisterUserDetail = ({navigation, route}) => {
                 .then(userCredentials => {
                 const user = userCredentials.user;
                 console.log('Registered with:', user.email);
+                console.log(props)
             dbRef.add({
                 userId: auth.currentUser?.uid,
                 email: route.params.email,
@@ -175,14 +176,6 @@ const RegisterUserDetail = ({navigation, route}) => {
                     <Text style={styles.btnText}>ลงทะเบียน</Text>
                 </TouchableOpacity>
             </View>
-    
-            
-            
-            
-            
-    
-    
-           
             
         </View>
       );
@@ -268,4 +261,18 @@ const styles = StyleSheet.create({
       
 });
   
+// const mapStateToProps = (state) => {
+
+//     return {
+//         user : state.user
+//     }
+// }
+
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         addUser: (user) => {dispatch({type: "TOGGLE_USERS", user: user})}
+//     }
+// }
+
+// export default connect(mapDispatchToProps, mapStateToProps)(RegisterUserDetail);
 export default RegisterUserDetail;

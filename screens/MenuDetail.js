@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { AppRegistry, Text, View, StyleSheet, Platform, Animated, ScrollView, Image,TouchableOpacity, } from 'react-native';
+import React, { useRef } from 'react';
+import { AppRegistry, Text, View, StyleSheet, Platform, Animated, ScrollView, Image,TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Octicons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons'; 
@@ -9,25 +9,59 @@ import {Picker} from '@react-native-picker/picker';
 const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 300;
 
-class MenuDetail extends Component {
+const MenuDetail =({navigation, route}, props) => {
+  const { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL,} = route.params;
 
-  constructor() {
-    super();
+  const scrollYAnimatedValue = useRef(new Animated.Value(0)).current;
 
-    this.scrollYAnimatedValue = new Animated.Value(0);
-  }
+    // scrollYAnimatedValue = new Animated.Value(0);
+    const  renderStep = () => {
+      return ingredient_name.map(function(item, i){
+        return(
+          <View key={i}>
+            <Octicons name="primitive-dot" size={24} color="#6b6969"/>
+             <Text style={styles.ingredianName}>{item}</Text>
+          </View>
+        );
+      })
+    };
 
+    const  renderIngredient_quantity = () => {
+      return ingredient_quantity.map(function(item, i){
+        return(
+          <View key={i}>
+            {/* <Octicons name="primitive-dot" size={24} color="#6b6969"/> */}
+             <Text style={styles.amount}>{item}</Text>
+          </View>
+        );
+      })
+    };
+      
+    const  renderSteps = () => {
+      return steps.map(function(item, i){
+        return(
+          <View key={i}>
+            <View style={[{flexDirection: "row"}]} >
+              <Text style={styles.step}>{i+1}. </Text>
+              <Text style={styles.stepDetail}>{item}</Text>
+            </View>
+             
+          </View>
+        );
+      })
+    };
 
-  render() {
+    // <View style={styles.stepBox}></View>
+  
 
-    const headerHeight = this.scrollYAnimatedValue.interpolate(
+    const headerHeight = scrollYAnimatedValue.interpolate(
       {
         inputRange: [0, (HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT)],
         outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
         extrapolate: 'clamp'
       });
 
-    const headerBackgroundColor = this.scrollYAnimatedValue.interpolate(
+    const headerBackgroundColor = scrollYAnimatedValue.interpolate(
       {
         inputRange: [0, (HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT)],
         outputRange: ['#000', '#000'],
@@ -36,11 +70,11 @@ class MenuDetail extends Component {
 
     return (
       <View style={styles.container} >
-        <ScrollView
+        <ScrollView 
           contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
           scrollEventThrottle={16}
           onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: this.scrollYAnimatedValue } } }], {useNativeDriver: false}
+            [{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } }], {useNativeDriver: false}
           )}>
           
                 <View style={[styles.foodCard]}>
@@ -73,53 +107,37 @@ class MenuDetail extends Component {
                 {/* ตัวอย่างที่ลองใส่มา code เหมือนกัน เปลี่ยนแค่ชื่อกับปริมาณที่ใส่ */}
 
                 {/* มายองเนส */}
+                
                 <View style={styles.ingredianBox}>
-
+                
                     <View style={[styles.detailIngredian, {flex: 1}]}>
-                        <Octicons name="primitive-dot" size={24} color="#6b6969"/>
-                        <Text style={styles.ingredianName}>มายองเนส</Text>
+                        <View>
+                          {renderStep()}
+                        </View>
                     </View>
 
                     <View style={[styles.amountBox, {flex: 1}]}>
-                        <Text style={styles.amount}>1/2 ช้อนโต๊ะ</Text>
+                        <View>
+                          {renderIngredient_quantity()}
+                        </View>
                     </View>                  
 
                 </View>
-
-                {/* น้ำตาล */}
-                <View style={styles.ingredianBox}>
-
-                    <View style={[styles.detailIngredian, {flex: 1}]}>
-                        <Octicons name="primitive-dot" size={24} color="#6b6969"/>
-                        <Text style={styles.ingredianName}>น้ำตาล</Text>
-                    </View>
-
-                    <View style={[styles.amountBox, {flex: 1}]}>
-                        <Text style={styles.amount}>1/4 ช้อนโต๊ะ</Text>
-                    </View>                  
-
-                </View>
-
-
+     
+                {/* renderSteps() */}
+{/* ---------------------------- วิธีทำ -------------------------------------------- */}
                 <Text style={styles.header}>วิธีทำ</Text>
-                {/* ตัวอย่างที่ลองใส่มา code เหมือนกัน เปลี่ยนแค่ข้อมูล*/} 
-                {/* step 1 */}
-                <View style={styles.stepBox}>
-                    <Text style={styles.step}>1.</Text>
-                    <Text style={styles.stepDetail}>ใส่ปลาทูน่ากระป๋องลงในชามสำหรับผสม</Text>
+                <View style={[styles.stepBox, {flex: 1}]}>
+                {/* <View style={styles.stepBox}> */}
+                    {renderSteps()}
                 </View>
-
-                {/* step 2 */}
-                <View style={styles.stepBox}>
-                    <Text style={styles.step}>2.</Text>
-                    <Text style={styles.stepDetail}>ปรุงรสด้วยแคร์ช้อยส์สูตรดั้งเดิม น้ำปลา น้ำมะนาว พริกป่นตามชอบ คลุกเคล้าให้เข้ากันดี</Text>
-                </View>             
+            
                 
                 
                 <View style={styles.line} />
 
                 <View style={styles.bottom}>
-                    <Text style={styles.foodCalBottom}>120 Kcal.</Text>   
+                    <Text style={styles.foodCalBottom}>{kcal} Kcal.</Text>   
                     <View style={styles.pickerBorder}>
                         <Picker 
                         // selectedValue={selectedValue}
@@ -147,21 +165,22 @@ class MenuDetail extends Component {
 
         </ScrollView>
 
+{/* ---------------------------- รูปอาหาร ------------------------------------- */}
         <Animated.View style={[styles.animatedHeaderContainer, { height: headerHeight}]}>
             <View style={[styles.item1, {flex:2}]}>
-                <Image style={styles.foodImage} source={require("../assets/yum.png")}/>
+                <Image style={styles.foodImage} source={{ uri: imageURL }}/>
             </View>
-
+{/* ---------------------------- กล่องชื่ออาหาร ------------------------------------- */}
             <View style={styles.item2}>
                 <View style={{flexDirection: 'row'}}>
 
                 <View style={[styles.left ,{flex:2}]}>
 
-                    <Text style={styles.foodName}>ยำวุ้นเส้น</Text>
+                    <Text numberOfLines={1} style={styles.foodName}>{name}</Text>
 
                     <View style={styles.foodTime}>
                         <MaterialIcons name="access-time" size={26} color="black"/>
-                        <Text style={styles.timeText}>10 นาที</Text>
+                        <Text style={styles.timeText}>{time} นาที</Text>
                     </View>
 
                 </View> 
@@ -173,7 +192,7 @@ class MenuDetail extends Component {
                     {/* ไอคอนตอนยังไม่กด fav สีขาว */}
                     {/* <Ionicons name="bookmark-outline" size={40} color="black" style={styles.favIcon}/> */}
 
-                    <Text style={styles.foodCal}>120 Kcal.</Text>                   
+                    <Text style={styles.foodCal}>{kcal} Kcal.</Text>                   
                 </View> 
 
                 </View>
@@ -183,7 +202,7 @@ class MenuDetail extends Component {
 
       </View>
     );
-  }
+
 }
 
 const styles = StyleSheet.create(
@@ -233,7 +252,8 @@ const styles = StyleSheet.create(
         width: "100%"
     },
       foodName:{
-        fontSize:35,
+        width: 260 ,
+        fontSize: 28,
         fontWeight: "bold",
         color: "#547f53",
         flexWrap: "wrap",
@@ -320,6 +340,7 @@ const styles = StyleSheet.create(
         justifyContent: "center"
       },
       ingredianName:{
+        marginBottom: 1.75,
         fontSize: 18,
         color: "#6b6969",
         marginTop: -26,
@@ -331,7 +352,7 @@ const styles = StyleSheet.create(
         color: "#6b6969",
       },
       stepBox:{
-        flexDirection: "row",
+        // flexDirection: "row",
         marginLeft: 40,
         marginRight: 30
       },   
