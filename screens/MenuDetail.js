@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
-import { AppRegistry, Text, View, StyleSheet, Platform, Animated, ScrollView, Image,TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { AppRegistry, Text, View, StyleSheet, Platform, Animated, ScrollView, Image,TouchableOpacity, Alert  } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Octicons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleBookmark } from '../store/actions/recipeAction';
 
 import {Picker} from '@react-native-picker/picker';
 
@@ -10,12 +12,16 @@ const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 300;
 
 const MenuDetail =({navigation, route}, props) => {
+  console.log(useSelector((state) => state.recipes.bookmarkRecipes))
+  
   const { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL,} = route.params;
-
+  const bookmark_recipe = useSelector((state) => state.recipes.bookmarkRecipes);
+  const existingIndex = bookmark_recipe.findIndex(recipe => recipe.id === id)
+  const [bookmark, setBookmark] = useState(existingIndex >= 0)
   const scrollYAnimatedValue = useRef(new Animated.Value(0)).current;
-
-    // scrollYAnimatedValue = new Animated.Value(0);
-    const  renderStep = () => {
+ 
+  // ------------------- Loop ingredients's name -----------------------------
+    const  renderIn_name = () => {
       return ingredient_name.map(function(item, i){
         return(
           <View key={i}>
@@ -25,7 +31,7 @@ const MenuDetail =({navigation, route}, props) => {
         );
       })
     };
-
+  // ------------------- Loop quantity's list -----------------------------
     const  renderIngredient_quantity = () => {
       return ingredient_quantity.map(function(item, i){
         return(
@@ -51,8 +57,30 @@ const MenuDetail =({navigation, route}, props) => {
       })
     };
 
-    // <View style={styles.stepBox}></View>
+    // ---------- ปุ่ม bookmark ---------------
+    const pressBookmark = (id) => {
+      
+      
+      
+      toggleBookmarkHandler(id)
+      if(bookmark === false){ 
+        Alert.alert("เพิ่ม \"" + name + "\" เข้า Bookmark")
+      }else {
+        Alert.alert("ลบ \"" + name + "\" ออกจาก Bookmark")
+      }
+      setBookmark(!bookmark);
+      
+      
+    };
+    const dispatch = useDispatch();
+    const toggleBookmarkHandler = (mealId) => {
+    
+    console.log(mealId)
+    dispatch(toggleBookmark(mealId));
+  }
   
+
+
 
     const headerHeight = scrollYAnimatedValue.interpolate(
       {
@@ -112,7 +140,7 @@ const MenuDetail =({navigation, route}, props) => {
                 
                     <View style={[styles.detailIngredian, {flex: 1}]}>
                         <View>
-                          {renderStep()}
+                          {renderIn_name()}
                         </View>
                     </View>
 
@@ -185,16 +213,23 @@ const MenuDetail =({navigation, route}, props) => {
 
                 </View> 
 
+               
                 <View style={[styles.right ,{flex:1}]}>
-
+                  <TouchableOpacity 
+                      onPress={() => pressBookmark(id)}> 
                     {/* ไอคอนตอนกด fav สีดำ */}
-                    <Ionicons name="bookmark" size={40} color="black" style={styles.favIcon}/>
+ 
+                      <Ionicons 
+                      name="bookmark"
+                      size={40} 
+                      color={bookmark ? "black" : "white"} style={styles.favIcon}/>
+                    
                     {/* ไอคอนตอนยังไม่กด fav สีขาว */}
                     {/* <Ionicons name="bookmark-outline" size={40} color="black" style={styles.favIcon}/> */}
-
+                </TouchableOpacity>
                     <Text style={styles.foodCal}>{kcal} Kcal.</Text>                   
                 </View> 
-
+                
                 </View>
             </View>
 
