@@ -8,7 +8,7 @@ import RecipeList from "../components/Recipe/RecipeList";
 const SearchScreen = ({navigation, route}) => {
   const[searchResult, setSearchResult] = useState([]);
   const[searchWord, setSearchWord] = useState("");
-  const[titleBar, setTitleBar] = useState("");
+  const[titleBar, setTitleBar] = useState("กรอกด้วยตัวเอง");
 
   const recipes = useSelector(state => state.recipes.recipes)
 
