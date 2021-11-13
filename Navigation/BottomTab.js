@@ -117,7 +117,10 @@ function HomeNavigator() {
             <Stack.Screen name="Breakfast"  component={Breakfast} options={{
               title: 'อาหารเช้า'
           }}/>
-          <Stack.Screen name="MenuDetail" component={MenuDetail} />
+          <Stack.Screen name="MenuDetail" options={ 
+            ({ route }) => ({ 
+              title: route.params.name })}
+              component={MenuDetail} />
 
         </Stack.Navigator>
     )
