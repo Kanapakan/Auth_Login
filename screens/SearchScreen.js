@@ -1,62 +1,79 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity, CheckBox } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { useSelector } from 'react-redux';
+import { AntDesign } from "@expo/vector-icons";
+import { Entypo } from '@expo/vector-icons';
+import RecipeList from "../components/Recipe/RecipeList";
+
+const SearchScreen = ({navigation, route}) => {
+  const[searchResult, setSearchResult] = useState([]);
+  const[searchWord, setSearchWord] = useState("");
+  const[titleBar, setTitleBar] = useState("");
+
+  const recipes = useSelector(state => state.recipes.recipes)
 
 
-const SearchScreen = () => {
+  // ---------------- funtion filter จากชื่อ
+  const searchHandler = (text) => {
+    if (text !== "") {
+      const newMenuList = recipes.filter((recipe) => {
+        const itemData = recipe.name
+          ? recipe.name.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setSearchResult(newMenuList)
+      setSearchWord()
+      setTitleBar("ผลการค้นหา")
+      console.log(newMenuList)
+    } else {
+      setTitleBar("กรองด้วยตัวเอง")
+      setSearchWord(text);
+      setSearchResult([]);
+      
+    }
+  }
 
-  return (
-// ผลการค้นหา    
+      return (
+        <View style={styles.container}>
+        {/* Search */}
+          <View style={{alignItems: "center" , marginTop: 15, }}>
+            <View style={styles.searchBorder}>
+              <AntDesign name="search1" size={28} style={{paddingTop: 6, paddingLeft: 10, paddingRight: 10, color: "#adacac"}} 
+              />
+                <TextInput
+                style={styles.searchBox}
+                placeholder="ค้นหาจากชื่อเมนู..."
+                onChangeText = {(text) => searchHandler(text)}
+                
+                value = {searchWord}
+                >
+                  
+                </TextInput>
+                <Entypo name="cross" size={24} color="black" size={28} style={{paddingTop: 6, color: "#adacac"}} 
+                onPress={(text) => searchHandler('')}/>
+              </View>
+          </View>
+              <View style={styles.headBox} >
+                  <Text style={styles.headText}>{titleBar}</Text>
+              </View>
 
-    // <View style={styles.container}>
-    //     <View style={styles.headBox} >
-    //         <Text style={styles.headText}>ผลการค้นหา</Text>
-    //     </View>
-
-       
-    //     {/* 1 รายการอาหาร */}
-    //     <View>
-    //         <View style={{flexDirection: 'row', marginTop: 20}}>
-    //             <Image style={styles.food} source={require("../assets/yum.png")}/>
-
-    //             <View style={styles.foodBox}>
-    //                 <Text style={styles.foodName}>ยำวุ้นเส้น</Text>
-    //                 <View style={styles.foodTime}>
-    //                     <MaterialIcons name="access-time" size={26} color="black"/>
-    //                     <Text style={styles.timeText}>10 นาที</Text>
-    //                 </View>
-
-    //             </View>
-    //             <Text style={styles.foodCal}>120 Kcal.</Text>
             
-    //         </View>
-    //         <View style={styles.line} />
+              {/* 1 รายการอาหาร */}
+              <View style={styles.container}>
+                  <RecipeList
+                    style={{ width: "100%", height: "100%" }}
+                    listData={searchResult}
+                    navigation={navigation}
+                  />
 
-    //     </View>      
-      
-    // </View>
+              </View>
+          </View>
+      )
+  
+  }
 
-// ค้นหาด้วยตัวเอง
-
-    <View style={styles.container}>
-        <View style={styles.headBox} >
-            <Text style={styles.headText}>ค้นหาด้วยตัวเอง</Text>
-        </View>
-
-        {/* <Text style={styles.sensitiveText}>การแพ้</Text> */}
-        <View style={{flex:1, justifyContent:"flex-end",alignItems: "center", margin: 20}}>
-            <TouchableOpacity 
-                // onPress={} 
-                style={styles.btnContainer}>
-                <Text style={styles.btnText}>ต่อไป</Text>
-            </TouchableOpacity>
-        </View>      
-      
-    </View>
-        
-
-    );
-};
     
     const styles = StyleSheet.create({
       container: {
@@ -69,7 +86,7 @@ const SearchScreen = () => {
   headBox:{
     backgroundColor: "#e4efe3",
     //ตอนเอาลง tab เอา marginTop ออกด้วยนะ
-    marginTop: 80,
+    marginTop: 15,
     alignItems: "flex-start",
     padding: 8
   },
@@ -140,6 +157,23 @@ const SearchScreen = () => {
     color: "#fff",
     fontWeight: "bold",
     alignSelf: "center",
+  },
+  searchBox:{
+    width: "75%",
+    height: 40,
+    // flex: 1,
+    // borderColor: '#adacac',
+    // borderWidth: 2,
+    // borderRadius: 10,
+    fontSize: 18,
+  },
+  searchBorder:{
+    flexDirection: "row",
+    width: "90%",
+    height: 45,
+    borderColor: '#8ec18d',
+    borderWidth: 2,
+    borderRadius: 10,
   },
 
 

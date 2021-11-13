@@ -111,9 +111,9 @@ class Home extends Component {
                             <View style={styles.pieChart}>
                                 <VictoryPie
                                 data={[
-                                    { y: 10, label: "10%" },
                                     { y: 20, label: "20%" },
-                                    { y: 30, label: "30%" }
+                                    { y: 10, label: "10%" },
+                                    { y: 100, label: "100%" }
                                 ]}
                                 width={180}
                                 height={180}
@@ -193,6 +193,8 @@ class Home extends Component {
                                             { x: "8/10",  y: 750 },
                                             { x: "9/10",  y: 1050 },
                                             { x: "10/10", y: 550 },
+                                            { x: "11/10", y: 550 },
+
                                         ]}
                                         labels={(data) => ( data.datum.y )}
   
@@ -275,7 +277,8 @@ const styles = StyleSheet.create(
     container: {
       flex: 1,
       justifyContent: "center",
-      flexDirection: "column"
+      flexDirection: "column",
+      backgroundColor: "white"
 
     },
     animatedHeaderContainer: {
@@ -370,6 +373,7 @@ const styles = StyleSheet.create(
       },
       infoContainer:{
         flex: 1,
+        backgroundColor: "white"
         // padding: 15,
       },
       pieHead:{
