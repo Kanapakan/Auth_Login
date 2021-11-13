@@ -9,7 +9,7 @@ import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import BookmarkScreen from "../screens/bookmarkScreen";
+import BookmarkScreen from "../screens/BookmarkScreen";
 import HomeScreen from "../screens/HomeScreen";
 import Breakfast from "../screens/Breakfast";
 import MenuDetail from "../screens/MenuDetail";
@@ -65,7 +65,7 @@ function MainNavigator() {
             tabBarActiveBackgroundColor: "#8EC18D",
             tabBarLabel: '',
             tabBarIcon: ({ color}) => {
-              return <AntDesign name="heart" size={28} color={color} />;
+              return <FontAwesome name="bookmark" size={28} color={color} />
             },
           }} />
         <Tab.Screen name="User" component={UserNavigator}
@@ -136,7 +136,7 @@ function SearchNavigator() {
               // fontSize:  "25px",
             },
              }}>
-            <Stack.Screen  name="FindRecipe" component={FindRecipe} />
+            <Stack.Screen  name="FindRecipe" options={{ title: "ค้นหาเมนูอาหาร"}} component={FindRecipe} />
         </Stack.Navigator>
     )
 }
