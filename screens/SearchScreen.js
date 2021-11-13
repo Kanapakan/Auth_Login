@@ -3,8 +3,7 @@ import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity, CheckBox } f
 import { MaterialIcons } from '@expo/vector-icons'; 
 
 
-
-const FindRecipe = () => {
+const SearchScreen = () => {
 
   return (
 // ผลการค้นหา    
@@ -45,14 +44,12 @@ const FindRecipe = () => {
         </View>
 
         {/* <Text style={styles.sensitiveText}>การแพ้</Text> */}
-
         <View style={{flex:1, justifyContent:"flex-end",alignItems: "center", margin: 20}}>
             <TouchableOpacity 
                 // onPress={} 
                 style={styles.btnContainer}>
                 <Text style={styles.btnText}>ต่อไป</Text>
             </TouchableOpacity>
-
         </View>      
       
     </View>
@@ -150,7 +147,7 @@ const FindRecipe = () => {
     
     });
     
-    export default FindRecipe;
+    export default SearchScreen;
     
     {/* <Text style={{fontFamily: 'normal'}}>  normal </Text>
             <Text style={{fontFamily: 'notoserif'}}>  notoserif </Text>

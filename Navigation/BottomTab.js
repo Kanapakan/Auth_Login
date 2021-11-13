@@ -9,15 +9,14 @@ import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 
-// import LogIn from './components/Login';
-import Logout from "../components/Logout";
+import BookmarkScreen from "../screens/bookmarkScreen";
 import HomeScreen from "../screens/HomeScreen";
 import Breakfast from "../screens/Breakfast";
 import MenuDetail from "../screens/MenuDetail";
 import MyProfile from  '../screens/MyProfile';
 import ChangeUserDetail from "../components/ChangeUserDetail";
 
-import FindRecipe from "../screens/FindRecipe";
+import FindRecipe from "../screens/SearchScreen";
 
 // const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -153,7 +152,7 @@ function FavNavigator() {
               // fontSize:  "25px",
             },
              }}>
-            <Stack.Screen options={{ headerShown: false }} name="Logout" component={Logout} />
+            <Stack.Screen name="BookmarkScreen" options={{ title: "Bookmark"}} component={BookmarkScreen} />
         </Stack.Navigator>
     )
 }
