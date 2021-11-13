@@ -1,16 +1,17 @@
 import React from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity,FlatList, } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'; 
-import RecipeItem from "./RecipeItem";
+import RecipeMealTime from "./RecipeMealTime";
 
-const RecipeList = (props) => {
+const RecipeMealList = (props) => {
     const renderRecipeItem = (itemData) => {
         const {id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL} = itemData.item
-
+        // console.log(props.mealTime)
         return (
             <View>
-                <RecipeItem 
-                
+                <RecipeMealTime 
+                mealTime={props.mealTime}
+                id={id}
                 name={name}
                 kcal={kcal}
                 time={time}
@@ -43,4 +44,4 @@ const RecipeList = (props) => {
         },
       });
 
-export default RecipeList;
+export default RecipeMealList;

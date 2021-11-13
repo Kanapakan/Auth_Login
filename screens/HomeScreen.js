@@ -4,8 +4,11 @@ import { Text, View, StyleSheet, Platform, Animated, ScrollView, Image,Touchable
 import { VictoryPie, VictoryBar , VictoryChart, VictoryGroup, VictoryAxis, VictoryLegend, VictoryTheme} from "victory-native";
 import  db from '../database/firebaseDb'
 import { auth } from '../database/Auth';
+import moment from "moment";
 // import { useDispatch } from 'react-redux';
 // import { toggleUsers } from "../store/actions/UserAction";
+import PieGraph from '../components/dashboad/PieGraph';
+import BarChart from '../components/dashboad/BarChart';
 
 const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 100
@@ -24,7 +27,8 @@ class Home extends Component {
         userArr: [],
       }
     this.scrollYAnimatedValue = new Animated.Value(0);
-    
+    this.date_create = moment().format("DD/MM/YYYY")
+ 
 
 
     firestoreRef
@@ -42,7 +46,6 @@ class Home extends Component {
       })
   }
   
-
 
   render() {
     
@@ -76,28 +79,30 @@ class Home extends Component {
                 <View style={[styles.Card]}>
                     
                     {/* กดไปหน้า มื้ออาหาร */}
-                        <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("Breakfast") }}> 
+                        <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("Breakfast", { mealTime: "breakfast"}) }}> 
                             <Image style={styles.foodImage} source={require("../assets/egg.png")} />
-                            <Text style={styles.typeFood}>อาหารเช้า</Text>
+                            <Text style={styles.typeFood}>มื้อเช้า</Text>
                             
     
                         </TouchableOpacity>
                     
-                    <View style={styles.square}> 
+                    <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("Lunch", {mealTime: "lunch"}) }}> 
                         <Image style={styles.foodImage} source={require("../assets/sanwich.png")}/>
-                        <Text style={styles.typeFood}>อาหารกลางวัน</Text>
+                        <Text style={styles.typeFood}>มื้อกลางวัน</Text>
                        
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.square}> 
+                    <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("Dinner", { mealTime: "dinner"}) }}> 
                         <Image style={styles.foodImage} source={require("../assets/pasta.png")}/>
-                        <Text style={styles.typeFood}>อาหารเย็น</Text>
+                        <Text style={styles.typeFood}>มื้อเย็น</Text>
                         
-                    </View>
+                    </TouchableOpacity>
                 
                 </View>
 
-                <View style={styles.card}>
+                <PieGraph />
+                <BarChart />
+                {/* <View style={styles.card}>
 
                     <View style={styles.headContainer}>
                         <Text style={styles.boldText}>สารอาหารที่ได้รับต่อวัน</Text>
@@ -150,9 +155,9 @@ class Home extends Component {
 
                     </View>
 
-                </View>
+                </View> */}
 
-                <View style={styles.card}>
+                {/* <View style={styles.card}>
 
                     <View style={styles.headContainer}>
                         <Text style={styles.boldText}>ปริมาณแคลอรี่ที่ได้รับต่อวัน</Text>
@@ -164,22 +169,8 @@ class Home extends Component {
                             <VictoryChart
                              width={350}
                              height={250}
-                             theme={VictoryTheme.material}
-                            //  paddingLeft={60}
-                            >
-                                {/* <VictoryAxis label=''/>
-                                <VictoryAxis 
-                                    dependentAxis 
-                                    label='ปริมาณแคลอรี่ (KCal.)'
-
-                                    style={{
-                                        
-                                        axisLabel: {
-                                            padding: 30,
-                                           
-                                        }
-                                    }}
-                                /> */}
+                             theme={VictoryTheme.material} >
+   
 
      
                                 <VictoryGroup offset={30}>
@@ -219,26 +210,20 @@ class Home extends Component {
                                         }
                                     ]}
                                 />
-
                                 </VictoryGroup>
-          
                             </VictoryChart>
-                           
-
                         </View>                           
-
                     </View>
-                    
-
-                </View>
-                
-
-
+                </View> */}
         </ScrollView>
 
+{/* ------------------- cal Bar ----------------------------------------- */}
         <Animated.View style={[styles.animatedHeaderContainer, { height: headerHeight}]}>
            
-            <View style={styles.item}>
+           <View style={styles.item}>
+                  <Text style={styles.hearderText2}>{this.date_create}</Text>
+                </View>
+            <View style={styles.item2}>
                 {/* แอดค่า cal แล้ว */}
                 <View style={styles.left}>
                     <Text style={styles.hearderText}>{this.state.userArr.TDEE}</Text>
@@ -278,7 +263,9 @@ const styles = StyleSheet.create(
       flex: 1,
       justifyContent: "center",
       flexDirection: "column",
-      backgroundColor: "white"
+      backgroundColor: "white",
+      paddingTop: 30,
+      paddingBottom: 40,
 
     },
     animatedHeaderContainer: {
@@ -290,13 +277,22 @@ const styles = StyleSheet.create(
       alignItems: 'center'
     },
     item:{
+      backgroundColor: "#9bcc8f",
+        width: "100%",
+        flexDirection: "row",
+        // padding: 2,
+        paddingTop: 50,
+        paddingBottom: 5,
+        justifyContent: "center"
+  },
+    item2:{
         backgroundColor: "#9bcc8f",
         // justifyContent: "center",
         width: "100%",
         flexDirection: "row",
         padding: 2,
-        paddingTop: 40,
-        paddingBottom: 20,
+        // paddingTop: 40,
+        paddingBottom: 15,
         justifyContent: "center"
     },
     left:{
@@ -330,7 +326,8 @@ const styles = StyleSheet.create(
         borderWidth: 2,
         borderRadius: 10,
         margin: 20,
-        backgroundColor: "#9bcc8f" 
+        backgroundColor: "#9bcc8f" ,
+        
       },
       square:{
         width: 120,

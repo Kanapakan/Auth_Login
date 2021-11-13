@@ -11,7 +11,9 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import BookmarkScreen from "../screens/BookmarkScreen";
 import HomeScreen from "../screens/HomeScreen";
-import Breakfast from "../screens/Breakfast";
+import Breakfast from "../screens/BreakfastScreen";
+import Dinner from "../screens/DinnerScreen";
+import Lunch from "../screens/LunchScreen";
 import MenuDetail from "../screens/MenuDetail";
 import MyProfile from  '../screens/MyProfile';
 import ChangeUserDetail from "../components/ChangeUserDetail";
@@ -113,9 +115,10 @@ function HomeNavigator() {
              }}>
             {/* <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} /> */}
             <Stack.Screen name="HomeScreen" options={{ headerShown: false }} component={HomeScreen}/>
-            <Stack.Screen name="Breakfast"  component={Breakfast} options={{
-              title: 'อาหารเช้า'
-          }}/>
+            <Stack.Screen name="Breakfast"  component={Breakfast} options={{ title: 'มื้อเช้า' }}/>
+            <Stack.Screen name="Lunch"  component={Lunch} options={{ title: 'มื้อกลางวัน' }}/>
+            <Stack.Screen name="Dinner"  component={Dinner} options={{ title: 'มื้อเย็น' }}/>
+
           <Stack.Screen name="MenuDetail" options={ 
             ({ route }) => ({ 
               title: route.params.name })}

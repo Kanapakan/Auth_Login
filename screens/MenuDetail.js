@@ -5,6 +5,7 @@ import { Octicons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleBookmark } from '../store/actions/recipeAction';
+import { toggleMealTime } from '../store/actions/recipeAction';
 
 import {Picker} from '@react-native-picker/picker';
 
@@ -12,12 +13,14 @@ const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 300;
 
 const MenuDetail =({navigation, route}, props) => {
-  console.log(useSelector((state) => state.recipes.bookmarkRecipes))
+  console.log("----- Bookmark : ",(useSelector((state) => state.recipes.bookmarkRecipes)))
+  // console.log(useSelector((state) => state.recipes.breakfastMeals))
   
   const { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL,} = route.params;
   const bookmark_recipe = useSelector((state) => state.recipes.bookmarkRecipes);
   const existingIndex = bookmark_recipe.findIndex(recipe => recipe.id === id)
   const [bookmark, setBookmark] = useState(existingIndex >= 0)
+  const [mealTime, setMealTime] = useState("")
   const scrollYAnimatedValue = useRef(new Animated.Value(0)).current;
  
   // ------------------- Loop ingredients's name -----------------------------
@@ -59,25 +62,37 @@ const MenuDetail =({navigation, route}, props) => {
 
     // ---------- ปุ่ม bookmark ---------------
     const pressBookmark = (id) => {
-      
-      
-      
       toggleBookmarkHandler(id)
+      // console.log(id)
       if(bookmark === false){ 
         Alert.alert("เพิ่ม \"" + name + "\" เข้า Bookmark")
       }else {
         Alert.alert("ลบ \"" + name + "\" ออกจาก Bookmark")
       }
       setBookmark(!bookmark);
-      
-      
     };
+
     const dispatch = useDispatch();
     const toggleBookmarkHandler = (mealId) => {
     
-    console.log(mealId)
     dispatch(toggleBookmark(mealId));
-  }
+    }
+  
+    // ---------- เพิ่มเมนูอาหาร ---------------
+    const selectMeals = (id, mealTime ) => {
+      toggleMealTimeHandler(id, mealTime)
+      console.log("Add in " + mealTime)
+      
+      Alert.alert("เพิ่ม \"" + name + "\" เข้าตารางอาหาร")
+      
+      // navigation.push("Dinner", {mealTime: "dinner"})
+    }
+
+      // const dispatch = useDispatch();
+      const toggleMealTimeHandler = (mealId, Time) => {
+      console.log(mealId, Time)
+      dispatch(toggleMealTime(mealId, Time));
+    }
   
 
 
@@ -164,13 +179,14 @@ const MenuDetail =({navigation, route}, props) => {
                 
                 <View style={styles.line} />
 
+{/* ---------------------- เลือกมื้ออาหาร ----------------------------- */}
                 <View style={styles.bottom}>
                     <Text style={styles.foodCalBottom}>{kcal} Kcal.</Text>   
                     <View style={styles.pickerBorder}>
                         <Picker 
-                        // selectedValue={selectedValue}
+                        selectedValue={mealTime}
                         style={styles.pickerdropdown}
-                         // onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                         onValueChange={(itemValue, itemIndex) => setMealTime(itemValue)}
                   
                         >
                         {/* อย่าลืม disable  และจัดให้ตรงกลาง*/}
@@ -185,7 +201,7 @@ const MenuDetail =({navigation, route}, props) => {
 
             <View style={{alignItems: "center" , marginTop: 20, marginBottom: 20}}>
             <TouchableOpacity 
-                // onPress={} 
+                onPress={() => selectMeals(id, mealTime)} 
                 style={styles.btnContainer}>
                 <Text style={styles.btnText}>บันทึกลงตารางอาหาร</Text>
             </TouchableOpacity>
@@ -462,4 +478,4 @@ const styles = StyleSheet.create(
       }
     
   });
-  export default MenuDetail;
+  export default MenuDetail
