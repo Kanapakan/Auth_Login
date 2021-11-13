@@ -1,11 +1,9 @@
 import { useNavigation } from '@react-navigation/core'
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { ListItem, Button, Input, Image, Badge } from "react-native-elements";
-import  Icon  from "react-native-vector-icons/FontAwesome";
 import { auth } from '../database/Auth';
 
-const HomeScreen = () => {
+const Logout = () => {
   const navigation = useNavigation()
 
   const handleSignOut = () => {
@@ -18,36 +16,19 @@ const HomeScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
-       <Button 
-                    icon={
-                        <Icon 
-                        name='users'
-                        size={15}
-                        color='white'
-                        />
-                    }
-                    title="  Go to Add User Screen"
-                    onPress={() => {
-                        navigation.navigate("AddUserScreen")
-                    }}
-                    containerStyle={{
-                        marginBottom: 10
-                    }}
-                />
-
-      <Text>Email: {auth.currentUser?.email}</Text>
+    // <View style={styles.container}>
+    //   <Text>Email: {auth.currentUser?.email}</Text>
       <TouchableOpacity
         onPress={handleSignOut}
-        style={styles.button}
+        style={styles.btnContainer}
       >
-        <Text style={styles.buttonText}>Sign out</Text>
+        <Text style={styles.btnText}>Sign out</Text>
       </TouchableOpacity>
-    </View>
+    // </View>
   )
 }
 
-export default HomeScreen
+export default Logout
 
 const styles = StyleSheet.create({
   container: {
@@ -63,9 +44,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 40,
   },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
+  btnText: {
+    fontSize: 18,
+    color: "#000",
+    fontWeight: "bold",
+    alignSelf: "center",
   },
+  btnContainer: {
+    width: "35%",
+    elevation: 8,
+    backgroundColor: "#cecece",
+    borderRadius: 10,
+    paddingVertical: 5,
+    // paddingHorizontal: 20,
+  }
 })

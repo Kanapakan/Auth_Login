@@ -1,7 +1,5 @@
 import React, { useRef } from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons'; 
-import RecipeItem from "../components/Recipe/RecipeItem";
 import RecipeList from "../components/Recipe/RecipeList";
 import { RECIPES } from "../dataJson/recipeData";
 

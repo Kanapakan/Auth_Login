@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native";
 import  db from '../database/firebaseDb'
 import { auth } from '../database/Auth';
+import Logout from "../components/Logout";
 // import { useDispatch } from 'react-redux';
 // import { toggleUsers } from "../store/actions/UserAction";
 
@@ -115,6 +116,10 @@ const MyProfile = ({navigation, route}) => {
                 <Text style={styles.calorieText3}>แคลอรี่ไม่ควรต่ำกว่า</Text>
                 <Text style={styles.calorieText4}>{userArr[0].BMR} Kcal.</Text>
             </View>
+       
+        </View>
+        <View style={{alignItems: "center", margin: 10}}>
+          < Logout  />
         </View>
          
         
@@ -144,7 +149,8 @@ const styles = StyleSheet.create({
 
   },
   item2:{
-    backgroundColor:"#fff" , 
+    backgroundColor:"#fff" ,
+    // paddingBottom: 30 ,
   },
   headText:{
     fontSize:35,
