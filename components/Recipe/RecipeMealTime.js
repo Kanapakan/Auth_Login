@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from "react
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleMealTime } from '../../store/actions/recipeAction';
+import { toggleMealTime, toggleEatKcals  } from '../../store/actions/recipeAction';
 
 const RecipeMealTime = (props) => {
     
@@ -11,6 +11,7 @@ const RecipeMealTime = (props) => {
     const delRecipe = () => {
         console.log('del', props.id, props.mealTime)
         toggleMealTimeHandler(props.id, props.mealTime)
+        toggleEatKcalsHandler(props.kcal)
         // props.parentCallback(sumKcals)
     }
 
@@ -18,6 +19,11 @@ const RecipeMealTime = (props) => {
         const toggleMealTimeHandler = (mealId, Time) => {
         console.log(props.id, props.mealTime)
         dispatch(toggleMealTime(mealId, Time));
+      }
+
+      const toggleEatKcalsHandler = (kcals) => {
+        console.log(kcals)
+        dispatch(toggleEatKcals(kcals))
       }
     return(
         <View style={styles.container}>

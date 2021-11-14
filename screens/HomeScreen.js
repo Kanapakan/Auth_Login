@@ -19,7 +19,7 @@ const Home = ({navigation, route}, props) => {
     const date_create = moment().format("DD/MM/YYYY")
     const HEADER_MIN_HEIGHT = 100;
     const HEADER_MAX_HEIGHT = 100
-    // const eatKcal = (useSelector((state) => state.recipes.eatKcals))
+    const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
     
     const firestoreRef = db.collection('userDetail');
 
@@ -237,7 +237,7 @@ const Home = ({navigation, route}, props) => {
                 </View>
 
                 <View style={styles.middle}>
-                    <Text style={styles.hearderText}>1</Text>
+                    <Text style={styles.hearderText}>{eatKcal}</Text>
                     <Text style={styles.hearderText2}>แคลอรี่อาหาร</Text>
                 </View>
 
@@ -246,7 +246,7 @@ const Home = ({navigation, route}, props) => {
                 </View>
 
                 <View style={styles.right}>
-                    <Text style={styles.hearderText}>1505</Text>
+                    <Text style={styles.hearderText}>{userArr.TDEE - eatKcal}</Text>
                     <Text style={styles.hearderText2}>แคลอรี่คงเหลือ</Text>
                 </View>
             

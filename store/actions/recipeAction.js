@@ -5,8 +5,8 @@ export const toggleBookmark = (id) => {
 export const toggleMealTime = (id, mealTime) => {
     return { type: "MEALTIME", recipeId: id, mealTime: mealTime };
 }
-export const toggleEatKcals = (kcals) => {
-    return { type: "EATKCAL", eatKcals: kcals};
+export const toggleEatKcals = (kcals, order) => {
+    return { type: "EATKCAL", eatKcals: kcals, order: order};
 }
 // export const toggleDinner = (id) => {
 //     return { type: "DINNER", recipeId: id };

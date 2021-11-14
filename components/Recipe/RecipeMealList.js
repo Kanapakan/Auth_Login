@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity,FlatList, } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'; 
 import RecipeMealTime from "./RecipeMealTime";
+import { useDispatch, useSelector } from 'react-redux';
+// import { toggleEatKcals  } from '../../store/actions/recipeAction';
 
 const RecipeMealList = (props) => {
   const [sumKcals, setSumkcals] = useState(0)
@@ -31,7 +33,16 @@ const RecipeMealList = (props) => {
             </View>
         ) 
     }
-
+    // ----------------- store ค่า แคลทั้งหมด ----------------------------
+      // const toggleEatKcalsHandler = (kcals) => {
+      // console.log(kcals)
+      // dispatch(toggleEatKcals(kcals))
+  
+      // }
+      // toggleEatKcalsHandler(sumKcals)
+      // dispatch(toggleEatKcals(sumKcals))
+      // console.log("----- kcal : ", useSelector((state) => state.recipes.sumEatKcals))
+      
    return (
       <View  style={styles.container}>
         <View style={styles.headBox}>
