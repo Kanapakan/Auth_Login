@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleBookmark } from '../store/actions/recipeAction';
 import { toggleMealTime } from '../store/actions/recipeAction';
+// import { toggleEatKcals } from '../store/actions/recipeAction';
 
 import {Picker} from '@react-native-picker/picker';
 
@@ -79,21 +80,40 @@ const MenuDetail =({navigation, route}, props) => {
     }
   
     // ---------- เพิ่มเมนูอาหาร ---------------
-    const selectMeals = (id, mealTime ) => {
+    const selectMeals = (id, mealTime, kcal ) => {
+      
       toggleMealTimeHandler(id, mealTime)
       console.log("Add in " + mealTime)
-      
-      Alert.alert("เพิ่ม \"" + name + "\" เข้าตารางอาหาร")
-      
-      // navigation.push("Dinner", {mealTime: "dinner"})
+      let timeMeals;
+      switch (mealTime) {
+        case "breakfast":
+            timeMeals = "มื้อเช้า";
+        break;
+        case "lunch":
+            timeMeals = "มื้อกลางวัน";
+        break;
+        case "dinner":
+            timeMeals = "มื้อเย็น";
+        break;  
+    }
+    // toggleEatKcalsHandler(kcal)
+      Alert.alert("เพิ่ม \"" + name + "\" เข้าตารางอาหาร " + timeMeals)
+
     }
 
-      // const dispatch = useDispatch();
       const toggleMealTimeHandler = (mealId, Time) => {
-      console.log(mealId, Time)
+      // console.log(mealId, Time)
       dispatch(toggleMealTime(mealId, Time));
     }
   
+    // ----------------- store ค่า แคลทั้งหมด ----------------------------
+      // const toggleEatKcalsHandler = (kcals) => {
+      // console.log(kcals)
+      // dispatch(toggleEatKcals(kcals))
+  
+      // }
+
+      
 
 
 
@@ -201,7 +221,7 @@ const MenuDetail =({navigation, route}, props) => {
 
             <View style={{alignItems: "center" , marginTop: 20, marginBottom: 20}}>
             <TouchableOpacity 
-                onPress={() => selectMeals(id, mealTime)} 
+                onPress={() => selectMeals(id, mealTime, kcal)} 
                 style={styles.btnContainer}>
                 <Text style={styles.btnText}>บันทึกลงตารางอาหาร</Text>
             </TouchableOpacity>

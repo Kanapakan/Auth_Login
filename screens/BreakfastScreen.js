@@ -5,7 +5,7 @@ import RecipeMealList from "../components/Recipe/RecipeMealList";
 import { useSelector } from 'react-redux';
 
 const Breakfast = ({navigation, route}, props) => {
-  const[time, setTime] = useState([])
+  const [sumKcals, setSumkcals] = useState(0);
   // if(props.mealTime == "breakfast"){
   //   setTime(useSelector((state) => state.recipes.breakfastMeals))
   // } else if (props.mealTime == "lunch"){
@@ -14,15 +14,27 @@ const Breakfast = ({navigation, route}, props) => {
   //   setTime(useSelector((state) => state.recipes.dinnerMeals))
   // }
     const breakfast = (useSelector((state) => state.recipes.breakfastMeals))
+    const callbackFunction  = (kcals) => {
+      setSumkcals(kcals)
+   //    console.log(timeMeals.length)
+   if(breakfast.length == 0 ){
+   // console.log("nothing")
+   setSumkcals(0)
+}
+}
   return (
 
 // รายการที่เลือก
 <View style={styles.container}>
+<Text style={{backgroundColor: "gray"}}>ปริมาณแคลอรี่ที่กิน รวม {sumKcals}
+    </Text>
+
     <RecipeMealList
       mealTime={route.params.mealTime}
       style={{ width: "100%", height: "100%" }}
       listData={breakfast}
       navigation={navigation}
+      parentCallback = {callbackFunction }
     />
 
 </View>
