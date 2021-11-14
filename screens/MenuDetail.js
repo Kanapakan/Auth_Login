@@ -4,9 +4,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleBookmark } from '../store/actions/recipeAction';
-import { toggleMealTime } from '../store/actions/recipeAction';
-// import { toggleEatKcals } from '../store/actions/recipeAction';
+import { toggleBookmark, toggleMealTime, toggleEatKcals  } from '../store/actions/recipeAction';
+
 
 import {Picker} from '@react-native-picker/picker';
 
@@ -15,7 +14,7 @@ const HEADER_MAX_HEIGHT = 300;
 
 const MenuDetail =({navigation, route}, props) => {
   console.log("----- Bookmark : ",(useSelector((state) => state.recipes.bookmarkRecipes)))
-  // console.log(useSelector((state) => state.recipes.breakfastMeals))
+  console.log("----- kcal : ",useSelector((state) => state.recipes.sumEatKcals))
   
   const { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL,} = route.params;
   const bookmark_recipe = useSelector((state) => state.recipes.bookmarkRecipes);
@@ -80,10 +79,12 @@ const MenuDetail =({navigation, route}, props) => {
     }
   
     // ---------- เพิ่มเมนูอาหาร ---------------
-    const selectMeals = (id, mealTime, kcal ) => {
-      
+    const selectMeals = (id, mealTime, kcal) => {
+      toggleEatKcalsHandler(kcal, "Add")
       toggleMealTimeHandler(id, mealTime)
       console.log("Add in " + mealTime)
+      console.log(kcal)
+      // dispatch(toggleEatKcals(kcal))
       let timeMeals;
       switch (mealTime) {
         case "breakfast":
@@ -96,7 +97,7 @@ const MenuDetail =({navigation, route}, props) => {
             timeMeals = "มื้อเย็น";
         break;  
     }
-    // toggleEatKcalsHandler(kcal)
+    
       Alert.alert("เพิ่ม \"" + name + "\" เข้าตารางอาหาร " + timeMeals)
 
     }
@@ -104,14 +105,15 @@ const MenuDetail =({navigation, route}, props) => {
       const toggleMealTimeHandler = (mealId, Time) => {
       // console.log(mealId, Time)
       dispatch(toggleMealTime(mealId, Time));
+      // dispatch(toggleEatKcals(kcals))
     }
   
     // ----------------- store ค่า แคลทั้งหมด ----------------------------
-      // const toggleEatKcalsHandler = (kcals) => {
-      // console.log(kcals)
-      // dispatch(toggleEatKcals(kcals))
+      const toggleEatKcalsHandler = (kcals, order) => {
+      console.log(kcals)
+      dispatch(toggleEatKcals(kcals ,order))
   
-      // }
+      }
 
       
 

@@ -6,11 +6,19 @@ const initState = {
     breakfastMeals: [],
     lunchMeals: [],
     dinnerMeals: [],
-    eatKcals: 0,
+    sumEatKcals: 0,
 }
 
 const recipeReducer = (state = initState, action) => {
     switch (action.type) {
+        case "EATKCAL" :
+            if( action.order === "Add"){
+                 return {...state, sumEatKcals: state.sumEatKcals+action.eatKcals};
+            } else {
+                return {...state, sumEatKcals: state.sumEatKcals-action.eatKcals};
+            }
+           
+            
         case "BOOKMARK" :
             const existingIndex = state.bookmarkRecipes.findIndex(recipe => recipe.id === action.recipeId)
             if(existingIndex >= 0){
@@ -56,8 +64,7 @@ const recipeReducer = (state = initState, action) => {
                     return {...state, dinnerMeals: state.dinnerMeals.concat(recipe)};
                 }
             }
-        // case "EATKCAL" :
-        //     return (state.eatKcals = 1)
+       
 
         default: 
         return state;
