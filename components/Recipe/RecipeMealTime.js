@@ -7,10 +7,11 @@ import { toggleMealTime } from '../../store/actions/recipeAction';
 
 const RecipeMealTime = (props) => {
     
-     // ---------- เพิ่มเมนูอาหาร ---------------   
+     // ---------- กดลบเมนูอาหาร ---------------   
     const delRecipe = () => {
         console.log('del', props.id, props.mealTime)
         toggleMealTimeHandler(props.id, props.mealTime)
+        // props.parentCallback(sumKcals)
     }
 
         const dispatch = useDispatch();
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   foodCal:{
     fontSize: 20,
     fontWeight: "bold",
-    marginTop: 15,
+    marginTop: 25,
     flex: 1,
   },
   foodTime:{

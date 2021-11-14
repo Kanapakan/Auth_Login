@@ -1,65 +1,67 @@
-import React, { Component, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Platform, Animated, ScrollView, Image,TouchableOpacity, Dimensions} from 'react-native';
-
 import { VictoryPie, VictoryBar , VictoryChart, VictoryGroup, VictoryAxis, VictoryLegend, VictoryTheme} from "victory-native";
 import  db from '../database/firebaseDb'
 import { auth } from '../database/Auth';
 import moment from "moment";
-// import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { toggleUsers } from "../store/actions/UserAction";
 import PieGraph from '../components/dashboad/PieGraph';
 import BarChart from '../components/dashboad/BarChart';
 
-const HEADER_MIN_HEIGHT = 100;
-const HEADER_MAX_HEIGHT = 100
-const firestoreRef = db.collection('userDetail');
 
 
 
-class Home extends Component {
+const Home = ({navigation, route}, props) => {
+    const [userArr, setUserArr]= useState([]);
+
+    const scrollYAnimatedValue =  useRef(new Animated.Value(0)).current;
+    const date_create = moment().format("DD/MM/YYYY")
+    const HEADER_MIN_HEIGHT = 100;
+    const HEADER_MAX_HEIGHT = 100
+    // const eatKcal = (useSelector((state) => state.recipes.eatKcals))
     
+    const firestoreRef = db.collection('userDetail');
 
-  constructor() {
-    
-    
-    super();
-    this.state ={
-        userArr: [],
-      }
-    this.scrollYAnimatedValue = new Animated.Value(0);
-    this.date_create = moment().format("DD/MM/YYYY")
- 
-
-
-    firestoreRef
+    useEffect(() => {
+      const unsubscribe = firestoreRef.onSnapshot(getuser);
+          return () => {
+              unsubscribe();
+              
+          }
+    }, []);
+  
+    //Get user detail from collection
+    const getuser = () => {
+         firestoreRef
         .get()
-        .then(querySnapshot   => {
+        .then(querySnapshot  => {
           querySnapshot.forEach(documentSnapshot => {
 
             if(auth.currentUser?.uid === documentSnapshot.data().userId){
                 
               const userArr2 = [];
               userArr2.push(documentSnapshot.data())
-              this.setState({userArr: userArr2[0]})
+              // setState({userArr: userArr2[0]})
+              setUserArr(userArr2[0])
+              // console.log(userArr)
             }
           });
       })
   }
-  
 
-  render() {
+
     
-   
 
-    const { navigation } = this.props;
-    const headerHeight = this.scrollYAnimatedValue.interpolate(
+    // const { navigation } = this.props;
+    const headerHeight = scrollYAnimatedValue.interpolate(
       {
         inputRange: [0, (HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT)],
         outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
         extrapolate: 'clamp'
       });
 
-    const headerBackgroundColor = this.scrollYAnimatedValue.interpolate(
+    const headerBackgroundColor = scrollYAnimatedValue.interpolate(
       {
         inputRange: [0, (HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT)],
         outputRange: ['#000', '#000'],
@@ -73,26 +75,26 @@ class Home extends Component {
           contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
           scrollEventThrottle={16}
           onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: this.scrollYAnimatedValue } } }], {useNativeDriver: false}
+            [{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } }], {useNativeDriver: false}
           )}>
           
                 <View style={[styles.Card]}>
                     
                     {/* กดไปหน้า มื้ออาหาร */}
-                        <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("Breakfast", { mealTime: "breakfast"}) }}> 
+                        <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("ThreeTimeMeals", { mealTime: "breakfast", mealTimeThai: "มื้อเช้า" }) }}> 
                             <Image style={styles.foodImage} source={require("../assets/egg.png")} />
                             <Text style={styles.typeFood}>มื้อเช้า</Text>
                             
     
                         </TouchableOpacity>
                     
-                    <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("Lunch", {mealTime: "lunch"}) }}> 
+                    <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("ThreeTimeMeals", { mealTime: "lunch", mealTimeThai: "มื้อกลางวัน" }) }}> 
                         <Image style={styles.foodImage} source={require("../assets/sanwich.png")}/>
                         <Text style={styles.typeFood}>มื้อกลางวัน</Text>
                        
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("Dinner", { mealTime: "dinner"}) }}> 
+                    <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("ThreeTimeMeals", { mealTime: "dinner", mealTimeThai: "มื้อเย็น" }) }}> 
                         <Image style={styles.foodImage} source={require("../assets/pasta.png")}/>
                         <Text style={styles.typeFood}>มื้อเย็น</Text>
                         
@@ -221,12 +223,12 @@ class Home extends Component {
         <Animated.View style={[styles.animatedHeaderContainer, { height: headerHeight}]}>
            
            <View style={styles.item}>
-                  <Text style={styles.hearderText2}>{this.date_create}</Text>
+                  <Text style={styles.hearderText2}>{date_create}</Text>
                 </View>
             <View style={styles.item2}>
                 {/* แอดค่า cal แล้ว */}
                 <View style={styles.left}>
-                    <Text style={styles.hearderText}>{this.state.userArr.TDEE}</Text>
+                    <Text style={styles.hearderText}>{userArr.TDEE}</Text>
                     <Text style={styles.hearderText2}>แคลอรี่ที่ควรได้รับ</Text>
                 </View>
 
@@ -235,7 +237,7 @@ class Home extends Component {
                 </View>
 
                 <View style={styles.middle}>
-                    <Text style={styles.hearderText}>200</Text>
+                    <Text style={styles.hearderText}>1</Text>
                     <Text style={styles.hearderText2}>แคลอรี่อาหาร</Text>
                 </View>
 
@@ -254,7 +256,6 @@ class Home extends Component {
 
       </View>
     );
-  }
 }
 
 const styles = StyleSheet.create(

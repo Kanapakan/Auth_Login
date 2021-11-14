@@ -11,9 +11,11 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import BookmarkScreen from "../screens/BookmarkScreen";
 import HomeScreen from "../screens/HomeScreen";
-import Breakfast from "../screens/BreakfastScreen";
-import Dinner from "../screens/DinnerScreen";
-import Lunch from "../screens/LunchScreen";
+// import Breakfast from "../screens/BreakfastScreen";
+// import Dinner from "../screens/DinnerScreen";
+// import Lunch from "../screens/LunchScreen";
+import ThreeTimeMeals from "../screens/ThreeTimeMealScreen";
+
 import MenuDetail from "../screens/MenuDetail";
 import MyProfile from  '../screens/MyProfile';
 import ChangeUserDetail from "../components/ChangeUserDetail";
@@ -44,7 +46,9 @@ const customTabBarStyle = {
 function MainNavigator() { 
     return (
       <Tab.Navigator 
-      tabBarOptions={customTabBarStyle}
+      tabBarOptions={{ activeTintColor: '#ffffff', //เปลี่ยนเป็นสีเขียวตามงานเรา
+      inactiveTintColor: '#bdbdbd',
+      keyboardHidesTabBar: true,}}
       shifting="false" screenOptions={{ headerStyle: { backgroundColor: "#8EC18D", },  headerTintColor: "white",  headerShown: false}}>
         <Tab.Screen name="Home" component={HomeNavigator}
           options={{
@@ -115,14 +119,17 @@ function HomeNavigator() {
              }}>
             {/* <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} /> */}
             <Stack.Screen name="HomeScreen" options={{ headerShown: false }} component={HomeScreen}/>
-            <Stack.Screen name="Breakfast"  component={Breakfast} options={{ title: 'มื้อเช้า' }}/>
+            {/* <Stack.Screen name="Breakfast"  component={Breakfast} options={{ title: 'มื้อเช้า' }}/>
             <Stack.Screen name="Lunch"  component={Lunch} options={{ title: 'มื้อกลางวัน' }}/>
-            <Stack.Screen name="Dinner"  component={Dinner} options={{ title: 'มื้อเย็น' }}/>
-
-          <Stack.Screen name="MenuDetail" options={ 
+            <Stack.Screen name="Dinner"  component={Dinner} options={{ title: 'มื้อเย็น' }}/> */}
+            <Stack.Screen name="ThreeTimeMeals"  component={ThreeTimeMeals} options={ 
             ({ route }) => ({ 
-              title: route.params.name })}
+              title: route.params.mealTimeThai })}/>
+              <Stack.Screen name="MenuDetail" options={{
+            headerShown: false }}
               component={MenuDetail} />
+
+          
 
         </Stack.Navigator>
     )
@@ -140,6 +147,9 @@ function SearchNavigator() {
             },
              }}>
             <Stack.Screen  name="FindRecipe" options={{ title: "ค้นหาเมนูอาหาร"}} component={FindRecipe} />
+            <Stack.Screen name="MenuDetail" options={{
+            headerShown: false }}
+              component={MenuDetail} />
         </Stack.Navigator>
     )
 }
@@ -156,6 +166,9 @@ function FavNavigator() {
             },
              }}>
             <Stack.Screen name="BookmarkScreen" options={{ title: "Bookmark"}} component={BookmarkScreen} />
+            <Stack.Screen name="MenuDetail" options={{
+            headerShown: false }}
+              component={MenuDetail} />
         </Stack.Navigator>
     )
 }

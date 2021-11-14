@@ -26,7 +26,7 @@ const SearchScreen = ({navigation, route}) => {
       setSearchResult(newMenuList)
       setSearchWord()
       setTitleBar("ผลการค้นหา")
-      console.log(newMenuList)
+      // console.log(newMenuList)
     } else {
       setTitleBar("กรองด้วยตัวเอง")
       setSearchWord(text);

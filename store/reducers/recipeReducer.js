@@ -6,6 +6,7 @@ const initState = {
     breakfastMeals: [],
     lunchMeals: [],
     dinnerMeals: [],
+    eatKcals: 0,
 }
 
 const recipeReducer = (state = initState, action) => {
@@ -55,7 +56,8 @@ const recipeReducer = (state = initState, action) => {
                     return {...state, dinnerMeals: state.dinnerMeals.concat(recipe)};
                 }
             }
-            
+        // case "EATKCAL" :
+        //     return (state.eatKcals = 1)
 
         default: 
         return state;
