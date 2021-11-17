@@ -10,15 +10,15 @@ const RecipeMealTime = (props) => {
      // ---------- กดลบเมนูอาหาร ---------------   
     const delRecipe = () => {
         console.log('del', props.id, props.mealTime)
-        toggleMealTimeHandler(props.id, props.mealTime)
+        toggleMealTimeHandler(props.id, props.mealTime, "del", props.carbs, props.fats, props.protein)
         toggleEatKcalsHandler(props.kcal)
         // props.parentCallback(sumKcals)
     }
 
         const dispatch = useDispatch();
-        const toggleMealTimeHandler = (mealId, Time) => {
+        const toggleMealTimeHandler = (mealId, Time, order, carbs, fats, protein) => {
         console.log(props.id, props.mealTime)
-        dispatch(toggleMealTime(mealId, Time));
+        dispatch(toggleMealTime(mealId, Time, order, carbs, fats, protein));
       }
 
       const toggleEatKcalsHandler = (kcals) => {
@@ -42,7 +42,7 @@ const RecipeMealTime = (props) => {
                   </View>
                   <View style={styles.box2}>
                   <TouchableOpacity onPress={() => delRecipe()}>
-                       <Ionicons name="ios-trash-bin-sharp" size={24} color="black" size={28}  style={styles.delMeal}/>
+                       <Ionicons name="ios-trash-bin-sharp" color="#adacac"   style={styles.delMeal}/>
                   </TouchableOpacity>
                       <Text style={styles.foodCal}>{props.kcal} Kcal.</Text>
                   </View>
@@ -103,19 +103,19 @@ const styles = StyleSheet.create({
   foodCal:{
     fontSize: 20,
     fontWeight: "bold",
-    marginTop: 25,
+    marginTop: 23,
     flex: 1,
   },
   foodTime:{
     flex: 1,
     marginLeft: 10,
-    // marginTop: -180,
+    marginTop: 20,
   },
   delMeal: {
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: "bold",
-    marginTop: 5,
-    marginLeft: 50,
+    marginTop: 2,
+    marginLeft: 43,
     flex: 1,
   },
   timeText:{

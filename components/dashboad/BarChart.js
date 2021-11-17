@@ -1,18 +1,14 @@
 import React, { Component, useEffect } from 'react';
 import { Text, View, StyleSheet, Platform, Animated, ScrollView, Image,TouchableOpacity, Dimensions} from 'react-native';
-
+import { useSelector } from 'react-redux';
 import { VictoryPie, VictoryBar , VictoryChart, VictoryGroup, VictoryAxis, VictoryLegend, VictoryTheme} from "victory-native";
+import moment from "moment";
 
-class BarChart extends Component {
-    
+const BarChart = (props) =>{
+  const date_create = moment().format("DD/MM")
+  const date_day = moment().format("DD")
+  const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
 
-    constructor() {
-
-      super();
-    //   this.scrollYAnimatedValue = new Animated.Value(0);
-    }
-
-    render() {
         return(
             <View style={styles.card}>
 
@@ -24,13 +20,13 @@ class BarChart extends Component {
                 
                 <View style={styles.BarChartContainer}>
                     <VictoryChart
-                     width={350}
+                     width={380}
                      height={250}
                      theme={VictoryTheme.material} >
 
 
 
-                        <VictoryGroup offset={30}>
+                        <VictoryGroup offset={20}>
 
                         <VictoryBar
                             data={
@@ -40,15 +36,15 @@ class BarChart extends Component {
                                     { x: "7/10",  y: 1750 },
                                     { x: "8/10",  y: 750 },
                                     { x: "9/10",  y: 1050 },
-                                    { x: "10/10", y: 550 },
-                                    { x: "11/10", y: 550 },
+                                    { x: date_day, y: 550 },
+                                    { x: date_create, y: eatKcal },
 
                                 ]}
                                 labels={(data) => ( data.datum.y )}
 
                             style={{
                                 labels:{
-                                     fontSize: 12
+                                     fontSize: 11
                                 },
                                 data: {
                                     fill: "#9bcc8f"
@@ -73,7 +69,7 @@ class BarChart extends Component {
             </View>
         </View>
         )
-    }
+    
 }
 
 const styles = StyleSheet.create(
@@ -233,7 +229,8 @@ const styles = StyleSheet.create(
         },
         BarChartContainer:{
           alignItems: "center",
-          paddingLeft: 0
+          paddingLeft: 15,
+          // paddingLeft: 0
         },
     }
 )

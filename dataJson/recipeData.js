@@ -16,7 +16,10 @@ export const RECIPES = [
             "ตอกไข่และตีผสมให้เข้ากัน ปรุงรสเล็กน้อยด้วยซีอิ้วขาว"
         ],
         "https://www.lovefitt.com/system/wp-content/uploads/2013/07/diet-0036.jpg",
-        "https://www.lovefitt.com/diet-menu/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%88%E0%B8%B7%E0%B8%94%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%99%E0%B9%89%E0%B8%B3-%E0%B9%80%E0%B8%A1%E0%B8%99%E0%B8%B9%E0%B8%97%E0%B8%B3%E0%B8%87%E0%B9%88%E0%B8%B2%E0%B8%A2-%E0%B9%80%E0%B8%AD%E0%B8%B2%E0%B9%83%E0%B8%88%E0%B8%84%E0%B8%99%E0%B8%AD%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%9C%E0%B8%AD%E0%B8%A1/"
+        "https://www.lovefitt.com/diet-menu/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%88%E0%B8%B7%E0%B8%94%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%99%E0%B9%89%E0%B8%B3-%E0%B9%80%E0%B8%A1%E0%B8%99%E0%B8%B9%E0%B8%97%E0%B8%B3%E0%B8%87%E0%B9%88%E0%B8%B2%E0%B8%A2-%E0%B9%80%E0%B8%AD%E0%B8%B2%E0%B9%83%E0%B8%88%E0%B8%84%E0%B8%99%E0%B8%AD%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%9C%E0%B8%AD%E0%B8%A1/",
+        9.2,
+        19.3,
+        20.1
    ),
    new Recipe(
     "m2",
@@ -33,7 +36,10 @@ export const RECIPES = [
          "ตักใส่จาน โรยหน้าด้วยใบสะระแหน่ ทานกับผักสดตามชอบ"
      ],
      "https://www.naibann.com/wp-content/uploads/2016/08/tuna-spicy-salad-recipe-cover.jpg",
-    "https://carechoicethailand.com/%e0%b8%a5%e0%b8%b2%e0%b8%9a%e0%b8%9b%e0%b8%a5%e0%b8%b2%e0%b8%97%e0%b8%b9%e0%b8%99%e0%b9%88%e0%b8%b2/"
+    "https://carechoicethailand.com/%e0%b8%a5%e0%b8%b2%e0%b8%9a%e0%b8%9b%e0%b8%a5%e0%b8%b2%e0%b8%97%e0%b8%b9%e0%b8%99%e0%b9%88%e0%b8%b2/",
+    20,
+      30,
+      40
 ),
 new Recipe(
   "m3",
@@ -51,8 +57,11 @@ new Recipe(
       "นำน้ำราดหน้าไปราดบนเส้นหมี่งที่ลวกไว้ โรยพริกไทยป่น เป็นอันเสร็จ"
    ],
    "https://i.ytimg.com/vi/reH0KpDTNRw/maxresdefault.jpg",
-    "https://carechoicethailand.com/%e0%b8%a3%e0%b8%b2%e0%b8%94%e0%b8%ab%e0%b8%99%e0%b9%89%e0%b8%b2%e0%b8%81%e0%b8%b8%e0%b9%89%e0%b8%87/"
-),
+    "https://carechoicethailand.com/%e0%b8%a3%e0%b8%b2%e0%b8%94%e0%b8%ab%e0%b8%99%e0%b9%89%e0%b8%b2%e0%b8%81%e0%b8%b8%e0%b9%89%e0%b8%87/",
+    50,
+    20,
+    30
+    ),
 new Recipe(
   "m4",
     "ไข่ตุ๋น",
@@ -69,7 +78,10 @@ new Recipe(
        "วางกุ้งกับเห็ดหอมหั่นชิ้นลงบนหน้าไข่ตุ๋น ปิดฝานึ่งต่อจนไข่ตุ๋นสุกดี เอาขึ้นจากหม้อนึ่งพร้อมทานร้อนๆ"
    ],
            "https://d12man5gwydfvl.cloudfront.net/wp-content/uploads/2020/01/shutterstock_1510194374.jpg",
-        "https://carechoicethailand.com/%e0%b9%84%e0%b8%82%e0%b9%88%e0%b8%95%e0%b8%b8%e0%b9%8b%e0%b8%99/"
+        "https://carechoicethailand.com/%e0%b9%84%e0%b8%82%e0%b9%88%e0%b8%95%e0%b8%b8%e0%b9%8b%e0%b8%99/",
+        30,
+        20,
+        10
 ),
 new Recipe(
   "m5",
@@ -85,7 +97,15 @@ new Recipe(
             "ใส่ต้นหอมหั่นท่อน ผัดให้เข้ากันดีโรยพริกไทยป่นตามชอบ ตักใส่จานพร้อมเสิร์ฟ"
    ],
    "https://image.makewebeasy.net/makeweb/0/jKFUCwieZ/lay/%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%9B%E0%B8%B9%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%95%E0%B9%89%E0%B8%99%E0%B8%AB%E0%B8%AD%E0%B8%A1.jpg",
-    "https://carechoicethailand.com/%e0%b8%9b%e0%b8%b9%e0%b8%9c%e0%b8%b1%e0%b8%94%e0%b8%95%e0%b9%89%e0%b8%99%e0%b8%ab%e0%b8%ad%e0%b8%a1/"
+    "https://carechoicethailand.com/%e0%b8%9b%e0%b8%b9%e0%b8%9c%e0%b8%b1%e0%b8%94%e0%b8%95%e0%b9%89%e0%b8%99%e0%b8%ab%e0%b8%ad%e0%b8%a1/",
+    20,10,20
 ),
+// new Recipe(
+//   "m30",
+//   "ยำเห็ดรวมมิตร",
+//   104,
+
+// ),
+
 
 ]

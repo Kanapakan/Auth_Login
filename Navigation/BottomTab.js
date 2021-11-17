@@ -38,6 +38,8 @@ const customTabBarStyle = {
     activeTintColor: '#ffffff', //เปลี่ยนเป็นสีเขียวตามงานเรา
     inactiveTintColor: '#bdbdbd',
     keyboardHidesTabBar: true,
+    showLabel: false,
+    
 }
 
 
@@ -46,14 +48,12 @@ const customTabBarStyle = {
 function MainNavigator() { 
     return (
       <Tab.Navigator 
-      tabBarOptions={{ activeTintColor: '#ffffff', //เปลี่ยนเป็นสีเขียวตามงานเรา
-      inactiveTintColor: '#bdbdbd',
-      keyboardHidesTabBar: true,}}
+      tabBarOptions={customTabBarStyle}
       shifting="false" screenOptions={{ headerStyle: { backgroundColor: "#8EC18D", },  headerTintColor: "white",  headerShown: false}}>
         <Tab.Screen name="Home" component={HomeNavigator}
           options={{
             tabBarActiveBackgroundColor: "#8EC18D",
-            tabBarLabel: '',
+            
             tabBarIcon: ({ color}) => {
               return <Entypo name="home" size={28} color={color} />;
             },

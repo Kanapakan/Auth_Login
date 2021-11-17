@@ -1,3 +1,5 @@
+import { ThemeConsumer } from "react-native-elements";
+
 class Recipe {
     constructor(
       id,
@@ -10,6 +12,10 @@ class Recipe {
       steps,
       imageURL,
       originalURL,
+      carbs,
+      protein,
+      fats,
+
 
     ) {
       this.id = id;
@@ -22,6 +28,9 @@ class Recipe {
       this.steps = steps;
       this.imageURL = imageURL;
       this.originalURL = originalURL;
+      this.carbs = carbs;
+      this.protein = protein;
+      this.fats = fats;
     }
   }
   

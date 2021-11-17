@@ -9,7 +9,7 @@ const RecipeMealList = (props) => {
   const [sumKcals, setSumkcals] = useState(0)
   let sumKcal = 0;
     const renderRecipeItem = (itemData) => {
-        const {id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL} = itemData.item
+        const {id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL ,carbs, protein, fats,} = itemData.item
         // console.log(props.mealTime)
         sumKcal += kcal
         setSumkcals(sumKcal)
@@ -20,6 +20,9 @@ const RecipeMealList = (props) => {
                 // sumKcals={sumKcals}
                 // onChange={onChangeSumKcals}
                 mealTime={props.mealTime}
+                carbs={carbs}
+                fats={fats}
+                protein={protein}
                 id={id}
                 name={name}
                 kcal={kcal}
@@ -27,7 +30,7 @@ const RecipeMealList = (props) => {
                 image={imageURL}
                 onSelectRecipe={() => {
                     // เขียนโค้ดเพิ่ม
-                    props.navigation.navigate("MenuDetail", { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL,})
+                    props.navigation.navigate("MenuDetail", { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL,carbs, protein, fats,})
                   }}
                 />
             </View>

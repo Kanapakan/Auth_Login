@@ -7,6 +7,9 @@ const initState = {
     lunchMeals: [],
     dinnerMeals: [],
     sumEatKcals: 0,
+    sumCarbs: 0,
+    sumProteins: 0,
+    sumFats: 0
 }
 
 const recipeReducer = (state = initState, action) => {
@@ -33,35 +36,53 @@ const recipeReducer = (state = initState, action) => {
             
             if(action.mealTime === "breakfast"){
                 const existmenu = state.breakfastMeals.findIndex(recipe => recipe.id === action.recipeId)
-                if(existmenu >= 0){
+                if(action.order == 'del'){
                     const updateMeal = [...state.breakfastMeals];
                     updateMeal.splice(existmenu, 1);
-                    return {...state, breakfastMeals: updateMeal} 
+                    return {...state, breakfastMeals: updateMeal,
+                         sumCarbs: state.sumCarbs-action.carbs,
+                         sumFats: state.sumFats-action.fats,
+                         sumProteins: state.sumProteins-action.protein} 
                 } else {
                 const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
-                    return {...state, breakfastMeals: state.breakfastMeals.concat(recipe)};
+                    return {...state, breakfastMeals: state.breakfastMeals.concat(recipe),
+                        sumCarbs: state.sumCarbs+action.carbs,
+                        sumFats: state.sumFats+action.fats,
+                        sumProteins: state.sumProteins+action.protein};
                 }
                 
             } else if (action.mealTime === "lunch") {
                 const exist = state.lunchMeals.findIndex(recipe => recipe.id === action.recipeId)
-                if(exist >= 0){
+                if(action.order == 'del'){
                     const upMealLunch = [...state.lunchMeals];
                     upMealLunch.splice(exist, 1);
-                    return {...state, lunchMeals: upMealLunch} 
+                    return {...state, lunchMeals: upMealLunch,
+                        sumCarbs: state.sumCarbs-action.carbs,
+                        sumFats: state.sumFats-action.fats,
+                        sumProteins: state.sumProteins-action.protein} 
                 } else {
                 const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
-                    return {...state, lunchMeals: state.lunchMeals.concat(recipe)};
+                    return {...state, lunchMeals: state.lunchMeals.concat(recipe),
+                        sumCarbs: state.sumCarbs+action.carbs,
+                        sumFats: state.sumFats+action.fats,
+                        sumProteins: state.sumProteins+action.protein};
                 }
 
             } else if (action.mealTime === "dinner") {
                 const menu = state.dinnerMeals.findIndex(recipe => recipe.id === action.recipeId)
-                if(menu >= 0){
+                if(action.order == 'del'){
                     const upMealDinner = [...state.dinnerMeals];
                     upMealDinner.splice(menu, 1);
-                    return {...state, dinnerMeals: upMealDinner} 
+                    return {...state, dinnerMeals: upMealDinner,
+                        sumCarbs: state.sumCarbs-action.carbs,
+                        sumFats: state.sumFats-action.fats,
+                        sumProteins: state.sumProteins-action.protein} 
                 } else {
                 const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
-                    return {...state, dinnerMeals: state.dinnerMeals.concat(recipe)};
+                    return {...state, dinnerMeals: state.dinnerMeals.concat(recipe),
+                        sumCarbs: state.sumCarbs+action.carbs,
+                        sumFats: state.sumFats+action.fats,
+                        sumProteins: state.sumProteins+action.protein};
                 }
             }
        

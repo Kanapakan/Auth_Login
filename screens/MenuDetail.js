@@ -14,15 +14,20 @@ const HEADER_MAX_HEIGHT = 300;
 
 const MenuDetail =({navigation, route}, props) => {
   console.log("----- Bookmark : ",(useSelector((state) => state.recipes.bookmarkRecipes)))
-  console.log("----- kcal : ",useSelector((state) => state.recipes.sumEatKcals))
+  console.log("----- carbs : ",useSelector((state) => state.recipes.sumCarbs))
+  console.log("----- pro : ",useSelector((state) => state.recipes.sumProteins))
+  console.log("----- fats : ",useSelector((state) => state.recipes.sumFats))
   
-  const { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL,} = route.params;
+  const { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL, carbs, protein,fats,} = route.params;
   const bookmark_recipe = useSelector((state) => state.recipes.bookmarkRecipes);
+
+  const datePick = useSelector((state) => state.user.datePick);
+  console.log("kuyyyyyyyyy : ",datePick)
   const existingIndex = bookmark_recipe.findIndex(recipe => recipe.id === id)
   const [bookmark, setBookmark] = useState(existingIndex >= 0)
   const [mealTime, setMealTime] = useState("")
   const scrollYAnimatedValue = useRef(new Animated.Value(0)).current;
- 
+
   // ------------------- Loop ingredients's name -----------------------------
     const  renderIn_name = () => {
       return ingredient_name.map(function(item, i){
@@ -81,30 +86,34 @@ const MenuDetail =({navigation, route}, props) => {
     // ---------- เพิ่มเมนูอาหาร ---------------
     const selectMeals = (id, mealTime, kcal) => {
       toggleEatKcalsHandler(kcal, "Add")
-      toggleMealTimeHandler(id, mealTime)
+      toggleMealTimeHandler(id, mealTime, "Add", carbs, fats, protein)
       console.log("Add in " + mealTime)
       console.log(kcal)
       // dispatch(toggleEatKcals(kcal))
+      let timeMealsThai;
       let timeMeals;
       switch (mealTime) {
         case "breakfast":
-            timeMeals = "มื้อเช้า";
+            timeMealsThai = "มื้อเช้า";
+            timeMeals = "Breakfast";
         break;
         case "lunch":
-            timeMeals = "มื้อกลางวัน";
+            timeMealsThai = "มื้อกลางวัน";
+            timeMeals = "Lunch";
         break;
         case "dinner":
-            timeMeals = "มื้อเย็น";
+            timeMealsThai = "มื้อเย็น";
+            timeMeals = "Dinner";
         break;  
     }
     
-      Alert.alert("เพิ่ม \"" + name + "\" เข้าตารางอาหาร " + timeMeals)
-
+      Alert.alert("เพิ่ม \"" + name + "\" เข้าตารางอาหาร " + timeMealsThai)
+      // navigation.navigate("ThreeTimeMeals", { mealTime: timeMeals, mealTimeThai: timeMealsThai })
     }
 
-      const toggleMealTimeHandler = (mealId, Time) => {
+      const toggleMealTimeHandler = (mealId, Time, order, carbs, fats, protein) => {
       // console.log(mealId, Time)
-      dispatch(toggleMealTime(mealId, Time));
+      dispatch(toggleMealTime(mealId, Time, order, carbs, fats, protein));
       // dispatch(toggleEatKcals(kcals))
     }
   
@@ -148,21 +157,21 @@ const MenuDetail =({navigation, route}, props) => {
                     <View style={styles.square}> 
                         <Text style={styles.typeFood}>คาร์โบไฮเดรต</Text>
                         <Image style={styles.typeImage} source={require("../assets/carbohydrate-removebg.png")}/>
-                        <Text style={styles.gram}>10g</Text>
+                        <Text style={styles.gram}>{carbs}</Text>
                     </View>
 
                     {/* carbohydrate card */}
                     <View style={styles.square}> 
                         <Text style={styles.typeFood}>โปรตีน</Text>
                         <Image style={styles.typeImage} source={require("../assets/protein-removebg.png")}/>
-                        <Text style={styles.gram}>10g</Text>
+                        <Text style={styles.gram}>{protein}</Text>
                     </View>
 
                     {/* fat card */}
                     <View style={styles.square}> 
                         <Text style={styles.typeFood}>ไขมัน</Text>
                         <Image style={styles.typeImage} source={require("../assets/fat-removebg.png")}/>
-                        <Text style={styles.gram}>2g</Text>
+                        <Text style={styles.gram}>{fats}</Text>
                     </View>
                 
                 </View>

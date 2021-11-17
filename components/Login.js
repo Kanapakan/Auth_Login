@@ -19,8 +19,7 @@ const LoginScreen = ({navigation, route}) => {
     return unsubscribe
   }, [])
 
-
-
+  
   // login
   const handleLogin = () => {
     setisLoading(true);
