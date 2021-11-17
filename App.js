@@ -11,17 +11,15 @@ import LogIn from './components/Login';
 import Register from './components/Register';
 import RegisterUserDetail from './components/RegisterUserDetail';
 import BottomTabScreen from './Navigation/BottomTab';
-import UserReducer from './store/reducers/UserReducer';
-import recipeReducer from './store/reducers/recipeReducer';
+// import UserReducer from './store/reducers/UserReducer';
+// import recipeReducer from './store/reducers/recipeReducer';
+
+import store from './store/store';
 
 const Stack = createStackNavigator();
 
-const rootReducer = combineReducers({
-  user: UserReducer,
-  recipes: recipeReducer
-  })
 
-  const store = createStore(rootReducer);
+  // const store = createStore(rootReducer);
 
 function Mystack(){
   return  (

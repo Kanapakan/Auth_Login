@@ -1,12 +1,9 @@
 import React, {useState, useEffect} from "react";
-import { StyleSheet, ScrollView, ActivityIndicator, View,Text, Image, TextInput, TouchableOpacity, useWindowDimensions} from "react-native";
+import {KeyboardAvoidingView, StyleSheet, ScrollView, ActivityIndicator, View,Text, Image, TextInput, TouchableOpacity, useWindowDimensions} from "react-native";
 import {Picker} from '@react-native-picker/picker';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import  db from '../database/firebaseDb'
 import { auth } from '../database/Auth';
-
-
-
 
 const ChangeUserDetail = ({navigation, route}) => {
     const[key, setKey] = useState("");
@@ -29,7 +26,7 @@ const ChangeUserDetail = ({navigation, route}) => {
       { key: 'second', title: 'ข้อมูลเข้าสู่ระบบ' },
       ]);
 
-
+    
     let bmr;
     let dailyCalVal;
     let dailyCal;
@@ -53,6 +50,8 @@ const ChangeUserDetail = ({navigation, route}) => {
       }
 
     useEffect(() => {
+      console.log("load")
+      
         const dbRef = db.collection('userDetail').doc(userKey);
 
         dbRef.get().then((res) => {
@@ -83,6 +82,7 @@ const ChangeUserDetail = ({navigation, route}) => {
 
       //update ข้อมูล
     const updateUser = () => {
+      setisLoading(true);
           if(gender == "ชาย"){
               bmr = parseInt((66 + (13.7* weight) + (5 * height) - (6.8 * age)));
               dailyCal = parseInt(bmr*dailyCalVal);              
@@ -96,6 +96,7 @@ const ChangeUserDetail = ({navigation, route}) => {
         updateDBRef.set({
             userId: userId,
             gender: gender,
+            email: email,
             age: age,
             height: height,
             weight: weight,
@@ -123,7 +124,7 @@ const ChangeUserDetail = ({navigation, route}) => {
 
   // --------------------หน้าแรก-----------------------------
   const FirstRoute = () => (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
         <View style={styles.headBox} >
           <Text style={styles.headText}>ข้อมูลส่วนตัว</Text>
         </View>
@@ -146,8 +147,8 @@ const ChangeUserDetail = ({navigation, route}) => {
           style={styles.Box2}
           placeholder="อายุ"
           keyboardType="numeric"
-          value={age}
-          onChangeText = {setAge}
+          value={age.toString()}
+          onChangeText = {text => setAge(text)}
         />
   
         <Text style={styles.btnTextAll}>ส่วนสูง</Text>
@@ -155,7 +156,7 @@ const ChangeUserDetail = ({navigation, route}) => {
             style={styles.Box2}
             placeholder="ส่วนสูง"
             keyboardType="numeric"
-            value={height}
+            value={height.toString()}
             onChangeText = {setHeight}
         />
          <Text style={styles.btnTextAll}>น้ำหนัก</Text>  
@@ -163,7 +164,7 @@ const ChangeUserDetail = ({navigation, route}) => {
           style={styles.Box2}
           placeholder="น้ำหนัก"
           keyboardType="numeric"
-          value={weight}
+          value={weight.toString()}
           onChangeText = {setWeight}
         />
   
@@ -192,7 +193,7 @@ const ChangeUserDetail = ({navigation, route}) => {
           </TouchableOpacity>
         </View>
   
-      </View>
+      </KeyboardAvoidingView>
   );
 
     // --------------------แถบ 2-----------------------------

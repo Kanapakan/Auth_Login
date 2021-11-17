@@ -5,7 +5,7 @@ import RecipeItem from "./RecipeItem";
 
 const RecipeList = (props) => {
     const renderRecipeItem = (itemData) => {
-        const {id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL} = itemData.item
+        const {id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL, carbs, protein, fats} = itemData.item
 
         return (
             <View>
@@ -17,7 +17,7 @@ const RecipeList = (props) => {
                 image={imageURL}
                 onSelectRecipe={() => {
                     // เขียนโค้ดเพิ่ม
-                    props.navigation.navigate("MenuDetail", { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL,})
+                    props.navigation.navigate("MenuDetail", { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL,carbs, protein, fats,})
                   }}
                 />
             </View>

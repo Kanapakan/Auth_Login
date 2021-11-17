@@ -3,8 +3,8 @@ import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity, ActivityIndi
 import  db from '../database/firebaseDb'
 import { auth } from '../database/Auth';
 import Logout from "../components/Logout";
-// import { useDispatch } from 'react-redux';
-// import { toggleUsers } from "../store/actions/UserAction";
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleUsers } from "../store/actions/UserAction";
 
 
 const MyProfile = ({navigation, route}) => {
@@ -12,6 +12,8 @@ const MyProfile = ({navigation, route}) => {
   const[isLoading, setisLoading] = useState(true);
   const[userArr, setUserArr] = useState([]);
   const[docId, setDocId] = useState("");
+  const userData = (useSelector((state) => state.user.userDetail))
+  const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
 
   // const dispatch = useDispatch();
   // const toggleUserHandler = (UsersData) => {
@@ -41,13 +43,15 @@ const MyProfile = ({navigation, route}) => {
           const userArr2 = [];
           setDocId(documentSnapshot.id)
           userArr2.push(documentSnapshot.data())
-          setUserArr([...userArr2]),
+          setUserArr(userArr2[0]),
+          
           setisLoading(false);
           // toggleUserHandler(userArr[0])
         }
       });
   });
 }
+console.log(userData)
 
 //ตัวโหลดหน้า
    if (isLoading) {
@@ -65,7 +69,7 @@ const MyProfile = ({navigation, route}) => {
             </Text>
 
             <View style={{alignItems: "center"}}>
-                <Image style={styles.profile} source={((userArr[0].gender == 'หญิง') ? require("../assets/Eyes-amico-removebg.png") : require("../assets/Eyes-pana-removebg.png"))}/>
+                <Image style={styles.profile} source={((userArr.gender == 'หญิง') ? require("../assets/Eyes-amico-removebg.png") : require("../assets/Eyes-pana-removebg.png"))}/>
                 
             </View>
             
@@ -86,39 +90,39 @@ const MyProfile = ({navigation, route}) => {
             <Text style={styles.btnTextAll}>เพศ</Text>
 
             <View style={styles.btnContainerAll}>
-                <Text style={styles.btnTextAll2}>{userArr[0].gender}</Text>
+                <Text style={styles.btnTextAll2}>{userArr.gender}</Text>
             </View>
 
             <Text style={styles.btnTextAll}>อายุ</Text>
             <View style={styles.btnContainerAll}>
-                    <Text style={styles.btnTextAll2}>{userArr[0].age}</Text>
+                    <Text style={styles.btnTextAll2}>{userArr.age}</Text>
             </View>
 
             <Text style={styles.btnTextAll}>น้ำหนัก</Text>
             <View style={styles.btnContainerAll}>
-                    <Text style={styles.btnTextAll2}>{userArr[0].weight}</Text>
+                    <Text style={styles.btnTextAll2}>{userArr.weight}</Text>
             </View>
 
             <Text style={styles.btnTextAll}>ส่วนสูง</Text>
             <View style={styles.btnContainerAll}>
-                    <Text style={styles.btnTextAll2}>{userArr[0].height}</Text>
+                    <Text style={styles.btnTextAll2}>{userArr.height}</Text>
             </View>
 
             <Text style={styles.btnTextAll}>พฤติกรรม</Text>
             <View style={styles.btnContainerAll2}>
-                    <Text style={styles.btnTextAll2}>{userArr[0].activity}</Text>
+                    <Text style={styles.btnTextAll2}>{userArr.activity}</Text>
             </View>
 
             <View style={styles.circle}>
                 <Text style={styles.calorieText}>แคลอรี่ {"\n"}</Text>
                 <Text style={styles.calorieText2}>ที่ควรได้รับ/วัน</Text>
-                <Text style={styles.KcalText}>{userArr[0].TDEE} Kcal.</Text>
+                <Text style={styles.KcalText}>{userArr.TDEE} Kcal.</Text>
                 <Text style={styles.calorieText3}>แคลอรี่ไม่ควรต่ำกว่า</Text>
-                <Text style={styles.calorieText4}>{userArr[0].BMR} Kcal.</Text>
+                <Text style={styles.calorieText4}>{userArr.BMR} Kcal.</Text>
             </View>
        
         </View>
-        <View style={{alignItems: "center", margin: 10}}>
+        <View style={{alignItems: "center", backgroundColor: "white", paddingBottom: 10, paddingTop: 10}}>
           < Logout  />
         </View>
          
@@ -153,7 +157,7 @@ const styles = StyleSheet.create({
     // paddingBottom: 30 ,
   },
   headText:{
-    fontSize:35,
+    fontSize: 30,
     fontWeight: "bold",
     color: "#547f53"
     },
@@ -163,9 +167,9 @@ const styles = StyleSheet.create({
     marginTop: 40
   },
   profile:{
-    marginTop: -10,
+    marginTop: -5,
     height: "70%",
-    width: 120
+    width: 110
   },
   btnContainer: {
     width: "35%",

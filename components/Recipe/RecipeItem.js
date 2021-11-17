@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
   foodCal:{
     fontSize: 20,
     fontWeight: "bold",
-    marginTop: 60,
+    marginTop: 68,
     flex: 1,
   },
   foodTime:{
     flex: 1,
     marginLeft: 10,
-    // marginTop: -180,
+    marginTop: 20,
   },
   timeText:{
     fontSize: 18,

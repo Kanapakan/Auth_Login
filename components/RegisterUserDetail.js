@@ -65,7 +65,7 @@ const RegisterUserDetail = ({navigation, route}, props) => {
                 .then(userCredentials => {
                 const user = userCredentials.user;
                 console.log('Registered with:', user.email);
-                console.log(props)
+                // console.log(props)
             dbRef.add({
                 userId: auth.currentUser?.uid,
                 email: route.params.email,
