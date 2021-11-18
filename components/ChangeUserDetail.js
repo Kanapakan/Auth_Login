@@ -2,8 +2,9 @@ import React, {useState, useEffect} from "react";
 import {KeyboardAvoidingView, StyleSheet, ScrollView, ActivityIndicator, View,Text, Image, TextInput, TouchableOpacity, useWindowDimensions} from "react-native";
 import {Picker} from '@react-native-picker/picker';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
-import  db from '../database/firebaseDb'
+import  {firebase} from '../database/firebaseDb'
 import { auth } from '../database/Auth';
+const db = firebase.firestore()
 
 const ChangeUserDetail = ({navigation, route}) => {
     const[key, setKey] = useState("");

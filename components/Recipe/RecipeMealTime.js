@@ -25,6 +25,8 @@ const RecipeMealTime = (props) => {
         console.log(kcals)
         dispatch(toggleEatKcals(kcals))
       }
+    
+      
     return(
         <View style={styles.container}>
             <TouchableOpacity onPress={props.onSelectRecipe} >

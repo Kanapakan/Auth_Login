@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Image} from 'react-native'
 import { auth } from '../database/Auth'
-import  db from '../database/firebaseDb'
+import  {firebase} from '../database/firebaseDb'
 import {Picker} from '@react-native-picker/picker';
 // import {connect} from 'react-redux';
 
-
+const db = firebase.firestore()
  
 
 

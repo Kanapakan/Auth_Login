@@ -1,7 +1,7 @@
 // export const TOGGLE_USERS = "TOGGLE_USERS";
 // import store from "../store";
-import db from "../../database/firebaseDb";
-
+import {firebase} from "../../database/firebaseDb";
+const db = firebase.firestore()
 
 export const date_pickup = (date) => {
     return (dispatch, getState) => {
@@ -31,3 +31,7 @@ export const fetch_userdetail = (data) => {
         dispatch({ type: "FETCHED_USER_DETAIL", data});
     }
 }
+
+// export const thunk_action = data => {
+
+// }

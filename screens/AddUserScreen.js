@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import { StyleSheet, ScrollView, ActivityIndicator, View,Text} from "react-native";
-import  db from '../database/firebaseDb'
+import  {firebase} from '../database/firebaseDb'
 import { ThemeProvider, Button, Input, Image } from "react-native-elements";
 import  Icon  from "react-native-vector-icons/FontAwesome";
+
+const db = firebase.firestore()
 
 const AddUserScreen = ({navigation, route}) => {
     const dbRef = db.collection('react-native-code');

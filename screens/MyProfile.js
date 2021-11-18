@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native";
-import  db from '../database/firebaseDb'
+import  {firebase} from '../database/firebaseDb'
 import { auth } from '../database/Auth';
 import Logout from "../components/Logout";
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleUsers } from "../store/actions/UserAction";
 
+const db = firebase.firestore()
 
 const MyProfile = ({navigation, route}) => {
   const firestoreRef = db.collection('userDetail');
@@ -51,7 +52,7 @@ const MyProfile = ({navigation, route}) => {
       });
   });
 }
-console.log(userData)
+// console.log(userData)
 
 //ตัวโหลดหน้า
    if (isLoading) {
