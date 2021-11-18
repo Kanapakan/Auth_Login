@@ -1,14 +1,14 @@
-import db from "../../database/firebaseDb";
+import {firebase} from "../../database/firebaseDb";
 import { auth } from "../../database/Auth";
-import firebase from "firebase";
-// const userMenuFB = db.collection('userMenu');
 
+const db = firebase.firestore()
 
 export const toggleBookmark = (id) => {
     return { type: "BOOKMARK", recipeId: id };
 }
 
 export const toggleMealTime = (id, mealTime, order, carbs, fats, protein) => {
+    
     // const day = String(datePick)
     // let myArray = ["2", "4", "6"];
     // const arrayRemove = firebase.firestore.FieldValue.arrayRemove;

@@ -13,13 +13,13 @@ const ThreeTimeMeals = ({navigation, route}, props) => {
 
     switch (route.params.mealTime) {
         case "breakfast":
-            timeMeals = (useSelector((state) => state.recipes.breakfastMeals));
+            timeMeals = (useSelector((state) => state.recipes.allMeals.breakfastMeals));
         break;
         case "lunch":
-            timeMeals = (useSelector((state) => state.recipes.lunchMeals));
+            timeMeals = (useSelector((state) => state.recipes.allMeals.lunchMeals));
         break;
         case "dinner":
-            timeMeals = (useSelector((state) => state.recipes.dinnerMeals));
+            timeMeals = (useSelector((state) => state.recipes.allMeals.dinnerMeals));
         break;  
     }
 //   onChangeValueHandler = (val) => {

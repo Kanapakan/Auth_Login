@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react";
 import { StyleSheet, ScrollView, ActivityIndicator, View,Text, Alert } from "react-native";
-import  db from '../database/firebaseDb'
+import  {firebase} from '../database/firebaseDb'
 import { ThemeProvider, Button, Input, Image } from "react-native-elements";
 import  Icon  from "react-native-vector-icons/FontAwesome";
+const db = firebase.firestore()
 
 const UserDetail = ({navigation, route}) => {
     const[key, setKey] = useState("");

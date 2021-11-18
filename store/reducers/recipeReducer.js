@@ -3,19 +3,25 @@ import { RECIPES } from "../../dataJson/recipeData";
 const initState = {
     recipes: RECIPES,
     bookmarkRecipes: [],
-    breakfastMeals: [],
-    lunchMeals: [],
-    dinnerMeals: [],
+    // breakfastMeals: [],
+    // lunchMeals: [],
+    // dinnerMeals: [],
     sumEatKcals: 0,
-    sumCarbs: 0,
-    sumProteins: 0,
-    sumFats: 0
+    sumNutrient: {carbs: 0,
+                protein: 0,
+                fats: 0},
+    allMeals: {
+        breakfastMeals: [],
+        lunchMeals: [],
+        dinnerMeals: [],
+    }
+
 }
 
 const recipeReducer = (state = initState, action) => {
     switch (action.type) {
         case "EATKCAL" :
-            if( action.order === "Add"){
+            if( action.order == "Add"){
                  return {...state, sumEatKcals: state.sumEatKcals+action.eatKcals};
             } else {
                 return {...state, sumEatKcals: state.sumEatKcals-action.eatKcals};
@@ -32,57 +38,82 @@ const recipeReducer = (state = initState, action) => {
                 const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
                 return {...state, bookmarkRecipes: state.bookmarkRecipes.concat(recipe)};
             }
+    // ------------------------------------------------------------------------------------------
         case "MEALTIME" :
+            const breakfast = state.allMeals.breakfastMeals
+            const lunch = state.allMeals.lunchMeals
+            const dinner = state.allMeals.dinnerMeals
             
             if(action.mealTime === "breakfast"){
-                const existmenu = state.breakfastMeals.findIndex(recipe => recipe.id === action.recipeId)
+                const existmenu = breakfast.findIndex(recipe => recipe.id === action.recipeId)
                 if(action.order == 'del'){
-                    const updateMeal = [...state.breakfastMeals];
+                    const updateMeal = [...breakfast];
                     updateMeal.splice(existmenu, 1);
-                    return {...state, breakfastMeals: updateMeal,
-                         sumCarbs: state.sumCarbs-action.carbs,
-                         sumFats: state.sumFats-action.fats,
-                         sumProteins: state.sumProteins-action.protein} 
+                    return {...state, allMeals: {breakfastMeals : updateMeal,
+                                                lunchMeals: lunch,
+                                                dinnerMeals: dinner},
+                         sumNutrient:{  carbs :state.sumNutrient.carbs-action.carbs,
+                                    protein: state.sumNutrient.protein-action.protein,
+                                    fats: state.sumNutrient.fats-action.fats},
+
+                        } 
                 } else {
                 const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
-                    return {...state, breakfastMeals: state.breakfastMeals.concat(recipe),
-                        sumCarbs: state.sumCarbs+action.carbs,
-                        sumFats: state.sumFats+action.fats,
-                        sumProteins: state.sumProteins+action.protein};
+                    return {...state, allMeals:{breakfastMeals: breakfast.concat(recipe),
+                                                lunchMeals: lunch,
+                                                dinnerMeals: dinner},
+                        sumNutrient:{  carbs :state.sumNutrient.carbs+action.carbs,
+                            protein: state.sumNutrient.protein+action.protein,
+                            fats: state.sumNutrient.fats+action.fats},
+                    };
                 }
                 
             } else if (action.mealTime === "lunch") {
-                const exist = state.lunchMeals.findIndex(recipe => recipe.id === action.recipeId)
+                
                 if(action.order == 'del'){
-                    const upMealLunch = [...state.lunchMeals];
+                    const exist = lunch.findIndex(recipe => recipe.id === action.recipeId)
+                    const upMealLunch = [...lunch];
                     upMealLunch.splice(exist, 1);
-                    return {...state, lunchMeals: upMealLunch,
-                        sumCarbs: state.sumCarbs-action.carbs,
-                        sumFats: state.sumFats-action.fats,
-                        sumProteins: state.sumProteins-action.protein} 
+                    return {...state, allMeals :{breakfastMeals: breakfast,
+                                                lunchMeals: upMealLunch,
+                                                dinnerMeals: dinner},
+                        sumNutrient:{  carbs :state.sumNutrient.carbs-action.carbs,
+                            protein: state.sumNutrient.protein-action.protein,
+                            fats: state.sumNutrient.fats-action.fats},
+                    } 
                 } else {
                 const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
-                    return {...state, lunchMeals: state.lunchMeals.concat(recipe),
-                        sumCarbs: state.sumCarbs+action.carbs,
-                        sumFats: state.sumFats+action.fats,
-                        sumProteins: state.sumProteins+action.protein};
+                    return {...state,  allMeals: {breakfastMeals: breakfast,
+                                                    lunchMeals: lunch.concat(recipe),
+                                                    dinnerMeals: dinner},
+                        sumNutrient:{  carbs :state.sumNutrient.carbs+action.carbs,
+                            protein: state.sumNutrient.protein+action.protein,
+                            fats: state.sumNutrient.fats+action.fats},
+                    };
                 }
 
             } else if (action.mealTime === "dinner") {
-                const menu = state.dinnerMeals.findIndex(recipe => recipe.id === action.recipeId)
+                const menu = dinner.findIndex(recipe => recipe.id === action.recipeId)
                 if(action.order == 'del'){
-                    const upMealDinner = [...state.dinnerMeals];
+                    const upMealDinner = [...dinner];
                     upMealDinner.splice(menu, 1);
-                    return {...state, dinnerMeals: upMealDinner,
-                        sumCarbs: state.sumCarbs-action.carbs,
-                        sumFats: state.sumFats-action.fats,
-                        sumProteins: state.sumProteins-action.protein} 
+                    return {...state, allMeals: {breakfastMeals: breakfast,
+                                                lunchMeals: lunch
+                                                ,dinnerMeals: upMealDinner},
+                        sumNutrient:{  carbs :state.sumNutrient.carbs-action.carbs,
+                            protein: state.sumNutrient.protein-action.protein,
+                            fats: state.sumNutrient.fats-action.fats},
+                    } 
                 } else {
                 const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
-                    return {...state, dinnerMeals: state.dinnerMeals.concat(recipe),
-                        sumCarbs: state.sumCarbs+action.carbs,
-                        sumFats: state.sumFats+action.fats,
-                        sumProteins: state.sumProteins+action.protein};
+                    return {...state, allMeals:{breakfastMeals: breakfast,
+                                                lunchMeals: lunch
+                                                ,dinnerMeals: dinner.concat(recipe),
+                                            },
+                        sumNutrient:{  carbs :state.sumNutrient.carbs+action.carbs,
+                            protein: state.sumNutrient.protein+action.protein,
+                            fats: state.sumNutrient.fats+action.fats},
+                    };
                 }
             }
        

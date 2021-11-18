@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Button, Text, View, StyleSheet, Platform, Animated, ScrollView, Image,TouchableOpacity, Dimensions, ActivityIndicator} from 'react-native';
-import { VictoryPie, VictoryBar , VictoryChart, VictoryGroup, VictoryAxis, VictoryLegend, VictoryTheme} from "victory-native";
-import  db from '../database/firebaseDb'
+import  {firebase} from '../database/firebaseDb'
 import { auth } from '../database/Auth';
 import moment from "moment";
 import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 // import { toggleUsers } from "../store/actions/UserAction";
 import PieGraph from '../components/dashboad/PieGraph';
 import BarChart from '../components/dashboad/BarChart';
@@ -14,30 +14,26 @@ import { fetch_userdetail } from '../store/actions/UserAction';
 import { date_pickup } from '../store/actions/UserAction'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Entypo } from '@expo/vector-icons';
+const dbrealTime = firebase.app().database('https://fir-react-example-1e215-default-rtdb.asia-southeast1.firebasedatabase.app/');
 
-
+const db = firebase.firestore()
 
 
 const Home = ({navigation, route}, props) => {
     const [userArr, setUserArr]= useState([]);
     const [uHistoryArr, setUHistoryArr] = useState([]);
     const scrollYAnimatedValue =  useRef(new Animated.Value(0)).current;
-    const allMealid = (useSelector((state) => state.recipes.allMealId))
     const HEADER_MIN_HEIGHT = 100;
     const HEADER_MAX_HEIGHT = 100
     const[isLoading, setisLoading] = useState(true);
-    // const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
+    const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
     // const userData = (useSelector((state) => state.user.userData))
     const userDetailFB = db.collection('userDetail');
     const userMenuFB = db.collection('userMenu');
-    // const breakfastMeal = (useSelector((state) => state.recipes.breakfastMeals))
-    // const lunchMeal = (useSelector((state) => state.recipes.lunchMeals))
-    // const dinnerMeal = (useSelector((state) => state.recipes.dinnerMeals))
-    
-   
-    // console.log("All Id ----------------------------", allMealId)
+
+
 //  ----------- calendar -------------------------
-    const date_today = moment().format('DD/MM/YYYY'); 
+    const date_today = moment().format('DD-MM-YYYY'); 
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
@@ -60,16 +56,18 @@ const Home = ({navigation, route}, props) => {
         dispatch(date_pickup(data));
     }
   
-    
 
+    
     useEffect(() => {
 
       const unsubscribe = userDetailFB.onSnapshot(getuser);
       // const unsubscribe2 = userMenuFB.onSnapshot(getUserHistory);
-      onChange(date_today)
-       
+      
+      // getUserHistory();
+      
           return () => {
               unsubscribe();
+              // toggleDatePick(date_today)
               // unsubscribe2();
               
               
@@ -93,6 +91,7 @@ const Home = ({navigation, route}, props) => {
               setUserArr(userArr2[0])
               // console.log(userArr.userId)
               toggleUserDeail(userArr2[0])
+              onChange(date_today)
               setisLoading(false)
               
               
@@ -101,78 +100,79 @@ const Home = ({navigation, route}, props) => {
       })
   }
   // ---------------------------- Get user History ---------------------------------
-  const getUserHistory = () => {
-    userMenuFB
-    .get()
-    .then(querySnapshot  => {
-          querySnapshot.forEach(documentSnapshot => {
-            if(documentSnapshot.id === auth.currentUser?.uid){
+  // const getUserHistory = () => {
+  //   userMenuFB
+  //   .get()
+  //   .then(querySnapshot  => {
+  //         querySnapshot.forEach(documentSnapshot => {
+  //           if(documentSnapshot.id === auth.currentUser?.uid){
 
-               const uHistoryArr2 = [];
-              uHistoryArr2.push(documentSnapshot.data())
-              setUHistoryArr(uHistoryArr2[0])
-              toggleUserHistory(uHistoryArr2[0])
+  //              const uHistoryArr2 = [];
+  //             uHistoryArr2.push(documentSnapshot.data())
+  //             setUHistoryArr(uHistoryArr2[0])
+  //             toggleUserHistory(uHistoryArr2[0])
 
-              // console.log(Object.keys(uHistoryArr))
-              // if(datePick == (Object.keys(uHistoryArr)[0])){
-              //   console.log("yessssss")
-              // }
+  //             // console.log(Object.keys(uHistoryArr))
+  //             // if(datePick == (Object.keys(uHistoryArr)[0])){
+  //             //   console.log("yessssss")
+  //             // }
 
-            // console.log('Doc ID: ', documentSnapshot.id, documentSnapshot.data());
+  //           // console.log('Doc ID: ', documentSnapshot.id, documentSnapshot.data());
              
-              // const date = (Object.keys(uHistoryArr)[0])
-              // console.log(date)
+  //             // const date = (Object.keys(uHistoryArr)[0])
+  //             // console.log(date)
               
-              setisLoading(false)
-            }
+  //             setisLoading(false)
+  //           }
 
-          });
-      })
-  }
+  //         });
+  //     })
+  // }
   
   
 
  // ---------------------------- Pick Date ---------------------------------
   const onChange = (event, selectedDate) => {
+    
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
 
     let tempDate = new Date(currentDate);
-    let fDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
+    let fDate = tempDate.getDate() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getFullYear();
     // let fTime = 'Hours: ' + tempDate.getHours() + '| Minutes: ' + tempDate.getMinutes() ;
     
     setDatePick(fDate)
+    toggleDatePick(fDate)
     
-    
 
-    // ---------- check ว่ากดโดน ----------------
-    if((Object.keys(uHistoryArr)).find(day => day == fDate)){
-      const existIndex = (Object.keys(uHistoryArr)).findIndex(day => day == fDate)
-      // console.log((Object.keys(uHistoryArr))[existIndex])
-      // console.log((Object.values(uHistoryArr))[existIndex])
+    // // ---------- check ว่ากดโดน ----------------
+    // if((Object.keys(uHistoryArr)).find(day => day == fDate)){
+    //   const existIndex = (Object.keys(uHistoryArr)).findIndex(day => day == fDate)
+    //   // console.log((Object.keys(uHistoryArr))[existIndex])
+    //   // console.log((Object.values(uHistoryArr))[existIndex])
 
-      const dateHis = (Object.values(uHistoryArr))[existIndex]
-      // console.log(dateHis)
+    //   const dateHis = (Object.values(uHistoryArr))[existIndex]
+    //   // console.log(dateHis)
 
-        setUserHistory(dateHis)
-        console.log("kkkkkkk", dateHis)
-          // listData={uHistoryArr}
-          // dataUser={userArr}
+    //     // setUserHistory(dateHis)
+    //     // console.log("kkkkkkk", dateHis)
+    //       // listData={uHistoryArr}
+    //       // dataUser={userArr}
 
-    } else {
-    console.log("no")
-      const space = Object.create({
-        breakfast: [],
-        dinner: [],
-        carbs : 0,
-        eatKcals: 0,
-        fats: 0,
-        lunch: [],
-        proteins: 0
-      })
-      setUserHistory(space)
-    }
+    // } else {
+    // console.log("no")
+    //   const space = Object.create({
+    //     breakfast: [],
+    //     dinner: [],
+    //     carbs : 0,
+    //     eatKcals: 0,
+    //     fats: 0,
+    //     lunch: [],
+    //     proteins: 0
+    //   })
+      // setUserHistory(space)
+    // }
 
   };
   const showMode = (currentMode) => {
@@ -218,8 +218,7 @@ const Home = ({navigation, route}, props) => {
 // })     
 
 // }
-console.log("All idddddddddd : ", allMealid)
-toggleDatePick(datePick)
+
 
 // toggleUserHistory(uHistoryArr)
   
@@ -246,6 +245,7 @@ toggleDatePick(datePick)
         outputRange: ['#000', '#000'],
         extrapolate: 'clamp'
       });
+
 
 
     return (
@@ -538,4 +538,6 @@ const styles = StyleSheet.create(
 
     
   });
+
+
   export default Home;

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {  StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createStore, combineReducers } from 'redux';
+// import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux'
 
 
