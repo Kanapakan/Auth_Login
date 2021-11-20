@@ -3,9 +3,6 @@ import { RECIPES } from "../../dataJson/recipeData";
 const initState = {
     recipes: RECIPES,
     bookmarkRecipes: [],
-    // breakfastMeals: [],
-    // lunchMeals: [],
-    // dinnerMeals: [],
     sumEatKcals: 0,
     sumNutrient: {carbs: 0,
                 protein: 0,
@@ -20,6 +17,28 @@ const initState = {
 
 const recipeReducer = (state = initState, action) => {
     switch (action.type) {
+        case "RECIPE_HISTORY":
+            const fast = Object.keys(action.user_history.recipes).findIndex(recipe => recipe === "breakfastMeals")
+            const find = Object.keys(action.user_history.recipes).findIndex(recipe => recipe === "lunchMeals")
+            const din = Object.keys(action.user_history.recipes).findIndex(recipe => recipe === "dinnerMeals")
+
+          let moning = [];
+          let  afternoon = [];
+          let night = [];
+          console.log(fast,find,din)
+            if(fast >= 0){
+                moning = action.user_history.recipes.breakfastMeals
+            } if(find >= 0){
+                afternoon = action.user_history.recipes.lunchMeals
+            } if(din >= 0){
+                night = action.user_history.recipes.dinnerMeals
+            }
+            return {...state,allMeals: {breakfastMeals : moning,
+                                        lunchMeals: afternoon,
+                                        dinnerMeals: night},
+                            sumEatKcals : action.sumEatCal,
+                            sumNutrient: action.sumNetrients}
+
         case "EATKCAL" :
             if( action.order == "Add"){
                  return {...state, sumEatKcals: state.sumEatKcals+action.eatKcals};
@@ -43,7 +62,7 @@ const recipeReducer = (state = initState, action) => {
             const breakfast = state.allMeals.breakfastMeals
             const lunch = state.allMeals.lunchMeals
             const dinner = state.allMeals.dinnerMeals
-            
+            const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
             if(action.mealTime === "breakfast"){
                 const existmenu = breakfast.findIndex(recipe => recipe.id === action.recipeId)
                 if(action.order == 'del'){
@@ -58,7 +77,7 @@ const recipeReducer = (state = initState, action) => {
 
                         } 
                 } else {
-                const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
+                // const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
                     return {...state, allMeals:{breakfastMeals: breakfast.concat(recipe),
                                                 lunchMeals: lunch,
                                                 dinnerMeals: dinner},
@@ -82,9 +101,9 @@ const recipeReducer = (state = initState, action) => {
                             fats: state.sumNutrient.fats-action.fats},
                     } 
                 } else {
-                const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
+                // const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
                     return {...state,  allMeals: {breakfastMeals: breakfast,
-                                                    lunchMeals: lunch.concat(recipe),
+                                                    lunchMeals: state.allMeals.lunchMeals.concat(recipe),
                                                     dinnerMeals: dinner},
                         sumNutrient:{  carbs :state.sumNutrient.carbs+action.carbs,
                             protein: state.sumNutrient.protein+action.protein,
@@ -105,7 +124,7 @@ const recipeReducer = (state = initState, action) => {
                             fats: state.sumNutrient.fats-action.fats},
                     } 
                 } else {
-                const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
+                // const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
                     return {...state, allMeals:{breakfastMeals: breakfast,
                                                 lunchMeals: lunch
                                                 ,dinnerMeals: dinner.concat(recipe),

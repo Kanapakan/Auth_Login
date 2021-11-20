@@ -15,7 +15,7 @@ const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 300;
 
 const MenuDetail = ({ navigation, route }, props) => {
-  // console.log("----- Bookmark : ",(useSelector((state) => state.recipes.bookmarkRecipes)))
+  console.log("----- Bookmark : ",(useSelector((state) => state.recipes.bookmarkRecipes)))
   const allMeal = (useSelector((state) => state.recipes.allMeals))
   const sumNutrient = (useSelector((state) => state.recipes.sumNutrient))
   const sumEatKcals = (useSelector((state) => state.recipes.sumEatKcals))
@@ -24,7 +24,7 @@ const MenuDetail = ({ navigation, route }, props) => {
 
 
   const { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL, carbs, protein, fats, } = route.params;
-  const bookmark_recipe = useSelector((state) => state.recipes.bookmarkRecipes);
+  const bookmark_recipe = (useSelector((state) => state.recipes.bookmarkRecipes));
 
   const datePick = (useSelector((state) => state.user.datePick));
   console.log("kuyyyyyyyyy : ", datePick)
@@ -34,10 +34,7 @@ const MenuDetail = ({ navigation, route }, props) => {
   const scrollYAnimatedValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    getUserHistory(datePick)
-    return () => {
-      
-    }
+    pushUserHistory(datePick)
   }, [sumEatKcals]);
 
   // ------------------- Loop ingredients's name -----------------------------
@@ -128,7 +125,7 @@ const MenuDetail = ({ navigation, route }, props) => {
     // navigation.navigate("ThreeTimeMeals", { mealTime: timeMeals, mealTimeThai: timeMealsThai })
   }
 
-  const getUserHistory = (datePick) => {
+  const pushUserHistory = (datePick) => {
     let data;
     dbrealTime.ref("user_History/userRecipe/" + auth.currentUser?.uid + "/" + datePick).on('value', snapshot => {
       console.log('user date :', snapshot.val())
@@ -142,16 +139,17 @@ const MenuDetail = ({ navigation, route }, props) => {
         dateKey: keyDate
       }).then(
 
-        dbrealTime.ref("user_History/Recepy_of_day/" + keyDate).update({
+        dbrealTime.ref("user_History/Recipe_of_day/" + keyDate).update({
           date: datePick,
           recipes: allMeal,
           sumCal: sumEatKcals,
           sumNutrient: sumNutrient,
           userId: auth.currentUser?.uid
         }))
-    } else {
+    } 
+    else {
       // const keyDate = dbrealTime.ref("user_History/Recepy_of_day/"+ data.datakey).getKey();
-      dbrealTime.ref("user_History/Recepy_of_day/" + data.dateKey).update({
+      dbrealTime.ref("user_History/Recipe_of_day/" + data.dateKey).update({
         date: datePick,
         recipes: allMeal,
         sumCal: sumEatKcals,

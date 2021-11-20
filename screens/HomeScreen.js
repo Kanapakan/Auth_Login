@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import PieGraph from '../components/dashboad/PieGraph';
 import BarChart from '../components/dashboad/BarChart';
 import { createUser } from '../store/actions/UserAction';
-import { fetch_userHistory } from '../store/actions/UserAction';
+import { fetched_recipeHistory } from '../store/actions/recipeAction';
 import { fetch_userdetail } from '../store/actions/UserAction';
 import { date_pickup } from '../store/actions/UserAction'
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -29,7 +29,7 @@ const Home = ({navigation, route}, props) => {
     const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
     // const userData = (useSelector((state) => state.user.userData))
     const userDetailFB = db.collection('userDetail');
-    const userMenuFB = db.collection('userMenu');
+    
 
 
 //  ----------- calendar -------------------------
@@ -42,11 +42,11 @@ const Home = ({navigation, route}, props) => {
     // ---------------- pie Graph --------------------------
     const [userHistory, setUserHistory] = useState([]);
 
-    
+    // console.log("hiiiiii", (useSelector((state) => state.recipes.allMeals)))
       const dispatch = useDispatch();
       
-      const toggleUserHistory = (history) => {
-        dispatch(fetch_userHistory(history));
+      const toggleRecipeHistory = (history) => {
+        dispatch(fetched_recipeHistory(history));
         
         }
       const toggleUserDeail = (data) => {
@@ -54,27 +54,25 @@ const Home = ({navigation, route}, props) => {
       }
       const toggleDatePick = (data) => {
         dispatch(date_pickup(data));
-    }
+      }
   
 
     
     useEffect(() => {
-
-      const unsubscribe = userDetailFB.onSnapshot(getuser);
-      // const unsubscribe2 = userMenuFB.onSnapshot(getUserHistory);
       
+      const unsubscribe = userDetailFB.onSnapshot(getuser);
       // getUserHistory();
       
           return () => {
               unsubscribe();
-              // toggleDatePick(date_today)
+              
               // unsubscribe2();
               
               
               
               
           }
-    }, []);
+    }, [datePick]);
   
   // ---------------------------- Get user Detail ---------------------------------
     const getuser = () => {
@@ -87,9 +85,8 @@ const Home = ({navigation, route}, props) => {
                 
               const userArr2 = [];
               userArr2.push(documentSnapshot.data())
-              // setState({userArr: userArr2[0]})
               setUserArr(userArr2[0])
-              // console.log(userArr.userId)
+
               toggleUserDeail(userArr2[0])
               onChange(date_today)
               setisLoading(false)
@@ -100,34 +97,53 @@ const Home = ({navigation, route}, props) => {
       })
   }
   // ---------------------------- Get user History ---------------------------------
-  // const getUserHistory = () => {
-  //   userMenuFB
-  //   .get()
-  //   .then(querySnapshot  => {
-  //         querySnapshot.forEach(documentSnapshot => {
-  //           if(documentSnapshot.id === auth.currentUser?.uid){
+  const getUserHistory = (date) => {
+    let data;
+    dbrealTime.ref("user_History/userRecipe/" + auth.currentUser?.uid + "/" + date).on('value', snapshot => {
+      console.log('user date :', snapshot.val())
+      data = snapshot.val()
+    
+      if(data !== null){
+        dbrealTime.ref("user_History/Recipe_of_day/" + data.dateKey).on('value', snapshot => {
 
-  //              const uHistoryArr2 = [];
-  //             uHistoryArr2.push(documentSnapshot.data())
-  //             setUHistoryArr(uHistoryArr2[0])
-  //             toggleUserHistory(uHistoryArr2[0])
+          const user_history = snapshot.val()
+          
+          console.log('user recipes :', user_history.recipes)
 
-  //             // console.log(Object.keys(uHistoryArr))
-  //             // if(datePick == (Object.keys(uHistoryArr)[0])){
-  //             //   console.log("yessssss")
-  //             // }
+          if(!(user_history.recipes == null)){
+            console.log('fetch history :', Object.keys(user_history.recipes))
+            
+            toggleRecipeHistory(user_history)
+            setUserHistory(user_history)
+            
+          }
 
-  //           // console.log('Doc ID: ', documentSnapshot.id, documentSnapshot.data());
-             
-  //             // const date = (Object.keys(uHistoryArr)[0])
-  //             // console.log(date)
-              
-  //             setisLoading(false)
-  //           }
+      } )
 
-  //         });
-  //     })
-  // }
+      }         
+        else{
+          console.log('Nothinggggggg :')
+
+                const space = Object.create({
+                  date: "",
+                  recipes: {
+                    breakfastMeals: [],
+                    lunchMeals: [],
+                    dinnerMeals: [],
+                  },
+                  sumCal: 0,
+                  sumNutrient: {
+                    carbs: 0,
+                    protein: 0,
+                    fats: 0
+                  },
+                  userId: auth.currentUser?.uid
+                })
+                toggleRecipeHistory(space)
+                   setUserHistory(space)
+              }
+    })
+  }
   
   
 
@@ -143,36 +159,10 @@ const Home = ({navigation, route}, props) => {
     // let fTime = 'Hours: ' + tempDate.getHours() + '| Minutes: ' + tempDate.getMinutes() ;
     
     setDatePick(fDate)
+    
+    getUserHistory(fDate)
     toggleDatePick(fDate)
     
-
-    // // ---------- check ว่ากดโดน ----------------
-    // if((Object.keys(uHistoryArr)).find(day => day == fDate)){
-    //   const existIndex = (Object.keys(uHistoryArr)).findIndex(day => day == fDate)
-    //   // console.log((Object.keys(uHistoryArr))[existIndex])
-    //   // console.log((Object.values(uHistoryArr))[existIndex])
-
-    //   const dateHis = (Object.values(uHistoryArr))[existIndex]
-    //   // console.log(dateHis)
-
-    //     // setUserHistory(dateHis)
-    //     // console.log("kkkkkkk", dateHis)
-    //       // listData={uHistoryArr}
-    //       // dataUser={userArr}
-
-    // } else {
-    // console.log("no")
-    //   const space = Object.create({
-    //     breakfast: [],
-    //     dinner: [],
-    //     carbs : 0,
-    //     eatKcals: 0,
-    //     fats: 0,
-    //     lunch: [],
-    //     proteins: 0
-    //   })
-      // setUserHistory(space)
-    // }
 
   };
   const showMode = (currentMode) => {
@@ -183,44 +173,7 @@ const Home = ({navigation, route}, props) => {
   const showDatepicker = () => {
     showMode('date');
   };
-
-
-// ---------------------- store History ----------------------------
-// const storeHistory = () => {
-//   const objHis = Object.create({
-//     breakfast: [],
-//     dinner: [],
-//     carbs : 0,
-//     eatKcals: 0,
-//     fats: 0,
-//     lunch: [],
-//     proteins: 0
-//   })
-
-//   dbRef.add(
-//     Object.create(
-//       datePick
-//     )
-
-// ).then((res) => {
-//     setGender(""),
-//     setAge(0),
-//     setHeight(0),
-//     setWeight(0),
-//     setActivity(""),
-//     setisLoading(false)
-//     navigation.navigate('BottomTabScreen');
-//     //สร้างบัญชีผู้ใช้
-
-// }).catch((err) => {
-//     console.log('Error found: ', err);
-//     setisLoading(false)
-// })     
-
-// }
-
-
-// toggleUserHistory(uHistoryArr)
+  
   
   // ตัวโหลดหน้า
    if (isLoading) {
@@ -343,7 +296,7 @@ const Home = ({navigation, route}, props) => {
                 </View>
 
                 <View style={styles.middle}>
-                    <Text style={styles.hearderText}>{userHistory.eatKcals}</Text>
+                    <Text style={styles.hearderText}>{eatKcal}</Text>
                     <Text style={styles.hearderText2}>แคลอรี่อาหาร</Text>
                 </View>
 
@@ -352,7 +305,7 @@ const Home = ({navigation, route}, props) => {
                 </View>
 
                 <View style={styles.right}>
-                    <Text style={styles.hearderText}>{userArr.TDEE - userHistory.eatKcals}</Text>
+                    <Text style={styles.hearderText}>{userArr.TDEE - eatKcal}</Text>
                     <Text style={styles.hearderText2}>แคลอรี่คงเหลือ</Text>
                 </View>
             

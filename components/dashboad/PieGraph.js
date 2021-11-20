@@ -6,31 +6,38 @@ import { VictoryPie, VictoryBar , VictoryChart, VictoryGroup, VictoryAxis, Victo
 
 
 const PieGraph =(props) =>{
+      const datePick = (useSelector((state) => state.user.datePick))
+      const [graphicData, setGraphicData] = useState(defaultGraphicData);
+      const sumCal = (useSelector((state) => state.recipes.sumEatKcals))
+      const nutrient = (useSelector((state) => state.recipes.sumNutrient))
+      const wantedGraphicData = [{ y: 10 }, { y: 50 }, { y: 40 }]; // Data that we want to display
+      const defaultGraphicData = [{ y: 0 }, { y: 0 }, { y: 100 }]; // Data used to make the animate prop work
+      // const scrollYAnimatedValue = useRef(new Animated.Value(0)).current;
+      // const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
 
-      const scrollYAnimatedValue = useRef(new Animated.Value(0)).current;
-      const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
-      // const userData = (useSelector((state) => state.user.userDetail))
-      // const userHistory = Object.values((useSelector((state) => state.user.userHistory)))
-      // const userday = Object.keys(useSelector((state) => state.user.userHistory))
-      // const[userHis, setUserHis] = useState([]);
-      const sumNutient = (props.listData.carbs+props.listData.fats+props.listData.proteins)
+      const sumNutient = (nutrient.carbs+nutrient.fats+nutrient.protein)
       let percentEat;
       let fats;
       let proteins;
       let carbs;
+
+      useEffect(() => {
+        setGraphicData(wantedGraphicData); // Setting the data that we want to display
+      }, [sumCal]);
+
+
       if(sumNutient == 0){
         percentEat = 0;
-        fats = props.listData.fats
+        fats = nutrient.fats
         proteins = 0
         carbs = 0
       } else {
-        percentEat = parseFloat((props.listData.eatKcals/props.dataUser.TDEE)*100).toFixed(1)
-        fats = (parseFloat(props.listData.fats/sumNutient)*100).toFixed(1)
-        proteins = (parseFloat(props.listData.proteins/sumNutient)*100).toFixed(1)
-        carbs = (parseFloat(props.listData.carbs/sumNutient)*100).toFixed(1)
+        percentEat = parseFloat((sumCal/props.dataUser.TDEE)*100).toFixed(1)
+        fats = (parseFloat(nutrient.fats/sumNutient)*100).toFixed(1)
+        proteins = (parseFloat(nutrient.protein/sumNutient)*100).toFixed(1)
+        carbs = (parseFloat(nutrient.carbs/sumNutient)*100).toFixed(1)
       }
      
-      // console.log("Hi", props.listData)
 
 
         return(
@@ -43,23 +50,30 @@ const PieGraph =(props) =>{
                     </View>
                     
                     <View style={styles.infoContainer}>
-                        <Text style={styles.pieHead}>{props.listData.eatKcals} กิโลแคลอรี่</Text>
+                        <Text style={styles.pieHead}>{sumCal} กิโลแคลอรี่</Text>
                         <Text style={styles.piefade}>{percentEat}% ของแคลอรี่ที่ควรได้รับต่อวัน</Text>
 
                         <View style={styles.pieChartContainer}>
                             <View style={styles.pieChart}>
                                 <VictoryPie
+                                 animate={{
+                                  // duration: 2000,
+                                  
+                                      duration: 1500,
+                                      easing: 'exp'
+                                  
+                              }}
                                 data={ sumNutient ? [
                                     { y: fats, label: fats + "%" },
                                     { y: proteins, label: proteins + "%"},
                                     { y: carbs, label: carbs +"%" }
                                 ] : [{ y: 1, label: 0 + "%" }]
                                   }
-                                width={185}
-                                height={170}
+                                width={180}
+                                height={160}
                                 colorScale={['#ce5a57', '#78a5a3', '#444c5c']}
                                 innerRadius={80}
-                                labelRadius={({innerRadius}) => (190 * 0.15 + innerRadius)/2.65}
+                                labelRadius={({innerRadius}) => (190 * 0.15 + innerRadius)/2.8}
                                 style={{
                                     labels: {fill: "#fff", fontSize: 15},
                                 }}
