@@ -8,12 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 const ThreeTimeMeals = ({navigation, route}, props) => {
     // const [sumKcals, setSumkcals] = useState(0);
     let timeMeals;
-
-    // const dispatch = useDispatch();
+    // , allMeal: allMeal
+    // const recipe = (useSelector((state) => state.recipes.allMeals)
 
     switch (route.params.mealTime) {
         case "breakfast":
             timeMeals = (useSelector((state) => state.recipes.allMeals.breakfastMeals));
+            // console.log("hereeeeeeeeeeee", timeMeals)
         break;
         case "lunch":
             timeMeals = (useSelector((state) => state.recipes.allMeals.lunchMeals));
@@ -22,20 +23,10 @@ const ThreeTimeMeals = ({navigation, route}, props) => {
             timeMeals = (useSelector((state) => state.recipes.allMeals.dinnerMeals));
         break;  
     }
-//   onChangeValueHandler = (val) => {
-//     setSumkcals({ value: val.target.value })
-//   }
-//   console.log(RecipeMealList.sumKcals)
-    // const callbackFunction  = (kcals) => {
-    //        setSumkcals(kcals)
-    //     //    console.log(timeMeals.length)
-    //     if(timeMeals.length == 0 ){
-    //     // console.log("nothing")
-    //     setSumkcals(0)
+    // if(!timeMeals){
+    //   timeMeals =[];
     // }
-    // }
-    
-    // console.log(sumKcals)
+
 
   return (
 // รายการที่เลือก

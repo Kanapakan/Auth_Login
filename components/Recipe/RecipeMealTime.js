@@ -1,17 +1,57 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMealTime, toggleEatKcals  } from '../../store/actions/recipeAction';
+import firebase from 'firebase';
+import { auth } from '../../database/Auth';
+const dbrealTime = firebase.app().database('https://fir-react-example-1e215-default-rtdb.asia-southeast1.firebasedatabase.app/');
 
 const RecipeMealTime = (props) => {
+  const datePick = (useSelector((state) => state.user.datePick));
+  const allMeal = (useSelector((state) => state.recipes.allMeals))
+  const sumNutrient = (useSelector((state) => state.recipes.sumNutrient))
+  const sumEatKcals = (useSelector((state) => state.recipes.sumEatKcals))
+  // console.log("del lanwww: ", allMeal)
+  
+  // useEffect(() => {
     
+
+  // }, []);
+
+  const updateUserHistory = (date) => {
+    let data;
+    dbrealTime.ref("user_History/userRecipe/" + auth.currentUser?.uid + "/" + date).on('value', snapshot => {
+      // console.log('user date :', snapshot.val())
+      data = snapshot.val()
+      console.log("hideee : ", data.dateKey)
+      
+      // const keyDate = dbrealTime.ref("user_History/Recepy_of_day/"+ data.datakey).getKey();
+      dbrealTime.ref("user_History/Recipe_of_day/" + data.dateKey).update({
+        date: date,
+        recipes: allMeal,
+        sumCal: sumEatKcals,
+        sumNutrient: sumNutrient,
+        userId: auth.currentUser?.uid
+      })
+    
+    })
+
+
+  }
+
+
+
      // ---------- กดลบเมนูอาหาร ---------------   
     const delRecipe = () => {
+      
         console.log('del', props.id, props.mealTime)
+                
         toggleMealTimeHandler(props.id, props.mealTime, "del", props.carbs, props.fats, props.protein)
         toggleEatKcalsHandler(props.kcal)
+        
+        
         // props.parentCallback(sumKcals)
     }
 
@@ -19,11 +59,14 @@ const RecipeMealTime = (props) => {
         const toggleMealTimeHandler = (mealId, Time, order, carbs, fats, protein) => {
         console.log(props.id, props.mealTime)
         dispatch(toggleMealTime(mealId, Time, order, carbs, fats, protein));
+        
+        
       }
 
       const toggleEatKcalsHandler = (kcals) => {
         console.log(kcals)
         dispatch(toggleEatKcals(kcals))
+        
       }
     
       
@@ -43,7 +86,7 @@ const RecipeMealTime = (props) => {
 
                   </View>
                   <View style={styles.box2}>
-                  <TouchableOpacity onPress={() => delRecipe()}>
+                  <TouchableOpacity onPress={() => delRecipe(datePick)}>
                        <Ionicons name="ios-trash-bin-sharp" color="#adacac"   style={styles.delMeal}/>
                   </TouchableOpacity>
                       <Text style={styles.foodCal}>{props.kcal} Kcal.</Text>

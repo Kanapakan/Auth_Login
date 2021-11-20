@@ -8,22 +8,16 @@ import { useDispatch, useSelector } from 'react-redux';
 const RecipeMealList = (props) => {
   const [sumKcals, setSumkcals] = useState(0)
   let sumKcal = 0;
-  // useEffect(() => {
-  //   renderRecipeItem(itemData);
-  // }, []);
-
+  
   
     const renderRecipeItem = (itemData) => {
         const {id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL ,carbs, protein, fats,} = itemData.item
-        // console.log(props.mealTime)
         sumKcal += kcal
         setSumkcals(sumKcal)
     
         return (
             <View>
                 <RecipeMealTime 
-                // sumKcals={sumKcals}
-                // onChange={onChangeSumKcals}
                 mealTime={props.mealTime}
                 carbs={carbs}
                 fats={fats}
@@ -41,15 +35,7 @@ const RecipeMealList = (props) => {
             </View>
         ) 
     }
-    // ----------------- store ค่า แคลทั้งหมด ----------------------------
-      // const toggleEatKcalsHandler = (kcals) => {
-      // console.log(kcals)
-      // dispatch(toggleEatKcals(kcals))
-  
-      // }
-      // toggleEatKcalsHandler(sumKcals)
-      // dispatch(toggleEatKcals(sumKcals))
-      // console.log("----- kcal : ", useSelector((state) => state.recipes.sumEatKcals))
+
       
    return (
       <View  style={styles.container}>

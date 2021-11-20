@@ -4,13 +4,16 @@ import { useSelector } from 'react-redux';
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons';
 import RecipeList from "../components/Recipe/RecipeList";
+import FilterIngredient from "../components/FilterIngredient";
 
 const SearchScreen = ({navigation, route}) => {
   const[searchResult, setSearchResult] = useState([]);
   const[searchWord, setSearchWord] = useState("");
   const[titleBar, setTitleBar] = useState("กรอกด้วยตัวเอง");
-
+  const[showFilter, setShowFilter] = useState(true)
   const recipes = useSelector(state => state.recipes.recipes)
+
+  
 
 
   // ---------------- funtion filter จากชื่อ
@@ -26,12 +29,14 @@ const SearchScreen = ({navigation, route}) => {
       setSearchResult(newMenuList)
       setSearchWord()
       setTitleBar("ผลการค้นหา")
+      setShowFilter(false)
       // console.log(newMenuList)
     } else {
       setTitleBar("กรองด้วยตัวเอง")
       setSearchWord(text);
       setSearchResult([]);
-      
+      setShowFilter(true)
+      // setFilter( < FilterIngredient />)
     }
   }
 
@@ -56,11 +61,15 @@ const SearchScreen = ({navigation, route}) => {
               </View>
           </View>
               <View style={styles.headBox} >
-                  <Text style={styles.headText}>{titleBar}</Text>
+                  <Text style={styles.headText}>{titleBar} </Text>
+                  
               </View>
+              
+              {/* -------------------- FilterIngredient ---------------------------- */}
+                {showFilter ? < FilterIngredient 
+                navigation={navigation}/> : null }
 
-            
-              {/* 1 รายการอาหาร */}
+              {/* -------------------- List ผลการพิมพ์หา ---------------------------- */}
               <View style={styles.container}>
                   <RecipeList
                     style={{ width: "100%", height: "100%" }}
@@ -69,6 +78,7 @@ const SearchScreen = ({navigation, route}) => {
                   />
 
               </View>
+              
           </View>
       )
   
@@ -80,6 +90,7 @@ const SearchScreen = ({navigation, route}) => {
         flexDirection: "column",
     flex: 1,
     backgroundColor: "#fff",
+    // maxHeight: '100%'
     // alignItems: "center",
     // justifyContent: "center",
   },
