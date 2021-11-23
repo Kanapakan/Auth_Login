@@ -19,7 +19,8 @@ import ChangeUserDetail from "../components/ChangeUserDetail";
 
 import FindRecipe from "../screens/SearchScreen";
 import ChooseIngredient from "../screens/ChooseIngredient";
-
+import ConfirmIngredient from "../screens/ConfirmIngredient";
+import ResultFindRecipe from "../screens/ResultFindRecipe";
 // const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -144,6 +145,9 @@ function SearchNavigator() {
             <Stack.Screen  name="FindRecipe" options={{ title: "ค้นหาเมนูอาหาร"}} component={FindRecipe} />
             <Stack.Screen name="MenuDetail" options={{ headerShown: false }} component={MenuDetail} />
             <Stack.Screen name="ChooseIngredient"  options={{ title: "เลือกวัตถุดิบ"}} component={ChooseIngredient} />
+            <Stack.Screen name="ConfirmIngredient" options={{title: "รายการวัตถุดิบที่เลือก"}} component={ConfirmIngredient}/>
+            <Stack.Screen name="ResultFindRecipe" options={{title: "เมนูอาหารของคุณ"}} component={ResultFindRecipe}/>
+
         </Stack.Navigator>
     )
 }

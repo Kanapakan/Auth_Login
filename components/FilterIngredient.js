@@ -1,138 +1,217 @@
 import React, { useRef, useState } from "react";
-import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity} from "react-native";
+import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity, FlatList, Alert} from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { CheckBox } from 'react-native-elements'
+import { SegmentedControlIOSBase } from "react-native";
+import { and } from "react-native-reanimated";
+const data = require('../dataJson/menu.json');
 
+ const sensitiveType = [
+
+  {id:1, txt: "มังสวิรัติ", isChecked: false},
+  {id:2, txt: "ผลิตภัณฑ์จากน้ำตาล", isChecked: false},
+  {id:3, txt: "ผลิตภัณฑ์จากทะเล", isChecked: false},
+
+];
 
 const FilterIngredient  = ({navigation}, props) =>  {
-    const [checkedVegan, setcheckedVegan] = useState(false);
-    const [checkedGluten, setcheckedGluten] = useState(false);
-    const [checkedEgg, setcheckedEgg] = useState(false);
-    const [checkedDaily, setcheckedDaily] = useState(false);
-    const [checkedNut, setcheckedNut] = useState(false);
-    const [checkedSea, setcheckedSea] = useState(false);
+  const [filtered, setfiltered] = useState(data)
+  const [senType, setsenType] = useState(sensitiveType)
+  const [check, setcheck] = useState(false)
 
-    const toNextScreen = () => {
-      navigation.navigate("ChooseIngredient", {checkedVegan: checkedVegan, checkedGluten: checkedGluten, checkedEgg: checkedEgg, checkedDaily: checkedDaily, checkedNut: checkedNut, checkedSea: checkedSea})
-      setcheckedVegan(false)
-      setcheckedGluten(false)
-      setcheckedEgg(false)
-      setcheckedDaily(false)
-      setcheckedNut(false)
-      setcheckedSea(false)
+  
+
+  const handleChange = (id) => {
+
+    let temp = senType.map((item) => {
+      if (id === item.id) {
+        return { ...item, isChecked: !item.isChecked };
+      }
+      return item;
+    });
+    setsenType(temp);
+
+
+      
+
+      // if(senType[0].isChecked == false && senType[1].isChecked == false){
+
+      //   filtered.map((ele) => {
+  
+      //     if(ele.type == "meat" || ele.isGluten == true){
+      //       menu.splice(menu.indexOf(ele), 1)
+      //     }
+  
+      //   })
+      //   setfiltered(menu)
+      // }
+      // if(senType[1].isChecked == false && senType[2].isChecked == false){
+      //   filtered.map((ele) => {
+  
+      //     if(ele.isSeafood == true || ele.isGluten == true){
+      //       menu.splice(menu.indexOf(ele), 1)
+      //     }
+  
+      //   })
+      //   setfiltered(menu)
+      // }
+      
+      
+
+      
+
+  };
+
+    const confirm = () => {
+
+      let menu = [...filtered]
+
+      if(senType[0].isChecked == false && senType[1].isChecked == false && senType[2].isChecked == false){
+        setfiltered(data)
+      }
+      if(senType[0].isChecked == true && senType[1].isChecked == false && senType[2].isChecked == false){
+        filtered.map((ele) => {
+  
+          if(ele.type == "meat"){
+            menu.splice(menu.indexOf(ele), 1)
+            setfiltered(menu)
+          }
+        })
+      }
+       if(senType[0].isChecked == false && senType[1].isChecked == true && senType[2].isChecked == false){
+        filtered.map((ele) => {
+  
+          if(ele.isGluten == true){
+            menu.splice(menu.indexOf(ele), 1)
+            setfiltered(menu)
+
+          }
+  
+        })
+      }
+       if(senType[0].isChecked == false && senType[1].isChecked == false && senType[2].isChecked == true){
+        filtered.map((ele) => {
+  
+          if(ele.isSeafood == true){
+            menu.splice(menu.indexOf(ele), 1)
+            setfiltered(menu)
+
+          }
+  
+        })
+      }
+       if(senType[0].isChecked == false && senType[1].isChecked == true && senType[2].isChecked == true){
+        filtered.map((ele) => {
+  
+          if(ele.isSeafood == true || ele.isGluten == true){
+            menu.splice(menu.indexOf(ele), 1)
+            setfiltered(menu)
+
+          }
+  
+        })
+      }
+       if(senType[0].isChecked == true && senType[1].isChecked == true && senType[2].isChecked == false){
+        filtered.map((ele) => {
+  
+          if(ele.isGluten == true || ele.type == "meat"){
+            menu.splice(menu.indexOf(ele), 1)
+            setfiltered(menu)
+
+          }
+  
+        })
+      }
+      
+      // Alert.alert(
+      //   "ยืนยันการเลือก?",
+      //   "",
+      //   [
+      //     {
+      //       text: "Cancel"
+      //     },
+      //     { text: "OK", onPress: () => setcheck(true) }
+      //   ],
+      //   {
+      //     cancelable: true,
+      //   }
+      // );
+
+      // let temp =  senType.map((sen) => {
+      //     return { ...sen, isChecked: false };
+      // });
+
+      // setsenType(temp)
+    
+      setcheck(true)
     }
+
+
+    const renderFlatList = (renderData) => {
+      return(
+        <FlatList
+            data={renderData}
+            renderItem={({ item }) => (
+            
+              <View style={styles.checkboxContainer}>
+
+                <View style={styles.checkContainer}>
+                  <CheckBox
+                    checked={item.isChecked}
+                    onPress={() => {
+                      handleChange(item.id);
+                    }}
+                    checkedColor='#547f53'
+                  />
+                </View>
+
+                  <Text style={styles.typeSensitive}>{item.txt}</Text>
+
+              </View>
+            )}
+      />
+      )
+    }
+
+    const next = () => {
+      navigation.navigate("ChooseIngredient", {filtered: filtered})
+      setcheck(false)
+    }
+    
+
   return (
     
-    // ค้นหาด้วยตัวเอง
     
         <View style={styles.container}>
-        {/* //     <View style={styles.headBox} >
-        //         <Text style={styles.headText}>ค้นหาด้วยตัวเอง</Text>
-        //     </View> */}
     
             <Text style={styles.sensitiveText}>การแพ้</Text>
 
 
-            {/* checkbox 1 อัน Vegan */}
-            <View style={styles.checkboxContainer}>
+            {renderFlatList(senType)}
 
-              <View style={styles.checkContainer}>
-                <CheckBox
-                  checked={checkedVegan}
-                  onPress={() => setcheckedVegan(!checkedVegan)}
-                  checkedColor='#547f53'
-                  // Size='20'
-                />
-              </View>
-
-              <Text style={styles.typeSensitive}>มังสวิรัติ</Text>
-
-            </View>
-
-            {/* checkbox 1 อัน Gluten free */}
-            <View style={styles.checkboxContainer}>
-
-              <View style={styles.checkContainer}>
-                <CheckBox
-                  checked={checkedGluten}
-                  onPress={() => setcheckedGluten(!checkedGluten)}
-                  checkedColor='#547f53'
-                  // Size='20'
-                />
-              </View>
-
-              <Text style={styles.typeSensitive}>ผลิตภัณฑ์จากน้ำตาล</Text>
-
-            </View>
-
-            {/* checkbox 1 อัน Egg free */}
-            <View style={styles.checkboxContainer}>
-
-              <View style={styles.checkContainer}>
-                <CheckBox
-                  checked={checkedEgg}
-                  onPress={() => setcheckedEgg(!checkedEgg)}
-                  checkedColor='#547f53'
-                  // Size='20'
-                />
-              </View>
-
-              <Text style={styles.typeSensitive}>ผลิตภัณฑ์จากไข่</Text>
-      
-            </View>
-
-            <View style={styles.checkboxContainer}>
-
-              <View style={styles.checkContainer}>
-                <CheckBox
-                  checked={checkedSea}
-                  onPress={() => setcheckedSea(!checkedSea)}
-                  checkedColor='#547f53'
-                />
-              </View>
-
-              <Text style={styles.typeSensitive}>ผลิตภัณฑ์จากทะเล</Text>
-
-            </View>
+           
             
-            <View style={styles.checkboxContainer}>
-
-              <View style={styles.checkContainer}>
-                <CheckBox
-                  checked={checkedNut}
-                  onPress={() => setcheckedNut(!checkedNut)}
-                  checkedColor='#547f53'
-                />
-              </View>
-
-              <Text style={styles.typeSensitive}>ผลิตภัณฑ์จากจากถั่ว</Text>
-
-            </View>
-
-            <View style={styles.checkboxContainer}>
-
-              <View style={styles.checkContainer}>
-                <CheckBox
-                  checked={checkedDaily}
-                  onPress={() => setcheckedDaily(!checkedDaily)}
-                  checkedColor='#547f53'
-                />
-              </View>
-
-              <Text style={styles.typeSensitive}>ผลิตภัณฑ์จากนม</Text>
-
-            </View>
-            
-  
-            <View style={{ justifyContent:"flex-end",alignItems: "center", margin: 20}}>
+              {!check ? (
+                <View style={{ justifyContent:"flex-end",alignItems: "center", margin: 20}}>
                 <TouchableOpacity 
-                    onPress={ () => toNextScreen() }
+                    onPress={ () => confirm() }
                     style={styles.btnContainer}>
-                    <Text style={styles.btnText}>ต่อไป</Text>
+                    <Text style={styles.btnText}>ยืนยัน</Text>
                 </TouchableOpacity>
-    
-            </View>      
-          
+            </View>
+              ):null}
+            
+            {check ? (
+              <View style={{ justifyContent:"flex-end",alignItems: "center", margin: 20}}>
+              <TouchableOpacity 
+                  onPress = {() => next()}
+                  style={styles.btnContainer2}>
+                  <Text style={styles.btnText}>ถัดไป</Text>
+              </TouchableOpacity>
+  
+          </View>   
+            ):null}
+                  
         </View>
       )      
 
@@ -164,6 +243,13 @@ const FilterIngredient  = ({navigation}, props) =>  {
     borderRadius: 10,
     paddingVertical: 10,
     // paddingHorizontal: 20,
+  },
+  btnContainer2: {
+    width: "40%",
+    elevation: 8,
+    backgroundColor: "#00A316",
+    borderRadius: 10,
+    paddingVertical: 10,
   },
   btnText: {
     fontSize: 20,
