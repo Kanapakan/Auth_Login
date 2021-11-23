@@ -13,7 +13,6 @@ const MyProfile = ({navigation, route}) => {
   const[isLoading, setisLoading] = useState(true);
   const[userArr, setUserArr] = useState([]);
   const[docId, setDocId] = useState("");
-  const userData = (useSelector((state) => state.user.userDetail))
   const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
 
   // const dispatch = useDispatch();
@@ -123,7 +122,7 @@ const MyProfile = ({navigation, route}) => {
             </View>
        
         </View>
-        <View style={{alignItems: "center", backgroundColor: "white", paddingBottom: 10, paddingTop: 10}}>
+        <View style={{alignItems: "center", backgroundColor: "white", paddingBottom:15}}>
           < Logout  />
         </View>
          
@@ -193,7 +192,7 @@ const styles = StyleSheet.create({
   },
   btnContainerAll: {
     width: "20%",
-    marginTop: -60,
+    marginTop: -65,
     marginLeft: 120,
     backgroundColor: "#8ec18e",
     borderRadius: 10,

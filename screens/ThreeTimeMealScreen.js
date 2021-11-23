@@ -36,7 +36,7 @@ const ThreeTimeMeals = ({navigation, route}, props) => {
     {/* <RecipeMealList parentCallback = {callbackFunction }/> */}
 
         <RecipeMealList
-        // parentCallback = {callbackFunction }
+        dateKey={route.params.dateKey}
         mealTime={route.params.mealTime}
         style={{ width: "100%", height: "100%" }}
         listData={timeMeals}

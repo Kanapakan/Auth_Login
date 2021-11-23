@@ -17,9 +17,9 @@ const UserReducer = (state= initialState, action) => {
         // case "FETCHED_USER_HISTORY" :
         //     console.log('user history', action.history);
             // return {userHistory: action.history};
-        case "FETCHED_USER_DETAIL" :
-            console.log('created user', action.data);
-            return {userDetail: action.data};
+        // case "FETCHED_USER_DETAIL" :
+        //     console.log('created user', action.data);
+        //     return {userDetail: action.data};
         case "DATE_PICKUP" :
             console.log('Pick date : ', action.date);
             return {datePick: action.date};

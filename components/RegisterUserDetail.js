@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Image} from 'react-native'
+import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Image, Alert} from 'react-native'
 import { auth } from '../database/Auth'
 import  {firebase} from '../database/firebaseDb'
 import {Picker} from '@react-native-picker/picker';
@@ -65,6 +65,7 @@ const RegisterUserDetail = ({navigation, route}, props) => {
                 .then(userCredentials => {
                 const user = userCredentials.user;
                 console.log('Registered with:', user.email);
+
                 // console.log(props)
             dbRef.add({
                 userId: auth.currentUser?.uid,
@@ -132,19 +133,19 @@ const RegisterUserDetail = ({navigation, route}, props) => {
                 <TextInput
                     style={styles.Box}
                     placeholder="อายุ"
-                    keyboardType="numeric"
+                    keyboardType={Platform.OS === 'ios' ? "default" : "number-pad"}
                     onChangeText = {setAge}
                 />
                 <TextInput
                     style={styles.Box}
                     placeholder="ส่วนสูง"
-                    keyboardType="numeric"
+                    keyboardType={Platform.OS === 'ios' ? "default" : "number-pad"}
                     onChangeText = {setHeight}
                 />
                 <TextInput
                     style={styles.Box}
                     placeholder="น้ำหนัก"
-                    keyboardType="numeric"
+                    keyboardType={Platform.OS === 'ios' ? "default" : "number-pad"}
                     onChangeText = {setWeight}
                 />
     
