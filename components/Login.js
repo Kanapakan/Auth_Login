@@ -43,6 +43,7 @@ const LoginScreen = ({navigation, route}) => {
     return (
         <View style={styles.preloader}>
             <ActivityIndicator size="large" color="#547F53" />
+            <Text>กำลังเข้าสู่ระบบ</Text>
         </View>
     )
 }

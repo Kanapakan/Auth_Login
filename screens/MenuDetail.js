@@ -19,7 +19,7 @@ const MenuDetail = ({ navigation, route }, props) => {
   const allMeal = (useSelector((state) => state.recipes.allMeals))
   const sumNutrient = (useSelector((state) => state.recipes.sumNutrient))
   const sumEatKcals = (useSelector((state) => state.recipes.sumEatKcals))
-  console.log("----- sumNutrient : ", sumNutrient)
+  // console.log("----- sumNutrient : ", sumNutrient)
 
 
 
@@ -27,7 +27,7 @@ const MenuDetail = ({ navigation, route }, props) => {
   const bookmark_recipe = (useSelector((state) => state.recipes.bookmarkRecipes));
 
   const datePick = (useSelector((state) => state.user.datePick));
-  console.log("kuyyyyyyyyy : ", datePick)
+  console.log("Pick date : ", datePick)
   const existingIndex = bookmark_recipe.findIndex(recipe => recipe.id === id)
   const [bookmark, setBookmark] = useState(existingIndex >= 0)
   const [mealTime, setMealTime] = useState("")

@@ -1,9 +1,9 @@
-import React,{useEffect} from "react";
-import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons'; 
+import React, { useEffect } from "react";
+import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
+import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleMealTime, toggleEatKcals  } from '../../store/actions/recipeAction';
+import { toggleMealTime, toggleEatKcals } from '../../store/actions/recipeAction';
 import firebase from 'firebase';
 import { auth } from '../../database/Auth';
 const dbrealTime = firebase.app().database('https://fir-react-example-1e215-default-rtdb.asia-southeast1.firebasedatabase.app/');
@@ -13,93 +13,85 @@ const RecipeMealTime = (props) => {
   const allMeal = (useSelector((state) => state.recipes.allMeals))
   const sumNutrient = (useSelector((state) => state.recipes.sumNutrient))
   const sumEatKcals = (useSelector((state) => state.recipes.sumEatKcals))
-  // console.log("del lanwww: ", allMeal)
-  
+  // const sumCalList = props.sumCalList
+  const dateKey = props.dateKey
   // useEffect(() => {
     
 
   // }, []);
 
-  const updateUserHistory = (date) => {
-    let data;
-    dbrealTime.ref("user_History/userRecipe/" + auth.currentUser?.uid + "/" + date).on('value', snapshot => {
-      // console.log('user date :', snapshot.val())
-      data = snapshot.val()
-      console.log("hideee : ", data.dateKey)
-      
-      // const keyDate = dbrealTime.ref("user_History/Recepy_of_day/"+ data.datakey).getKey();
-      dbrealTime.ref("user_History/Recipe_of_day/" + data.dateKey).update({
-        date: date,
-        recipes: allMeal,
-        sumCal: sumEatKcals,
-        sumNutrient: sumNutrient,
-        userId: auth.currentUser?.uid
-      })
+  const dispatch = useDispatch();
+  const toggleMealTimeHandler = (mealId, Time, order, carbs, fats, protein) => {
+    console.log(props.id, props.mealTime)
+    dispatch(toggleMealTime(mealId, Time, order, carbs, fats, protein));
+
+  }
+
+  const toggleEatKcalsHandler = (kcals) => {
+    console.log(kcals)
+    dispatch(toggleEatKcals(kcals))
+
+  }
+
+  // ---------- กดลบเมนูอาหาร ---------------   
+  const delRecipe = () => {
+
+    console.log('del', props.id, props.mealTime)
+
+    toggleMealTimeHandler(props.id, props.mealTime, "del", props.carbs, props.fats, props.protein)
+    toggleEatKcalsHandler(props.kcal)
     
-    })
-
-
+   
+    updateUserHistory()
+      
   }
 
 
 
-     // ---------- กดลบเมนูอาหาร ---------------   
-    const delRecipe = () => {
-      
-        console.log('del', props.id, props.mealTime)
-                
-        toggleMealTimeHandler(props.id, props.mealTime, "del", props.carbs, props.fats, props.protein)
-        toggleEatKcalsHandler(props.kcal)
-        
-        
-        // props.parentCallback(sumKcals)
-    }
+  const updateUserHistory = () => {
 
-        const dispatch = useDispatch();
-        const toggleMealTimeHandler = (mealId, Time, order, carbs, fats, protein) => {
-        console.log(props.id, props.mealTime)
-        dispatch(toggleMealTime(mealId, Time, order, carbs, fats, protein));
-        
-        
-      }
 
-      const toggleEatKcalsHandler = (kcals) => {
-        console.log(kcals)
-        dispatch(toggleEatKcals(kcals))
-        
-      }
-    
-      
-    return(
-        <View style={styles.container}>
-            <TouchableOpacity onPress={props.onSelectRecipe} >
-              <View style={{flexDirection: 'row', marginTop: 20}}>
-                  <Image style={styles.food} source={{ uri: props.image }}/>
+      dbrealTime.ref("user_History/Recipe_of_day/" + dateKey).update({
+        // date: date,
+        recipes: allMeal,
+        sumCal: sumEatKcals,
+        sumNutrient: sumNutrient,
+        // userId: auth.currentUser?.uid
+      })
+       console.log(sumEatKcals)
+  }
 
-                  <View style={styles.foodBox}>
-                      <Text numberOfLines={1} style={styles.foodName}>{props.name}</Text>
-                      
-                      <View style={styles.foodTime}>
-                          <MaterialIcons name="access-time" size={26} color="black"/>
-                          <Text style={styles.timeText}>{props.time} นาที</Text>
-                      </View>
 
-                  </View>
-                  <View style={styles.box2}>
-                  <TouchableOpacity onPress={() => delRecipe(datePick)}>
-                       <Ionicons name="ios-trash-bin-sharp" color="#adacac"   style={styles.delMeal}/>
-                  </TouchableOpacity>
-                      <Text style={styles.foodCal}>{props.kcal} Kcal.</Text>
-                  </View>
- 
-              </View>
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={props.onSelectRecipe} >
+        <View style={{ flexDirection: 'row', marginTop: 20 }}>
+          <Image style={styles.food} source={{ uri: props.image }} />
+
+          <View style={styles.foodBox}>
+            <Text numberOfLines={1} style={styles.foodName}>{props.name}</Text>
+
+            <View style={styles.foodTime}>
+              <MaterialIcons name="access-time" size={26} color="black" />
+              <Text style={styles.timeText}>{props.time} นาที</Text>
+            </View>
+
+          </View>
+          <View style={styles.box2}>
+            <TouchableOpacity onPress={() => delRecipe(datePick)}>
+              <Ionicons name="ios-trash-bin-sharp" color="#adacac" style={styles.delMeal} />
             </TouchableOpacity>
-            <View style={styles.line} />
-   
-      
+            <Text style={styles.foodCal}>{props.kcal} Kcal.</Text>
+          </View>
+
+        </View>
+      </TouchableOpacity>
+      <View style={styles.line} />
+
+
     </View>
 
-    )
+  )
 }
 
 
@@ -110,34 +102,34 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "center",
   },
-  headBox:{
+  headBox: {
     backgroundColor: "#e3e3e3",
     //ตอนเอาลง tab เอา marginTop ออกด้วยนะ
     alignItems: "flex-start",
     padding: 8
   },
-  headText:{
-    fontSize:23,
+  headText: {
+    fontSize: 23,
     fontWeight: "bold",
     color: "#000",
     marginLeft: 10
   },
-  food:{
+  food: {
     height: 100,
     flex: 1,
     marginLeft: 10,
     borderRadius: 15
   },
-  foodBox:{
+  foodBox: {
     flexDirection: 'column',
     flex: 2,
   },
-  box2:{
+  box2: {
     flex: 1,
     flexDirection: 'column'
   },
-  foodName:{
-    width: 230 ,
+  foodName: {
+    width: 230,
     fontSize: 20,
     fontWeight: "bold",
     flex: 2,
@@ -145,13 +137,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexWrap: "wrap",
   },
-  foodCal:{
+  foodCal: {
     fontSize: 20,
     fontWeight: "bold",
     marginTop: 23,
     flex: 1,
   },
-  foodTime:{
+  foodTime: {
     flex: 1,
     marginLeft: 10,
     marginTop: 20,
@@ -163,15 +155,15 @@ const styles = StyleSheet.create({
     marginLeft: 43,
     flex: 1,
   },
-  timeText:{
+  timeText: {
     fontSize: 18,
     marginTop: -25,
     marginLeft: 30,
   },
-  line:{
-      height: 2,
-      backgroundColor: "#adacac",
-      marginTop: 20
+  line: {
+    height: 2,
+    backgroundColor: "#adacac",
+    marginTop: 20
   }
 
 });

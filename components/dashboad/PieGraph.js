@@ -6,14 +6,16 @@ import { VictoryPie, VictoryBar , VictoryChart, VictoryGroup, VictoryAxis, Victo
 
 
 const PieGraph =(props) =>{
-      const datePick = (useSelector((state) => state.user.datePick))
+      const datePick = props.date
       const [graphicData, setGraphicData] = useState(defaultGraphicData);
       const sumCal = (useSelector((state) => state.recipes.sumEatKcals))
+      const [endAngle, setEndAngle] = useState(0);
       const nutrient = (useSelector((state) => state.recipes.sumNutrient))
       const wantedGraphicData = [{ y: 10 }, { y: 50 }, { y: 40 }]; // Data that we want to display
       const defaultGraphicData = [{ y: 0 }, { y: 0 }, { y: 100 }]; // Data used to make the animate prop work
       // const scrollYAnimatedValue = useRef(new Animated.Value(0)).current;
       // const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
+
 
       const sumNutient = (nutrient.carbs+nutrient.fats+nutrient.protein)
       let percentEat;
@@ -21,10 +23,7 @@ const PieGraph =(props) =>{
       let proteins;
       let carbs;
 
-      useEffect(() => {
-        setGraphicData(wantedGraphicData); // Setting the data that we want to display
-      }, [sumCal]);
-
+      
 
       if(sumNutient == 0){
         percentEat = 0;
@@ -37,7 +36,14 @@ const PieGraph =(props) =>{
         proteins = (parseFloat(nutrient.protein/sumNutient)*100).toFixed(1)
         carbs = (parseFloat(nutrient.carbs/sumNutient)*100).toFixed(1)
       }
-     
+     useEffect(() => {
+        
+        setGraphicData(sumNutient ? [
+          { y: carbs*100, x: "คาร์บ"},
+          { y: proteins*100, x: "โปรตีน"},
+          { y: fats*100, x: "ไขมัน" }
+      ] : [{ y: 1, x: "0"}])
+      }, [sumCal]);
 
 
         return(
@@ -56,46 +62,43 @@ const PieGraph =(props) =>{
                         <View style={styles.pieChartContainer}>
                             <View style={styles.pieChart}>
                                 <VictoryPie
+                                
                                  animate={{
-                                  // duration: 2000,
-                                  
-                                      duration: 1500,
-                                      easing: 'exp'
-                                  
-                              }}
-                                data={ sumNutient ? [
-                                    { y: fats, label: fats + "%" },
-                                    { y: proteins, label: proteins + "%"},
-                                    { y: carbs, label: carbs +"%" }
-                                ] : [{ y: 1, label: 0 + "%" }]
+                                  // onLoad: {duration: 1000},
+                                  duration: 1000,
+                                  easing: "exp"
+                                }}
+                                
+                                data={ graphicData
                                   }
                                 width={180}
                                 height={160}
                                 colorScale={['#ce5a57', '#78a5a3', '#444c5c']}
                                 innerRadius={80}
-                                labelRadius={({innerRadius}) => (190 * 0.15 + innerRadius)/2.8}
+                                labelRadius={({innerRadius}) => (190 * 0.15 + innerRadius)/2.5}
                                 style={{
-                                    labels: {fill: "#fff", fontSize: 15},
+                                    labels: {fill: "#fff", fontSize: 13},
                                 }}
                                 />  
+                                
 
                                 
                             </View> 
                             <View style={styles.pieInfo}>
 
                                 <View style={styles.info}>
-                                    <Text style={styles.infoText}>{carbs}%</Text>
-                                    <Text style={styles.infoText2}>คาร์โบไฮเดรต</Text>
+                                    <Text style={styles.info1}>{carbs}%</Text>
+                                    <Text style={styles.infoText1}>คาร์โบไฮเดรต</Text>
                                 </View>
 
                                 <View style={styles.info}>
-                                    <Text style={styles.infoText}>{proteins}%</Text>
+                                    <Text style={styles.info2}>{proteins}%</Text>
                                     <Text style={styles.infoText2}>โปรตีน</Text>                       
                                 </View>
 
                                 <View style={styles.info}>                           
-                                    <Text style={styles.infoText}>{fats}%</Text>
-                                    <Text style={styles.infoText2}>ไขมัน</Text>
+                                    <Text style={styles.info3}>{fats}%</Text>
+                                    <Text style={styles.infoText3}>ไขมัน</Text>
                                 </View>
 
                             </View>
@@ -226,18 +229,53 @@ const styles = StyleSheet.create(
             marginLeft: 10,
         },
         info:{
+          
           flexDirection: "row",
         },
-        infoText:{
+        info1:{
           flex: 0.4,
           fontSize: 16,
-          padding: 7
+          padding: 7,
+          color: "#ce5a57",
+        },
+        infoText1:{
+            flex: 1,
+            fontSize: 16,
+            fontWeight: "bold",
+            padding: 5,
+            color: "#ce5a57",
+            paddingTop: 5
+        },
+        info2:{
+          flex: 0.4,
+          fontSize: 16,
+          padding: 7,
+          color: "#78a5a3",
+
         },
         infoText2:{
             flex: 1,
             fontSize: 16,
             fontWeight: "bold",
-            padding: 5
+            padding: 5,
+            color: "#78a5a3",
+            paddingTop: 7
+        },
+        info3:{
+          flex: 0.4,
+          fontSize: 16,
+          padding: 7,
+          color: "#444c5c",
+
+
+        },
+        infoText3:{
+            flex: 1,
+            fontSize: 16,
+            fontWeight: "bold",
+            padding: 5,
+            color: "#444c5c",
+            paddingTop: 7
         },
 
     }

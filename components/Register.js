@@ -7,6 +7,7 @@ const Register = ({navigation, route}) => {
     const [password, setPassword] = useState('')
     const [confirmpass, setConfirmpass] = useState('')
     const [isLoading, setisLoading] = useState(false);
+    // const[confirmPassword, setConfirmPassword] = useState('')
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
@@ -39,7 +40,7 @@ const Register = ({navigation, route}) => {
     }
     return (
         <ScrollView style={styles.container}>
-            <View style={{alignItems: "center", marginTop: 50}}>
+            <View style={{alignItems: "center", marginTop: 30}}>
                 <Image style={styles.diet} source={require("../assets/Diet.gif")}/>
             </View>
 
@@ -59,17 +60,24 @@ const Register = ({navigation, route}) => {
                     //value={}
                     onChangeText={text => setPassword(text)}
                 />
+                {password.length < 6 ? (
+                    <Text style={{color: "red", marginTop: 3, }}>
+                    ความยาวอย่างน้อย 6 ตัวอักษร
+                    </Text>) : null}
                 <TextInput
                     style={styles.Box}
                     placeholder="ยืนยันรหัสผ่าน"
                     keyboardType="default"
                     secureTextEntry={true}
                     onChangeText={text => setConfirmpass(text)}
-
                 />
+                {password !== confirmpass ? (
+        <Text style={{color: "red", marginTop: 3,}}>
+          กรุณาใส่รหัสยืนยันที่ถูกต้อง 
+        </Text>) : null}
             </KeyboardAvoidingView>
     
-            <View style={{alignItems: "center" , marginTop: 50,}}>
+            <View style={{alignItems: "center" , marginTop: 30,}}>
                 <TouchableOpacity 
                     style={styles.btnContainer}
                     onPress={handleSignUp}>
@@ -77,7 +85,7 @@ const Register = ({navigation, route}) => {
                 </TouchableOpacity>
             </View>
     
-            <View style={{flexDirection: 'row', justifyContent: "center" , marginTop: 50,}}>
+            <View style={{flexDirection: 'row', justifyContent: "center" , marginTop: 30,}}>
                     <Text style={styles.btnNewText2}>มีบัญชีผู้ใช้อยู่แล้ว ?</Text>
                     <TouchableOpacity 
                         onPress={() => {

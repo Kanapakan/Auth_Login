@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
-import {KeyboardAvoidingView, StyleSheet, ScrollView, ActivityIndicator, View,Text, Image, TextInput, TouchableOpacity, useWindowDimensions} from "react-native";
+import {KeyboardAvoidingView, StyleSheet, ScrollView, ActivityIndicator, View,Text, Image, TextInput, TouchableOpacity, useWindowDimensions, Dimensions,Animated, Alert } from "react-native";
 import {Picker} from '@react-native-picker/picker';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import  {firebase} from '../database/firebaseDb'
-import { auth } from '../database/Auth';
+import { auth, getAuth, reauthenticateWithCredential } from '../database/Auth';
 const db = firebase.firestore()
 
 const ChangeUserDetail = ({navigation, route}) => {
@@ -15,18 +15,16 @@ const ChangeUserDetail = ({navigation, route}) => {
     const[weight, setWeight] = useState(0);
     const[activity, setActivity] = useState("");
     const[email, setEmail] = useState('')
-    // const[password, setPassword] = useState('')
+    const[oldPassword, setOldPassword] = useState('')
+    const[newPassword, setNewPassword] = useState('')
+    const[confirmPassword, setConfirmPassword] = useState('')
     const[isLoading, setisLoading] = useState(true);
     const userKey = route.params.userKey;
+    const [titleBar, setTitleBar] = useState("กรอกด้วยตัวเอง");
+    const [showTab1, setShowTab1] = useState(true)
+    const [active, setactive] = useState(true)
 
-  // -------------------- จัดแถบข้างบน -----------------------------
-    const layout = useWindowDimensions();
-    const [index, setIndex] = React.useState(0);
-    const [routes] = React.useState([
-      { key: 'first', title: 'ข้อมูลส่วนตัว' },
-      { key: 'second', title: 'ข้อมูลเข้าสู่ระบบ' },
-      ]);
-
+  // -------------------- จัดแถบข้างบน -----------------------------]
     
     let bmr;
     let dailyCalVal;
@@ -51,7 +49,7 @@ const ChangeUserDetail = ({navigation, route}) => {
       }
 
     useEffect(() => {
-      console.log("load")
+      // console.log("load")
       
         const dbRef = db.collection('userDetail').doc(userKey);
 
@@ -74,10 +72,7 @@ const ChangeUserDetail = ({navigation, route}) => {
                 console.log('Document does not exist!');
             }
         })
-            return () => {
-                // unsubscribe();
-                
-            }
+            
       }, []);
 
 
@@ -113,7 +108,7 @@ const ChangeUserDetail = ({navigation, route}) => {
             setWeight(0),
             setActivity(""),
             setisLoading(false)
-            console.log("Edit success!");
+            Alert.alert("แก้ไขข้อมูลส่วนตัวสำเร็จ")
             navigation.navigate('MyProfile');
         })
         .catch((err) => {
@@ -122,13 +117,115 @@ const ChangeUserDetail = ({navigation, route}) => {
         })
   }
 
+  const reauthrnticate = (currentPass) =>{
+    
+     const user = firebase.auth().currentUser;
+      const cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPass);
+      return user.reauthenticateWithCredential(cred);
+  }
+  //  const updatePassword = () => {
+    const updatePassword = (oldPassword, newPassword) => {
+      setisLoading(true);
+      reauthrnticate(oldPassword).then(() => {
+        const user = firebase.auth().currentUser;
+        user.updatePassword(newPassword).then(() => {
+          setisLoading(false)
+          Alert.alert("เปลี่ยนรหัสผ่านสำเร็จ")
+            console.log("Edit Password success!");
+            navigation.navigate('MyProfile');
+      }).then(() => {
+          setOldPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+      })
+      .catch((err) => {
+        console.log("Error:", err)
+        Alert.alert("รหัสผ่านเก่าไม่ถูกต้อง")
+        // setisLoading(false)
+    })
 
-  // --------------------หน้าแรก-----------------------------
-  const FirstRoute = () => (
-    <KeyboardAvoidingView style={styles.container}>
+    })
+  }
+
+
+  if (isLoading) {
+    return (
+        <View style={styles.preloader}>
+            <ActivityIndicator size="large" color="#547F53" />
+            <Text>กรุณารอสักครู่</Text>
+        </View>
+    )
+}
+
+  return(
+    <View style={styles.container}>
+        <View
+          style={{
+            width: "100%",
+            marginLeft: "auto",
+            marginRight: "auto"
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              // marginTop: 40,
+              // marginBottom: 20,
+              height: 50,
+              position: "relative"
+            }}
+          >
+                  {/* ----------------------- Tab1 --------------------------------- */}      
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                borderBottomWidth: 3,
+                borderBottomColor: showTab1 == true ? "#547F53" : "#fff",
+                backgroundColor:  "#fff",
+
+              }}
+              onPress={() => setShowTab1(true)}
+            >
+              <Text
+                style={{
+                  color: showTab1 == true ? "#000" : "#adacac",
+                  fontSize: 16
+                }}
+              >
+                ข้อมูลส่วนตัว
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                borderBottomWidth: 3,
+                borderBottomColor: showTab1 == false ? "#547F53" : "#fff",
+                backgroundColor:  "#fff",
+              }}
+              onPress={() => setShowTab1(false) }
+
+            >
+              <Text
+                style={{
+                  color: showTab1 == false ? "#000" : "#adacac",
+                  fontSize: 16
+                }}
+              >
+                ข้อมูลเข้าสู่ระบบ
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+          {showTab1 ? <KeyboardAvoidingView style={styles.container}>
+            {/* ----------------------- Tab2 --------------------------------- */}
         <View style={styles.headBox} >
           <Text style={styles.headText}>ข้อมูลส่วนตัว</Text>
         </View>
+
         <Text style={styles.btnTextAll}>เพศ</Text>
         <View style={styles.pickerBorder}>
           <Picker
@@ -148,8 +245,8 @@ const ChangeUserDetail = ({navigation, route}) => {
           style={styles.Box2}
           placeholder="อายุ"
           keyboardType="numeric"
-          value={age.toString()}
-          onChangeText = {text => setAge(text)}
+          value={age}
+          onChangeText = {setAge}
         />
   
         <Text style={styles.btnTextAll}>ส่วนสูง</Text>
@@ -157,7 +254,7 @@ const ChangeUserDetail = ({navigation, route}) => {
             style={styles.Box2}
             placeholder="ส่วนสูง"
             keyboardType="numeric"
-            value={height.toString()}
+            value={height}
             onChangeText = {setHeight}
         />
          <Text style={styles.btnTextAll}>น้ำหนัก</Text>  
@@ -165,7 +262,7 @@ const ChangeUserDetail = ({navigation, route}) => {
           style={styles.Box2}
           placeholder="น้ำหนัก"
           keyboardType="numeric"
-          value={weight.toString()}
+          value={weight}
           onChangeText = {setWeight}
         />
   
@@ -193,27 +290,19 @@ const ChangeUserDetail = ({navigation, route}) => {
             <Text style={styles.btnSaveText}>บันทึก</Text>
           </TouchableOpacity>
         </View>
-  
-      </KeyboardAvoidingView>
-  );
+      </KeyboardAvoidingView> : 
 
-    // --------------------แถบ 2-----------------------------
-  const SecondRoute = () => (
-    // ข้อมูลเข้าสู่ระบบ
-    <View style={styles.container}>
+      // ----------------------- Tab 2 --------------------------------------
+      <View style={styles.container}>
       <View style={styles.headBox} >
         <Text style={styles.headText}>ข้อมูลเข้าสู่ระบบ</Text>
       </View>
-      <Text style={styles.btnTextAll}>ชื่อผู้ใช้</Text>
+      <Text style={styles.btnTextAll}>อีเมลผู้ใช้</Text>
 
-      <TextInput
-        style={styles.Box}
-        placeholder="ชื่อผู้ใช้"
-        keyboardType="email-address"
-        value={email}
-        disabled={true}
-        //onChangeText={}
-      />
+      <View style={styles.Box}>
+        <Text style={styles.BoxText}>{email}</Text>
+      </View >
+      
 
       <Text style={styles.btnTextAll}>รหัสผ่านเก่า</Text>
       <TextInput
@@ -221,9 +310,10 @@ const ChangeUserDetail = ({navigation, route}) => {
         placeholder="รหัสผ่านเก่า"
         keyboardType="default"
         secureTextEntry={true}
-        //value={}
-        //onChangeText={}
+        value={oldPassword}
+        onChangeText={setOldPassword}
       />
+      
 
     <Text style={styles.btnTextAll}>รหัสผ่านใหม่</Text>
     <TextInput
@@ -231,64 +321,36 @@ const ChangeUserDetail = ({navigation, route}) => {
         placeholder="รหัสผ่านใหม่"
         keyboardType="default"
         secureTextEntry={true}
-        //value={}
-        //onChangeText={}
+        value={newPassword}
+        onChangeText={setNewPassword}
       />
+      {newPassword.length < 6 ? (
+        <Text style={{color: "red", paddingLeft: "50%", marginTop: 3, marginBottom: -15 }}>
+          ความยาวอย่างน้อย 6 ตัวอักษร
+        </Text>) : null}
     <Text style={styles.btnTextAll}>ยืนยันรหัสผ่านใหม่</Text>
     <TextInput
         style={styles.Box}
         placeholder="ยืนยันรหัสผ่านใหม่"
         keyboardType="default"
         secureTextEntry={true}
-        //value={}
-        //onChangeText={}
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
       />
-    <View style={{alignItems: "center" , marginTop: 30,}}>
+      {newPassword !== confirmPassword ? (
+        <Text style={{color: "red", paddingLeft: "50%", marginTop: 3, }}>
+          กรุณาใส่รหัสยืนยันที่ถูกต้อง 
+        </Text>) : null}
+    <View style={{alignItems: "center" , marginTop: 35, }}>
       <TouchableOpacity 
-        // onPress={} 
+        onPress={() => updatePassword(oldPassword, newPassword)}
         style={styles.btnSave}>
         <Text style={styles.btnSaveText}>บันทึก</Text>
       </TouchableOpacity>
     </View>
-  </View>
-  );
-  
-    // -------------------- render หน้า -----------------------------
-  const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-    });
-  
-    const renderTabBar = props => (
-      <TabBar
-          {...props}
-          activeColor={'black'}
-          inactiveColor={'gray'}
-          borderColor={'#547F53'}
+  </View>}
 
-            style={{backgroundColor:"white"}}
-      />
-    );
-
-
-  if (isLoading) {
-    return (
-        <View style={styles.preloader}>
-            <ActivityIndicator size="large" color="#547F53" />
-            
-        </View>
-    )
-}
-
-  return(
-    <TabView
-      	navigationState={{ index, routes }}
-      	renderScene={renderScene}
-      	renderTabBar={renderTabBar}
-      	onIndexChange={setIndex}
-      	initialLayout={{ width: layout.width }}
-  	/>
-    
+    </View>
     )
 }
 
@@ -324,7 +386,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#000",
     marginLeft: 50,
-    marginTop: 30
+    marginTop: 35
   },
   pickerBorder:{
     width: "40%",
@@ -343,6 +405,14 @@ const styles = StyleSheet.create({
     borderColor: '#adacac',
     borderWidth: 2,
     borderRadius: 10,
+    fontSize: 18,
+    textAlign: "center",
+    
+  },
+  BoxText:{
+    marginTop: 6,
+    height: 45,
+    borderColor: '#adacac',
     fontSize: 18,
     textAlign: "center",
   },
@@ -379,6 +449,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 18,
     textAlign: "center",
+    
   },
   pickerdropdown:{
     fontFamily: 'serif',

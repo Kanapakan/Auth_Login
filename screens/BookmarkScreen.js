@@ -6,9 +6,11 @@ import { useSelector } from 'react-redux';
 
 const BookmarkScreen = ({navigation, route}) => {
     const bookmark = (useSelector((state) => state.recipes.bookmarkRecipes))
-
+    // console.log("lenghtttt",bookmark.length)
     return (
+
         <View style={styles.container}>
+          <Text style={styles.headText}>{bookmark.length == 0 ? "ยังไม่มีรายการอาหาร" : "มีรายการอาหาร : "+bookmark.length   }</Text>
             <RecipeList
           style={{ width: "100%", height: "100%" }}
           listData={bookmark}
@@ -32,12 +34,6 @@ const styles = StyleSheet.create({
       //ตอนเอาลง tab เอา marginTop ออกด้วยนะ
       alignItems: "flex-start",
       padding: 8
-    },
-    headText:{
-      fontSize:23,
-      fontWeight: "bold",
-      color: "#000",
-      marginLeft: 10
     },
     food:{
       height: 100,
@@ -77,7 +73,14 @@ const styles = StyleSheet.create({
         height: 2,
         backgroundColor: "#adacac",
         marginTop: 20
-    }
+    },
+    headText:{
+      fontSize: 15,
+      fontWeight: "bold",
+      color: "#000",
+      marginTop: 10,
+      marginLeft: 10
+    },
   
   });
   

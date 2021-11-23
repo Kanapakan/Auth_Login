@@ -23,16 +23,14 @@ export const createUser = (userdata) => {
         
                 dispatch({ type: 'CREATE_USER', userdata});
             }
-            // .catch((err) => {
-            //     dispatch({type: 'CREATE_USER_ERROR', err})
-            // })
+
     
 }
-export const fetch_userdetail = (data) => {
-    return (dispatch, getState) => {
-        dispatch({ type: "FETCHED_USER_DETAIL", data});
-    }
-}
+// export const fetch_userdetail = (data) => {
+//     return (dispatch, getState) => {
+//         dispatch({ type: "FETCHED_USER_DETAIL", data});
+//     }
+// }
 
 // export const thunk_action_userHistory = userHistory => {
 //     const sumNutrient = userHistory.sumNutrient

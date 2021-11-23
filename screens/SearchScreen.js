@@ -1,19 +1,21 @@
 import React, { useRef, useState } from "react";
-import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity, CheckBox } from "react-native";
+import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity, CheckBox } from "react-native";
 import { useSelector } from 'react-redux';
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons';
 import RecipeList from "../components/Recipe/RecipeList";
 import FilterIngredient from "../components/FilterIngredient";
 
-const SearchScreen = ({navigation, route}) => {
-  const[searchResult, setSearchResult] = useState([]);
-  const[searchWord, setSearchWord] = useState("");
-  const[titleBar, setTitleBar] = useState("กรอกด้วยตัวเอง");
-  const[showFilter, setShowFilter] = useState(true)
+
+
+const SearchScreen = ({ navigation, route }) => {
+  const [searchResult, setSearchResult] = useState([]);
+  const [searchWord, setSearchWord] = useState("");
+  const [titleBar, setTitleBar] = useState("กรอกด้วยตัวเอง");
+  const [showFilter, setShowFilter] = useState(true)
   const recipes = useSelector(state => state.recipes.recipes)
 
-  
+
 
 
   // ---------------- funtion filter จากชื่อ
@@ -40,85 +42,84 @@ const SearchScreen = ({navigation, route}) => {
     }
   }
 
-      return (
-        <View style={styles.container}>
-        {/* Search */}
-          <View style={{alignItems: "center" , marginTop: 15, }}>
-            <View style={styles.searchBorder}>
-              <AntDesign name="search1" size={28} style={{paddingTop: 6, paddingLeft: 10, paddingRight: 10, color: "#adacac"}} 
-              />
-                <TextInput
-                style={styles.searchBox}
-                placeholder="ค้นหาจากชื่อเมนู..."
-                onChangeText = {(text) => searchHandler(text)}
-                
-                value = {searchWord}
-                >
-                  
-                </TextInput>
-                <Entypo name="cross" size={24} color="black" size={28} style={{paddingTop: 6, color: "#adacac"}} 
-                onPress={(text) => searchHandler('')}/>
-              </View>
-          </View>
-              <View style={styles.headBox} >
-                  <Text style={styles.headText}>{titleBar} </Text>
-                  
-              </View>
-              
-              {/* -------------------- FilterIngredient ---------------------------- */}
-                {showFilter ? < FilterIngredient 
-                navigation={navigation}/> : null }
+  return (
+    <View style={styles.container}>
+      {/* Search */}
+      <View style={{ alignItems: "center", marginTop: 15, }}>
+        <View style={styles.searchBorder}>
+          <AntDesign name="search1" size={28} style={{ paddingTop: 6, paddingLeft: 10, paddingRight: 10, color: "#adacac" }}
+          />
+          <TextInput
+            style={styles.searchBox}
+            placeholder="ค้นหาจากชื่อเมนู..."
+            onChangeText={(text) => searchHandler(text)}
+            value={searchWord}
+          >
 
-              {/* -------------------- List ผลการพิมพ์หา ---------------------------- */}
-              <View style={styles.container}>
-                  <RecipeList
-                    style={{ width: "100%", height: "100%" }}
-                    listData={searchResult}
-                    navigation={navigation}
-                  />
+          </TextInput>
+          <Entypo name="cross" size={24} color="black" size={28} style={{ paddingTop: 6, color: "#adacac" }}
+            onPress={(text) => searchHandler('')} />
+        </View>
+      </View>
+      <View style={styles.headBox} >
+        <Text style={styles.headText}>{titleBar} </Text>
 
-              </View>
-              
-          </View>
-      )
-  
-  }
+      </View>
 
-    
-    const styles = StyleSheet.create({
-      container: {
-        flexDirection: "column",
+      {/* -------------------- FilterIngredient ---------------------------- */}
+      {showFilter ? < FilterIngredient
+        navigation={navigation} /> : null}
+
+      {/* -------------------- List ผลการพิมพ์หา ---------------------------- */}
+      <View style={styles.container}>
+        <RecipeList
+          style={{ width: "100%", height: "100%" }}
+          listData={searchResult}
+          navigation={navigation}
+        />
+
+      </View>
+
+    </View>
+  )
+
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
     flex: 1,
     backgroundColor: "#fff",
     // maxHeight: '100%'
     // alignItems: "center",
     // justifyContent: "center",
   },
-  headBox:{
+  headBox: {
     backgroundColor: "#e4efe3",
     //ตอนเอาลง tab เอา marginTop ออกด้วยนะ
     marginTop: 15,
     alignItems: "flex-start",
     padding: 8
   },
-  headText:{
-    fontSize:23,
+  headText: {
+    fontSize: 23,
     fontWeight: "bold",
     color: "#000",
     marginLeft: 10
   },
-// css ของหน้าผลการค้นหา
-  food:{
+  // css ของหน้าผลการค้นหา
+  food: {
     height: 100,
     flex: 1,
     marginLeft: 10,
     borderRadius: 15
   },
-  foodBox:{
+  foodBox: {
     flexDirection: 'column',
     flex: 2,
   },
-  foodName:{
+  foodName: {
     fontSize: 22,
     fontWeight: "bold",
     flex: 2,
@@ -126,29 +127,29 @@ const SearchScreen = ({navigation, route}) => {
     marginTop: 10,
     flexWrap: "wrap",
   },
-  foodCal:{
+  foodCal: {
     fontSize: 20,
     fontWeight: "bold",
     marginTop: 10,
     flex: 1,
   },
-  foodTime:{
+  foodTime: {
     flex: 1,
     marginLeft: 10,
   },
-  timeText:{
+  timeText: {
     fontSize: 18,
     marginTop: -25,
     marginLeft: 30,
   },
-  line:{
-      height: 2,
-      backgroundColor: "#adacac",
-      marginTop: 20
+  line: {
+    height: 2,
+    backgroundColor: "#adacac",
+    marginTop: 20
   },
 
-// css ของหน้าค้นหาด้วยตัวเอง
-  sensitiveText:{
+  // css ของหน้าค้นหาด้วยตัวเอง
+  sensitiveText: {
     fontSize: 23,
     fontWeight: "bold",
     color: "#547f53",
@@ -169,7 +170,7 @@ const SearchScreen = ({navigation, route}) => {
     fontWeight: "bold",
     alignSelf: "center",
   },
-  searchBox:{
+  searchBox: {
     width: "75%",
     height: 40,
     // flex: 1,
@@ -178,7 +179,7 @@ const SearchScreen = ({navigation, route}) => {
     // borderRadius: 10,
     fontSize: 18,
   },
-  searchBorder:{
+  searchBorder: {
     flexDirection: "row",
     width: "90%",
     height: 45,
@@ -189,12 +190,12 @@ const SearchScreen = ({navigation, route}) => {
 
 
 
-    
-    });
-    
-    export default SearchScreen;
-    
-    {/* <Text style={{fontFamily: 'normal'}}>  normal </Text>
+
+});
+
+export default SearchScreen;
+
+{/* <Text style={{fontFamily: 'normal'}}>  normal </Text>
             <Text style={{fontFamily: 'notoserif'}}>  notoserif </Text>
             <Text style={{fontFamily: 'sans-serif'}}>  sans-serif </Text>
             <Text style={{fontFamily: 'sans-serif-light'}}>  sans-serif-light </Text>

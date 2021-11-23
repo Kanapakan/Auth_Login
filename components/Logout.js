@@ -22,7 +22,7 @@ const Logout = () => {
         onPress={handleSignOut}
         style={styles.btnContainer}
       >
-        <Text style={styles.btnText}>Sign out</Text>
+        <Text style={styles.btnText}>ออกจากระบบ</Text>
       </TouchableOpacity>
     // </View>
   )
