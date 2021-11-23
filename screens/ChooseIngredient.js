@@ -1,272 +1,156 @@
-import React, { useRef, useState } from "react";
-import {Text, View, StyleSheet, Image, TextInput, ScrollView, TouchableOpacity} from "react-native";
+import React, { useRef, useState, useEffect } from "react";
+import {Text, View, StyleSheet, Image, TextInput,FlatList, ScrollView, TouchableOpacity, Alert} from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { CheckBox } from 'react-native-elements'
 
-
 const ChooseIngredient  = ({route, navigation},props) =>  {
-  const {checkedVegan, checkedGluten, checkedEgg, checkedDaily, checkedNut, checkedSea} = route.params;
-//ทดลองของเนื้อ ฝั้งซ้าย 
-const [checked1, setchecked1] = useState(false);
-//ทดลองของเนื้อ ฝั้งขวา
-const [checked2, setchecked2] = useState(false);
+  const {filtered} = route.params;
+  const [products, setProducts] = useState(filtered.filter((item) => {return item.type == "meat"}));
+  const [products2, setProducts2] = useState(filtered.filter((item) => {return item.type == "veg"}))
+  const [select, setSelect] = useState([]);
 
-//ทดลองของผัก ฝั้งซ้าย 
-const [checked3, setchecked3] = useState(false);
-//ทดลองของผัก ฝั้งขวา
-const [checked4, setchecked4] = useState(false);
+  
+  
+  const handleChange = (id) => {
+    let item = [...select]
+    let temp = products.map((product) => {
+      if (id === product.id) {
+        return { ...product, isChecked: !product.isChecked };
+      }
+      return product;
+    });
+    setProducts(temp);
 
-  return (    
-    // เลือกวัตถุดิบ
+    temp.map((ele) => {
+      if(id === ele.id && ele.isChecked == true){
+        item.push(ele.txt)
+      }
+      if(id === ele.id && ele.isChecked == false){
+        item.splice(item.indexOf(ele.txt), 1)
+      }
+    })
+    setSelect(item)
+    
+    temp = products2.map((product) => {
+      if (id === product.id) {
+        return { ...product, isChecked: !product.isChecked };
+      }
+      return product;
+    });
+    setProducts2(temp);
+
+    temp.map((ele) => {
+      if(id === ele.id && ele.isChecked == true){
+        item.push(ele.txt)
+      }
+      if(id === ele.id && ele.isChecked == false){
+        item.splice(item.indexOf(ele.txt), 1)
+      }
+    })
+    setSelect(item)
+
+  };
+
+  
+ 
+
+const renderFlatList = (renderData) => {
+  return(
+    <FlatList
+        data={renderData}
+        renderItem={({ item }) => (
+        
+          <View style={styles.checkContainer}>
+            <CheckBox
+              checked={item.isChecked}
+              onPress={() => {
+                handleChange(item.id);
+              }}
+   
+              checkedColor='#547f53'
+            />
+          
+           <Text style={styles.ingredientName}>{item.txt}</Text>
+         </View>
+        )}
+  />
+  )
+}
+
+
+const clear = () => {
+  let temp = products.map((product) => {
+      return { ...product, isChecked: false };
+  });
+  setProducts(temp);
+}
+
+const next = () =>{
+  if (select.length == 0) {
+    Alert.alert(
+      "กรุณาเลือกวัตถุดิบ",
+      "เลือกวัตถุดิบอย่างน้อย 1 รายการ",
+      [
+        {
+          text: "ok",
+          style: "ok",
+        },
+      ],
+      {
+        cancelable: false,
+      }
+    );
+  }
+  else{
+    navigation.navigate("ConfirmIngredient", {select: select})
+  }
+}
+
+  return (   
+
     
         <View style={styles.container}>
-
-        <View style={{flex:3.4}}>
-          <ScrollView>
-           
-            {/* container ของเนื้อ และผลิตภัณฑ์จากสัตว์ */}
-            <Text style={styles.headerText}>เนื้อ และผลิตภัณฑ์จากสัตว์</Text>
-              {/* checkbox ทั้ง 2 ฝั้ง */}
-              {!checkedVegan ? (
-              <View style={styles.pararellContainer}>
-
-                {/* checkbox 1 อัน ฝั่งซ้าย */}
-                
-                  <View style={styles.checkboxContainer}>
-
-                  <View style={styles.checkContainer}>
-                      <CheckBox
-                          checked={checked1}
-                          onPress={() => setchecked1(!checked1)}
-                          checkedColor='#547f53'
-                      />
-                  </View>
-                      
-                      <Text style={styles.ingredientName}>ไก่</Text>
-
-                  </View>
-
-
-                {/* checkbox 1 อัน ฝั่งขวา */}
-                {!checkedSea ? (
-                  <View style={styles.checkboxContainer}>
-
-                  <View style={styles.checkContainer}>
-                      <CheckBox
-                          checked={checked2}
-                          onPress={() => setchecked2(!checked2)}
-                          checkedColor='#547f53'
-                      />
-                  </View>
-
-                      <Text style={styles.ingredientName}>ปู</Text>
+       
+        <View style={{ flex: 1,flexDirection: "row"}}>
     
-               </View>
-                ) : null}
-                
-            </View>
-             ) :null }
-            {!checkedVegan ? (
-            <View style={styles.pararellContainer}>
-                <View style={styles.checkboxContainer}>
+          <View style={{ flex: 1}}>
 
-                  <View style={styles.checkContainer}>
-                    <CheckBox
-                      // checked={}
-                      // onPress={}
-                      checkedColor='#547f53'
-                    />
-                  </View>
-    
-                <Text style={styles.ingredientName}>หมู</Text>
-                </View>
-                {!checkedSea ? (
-                  <View style={styles.checkboxContainer}>
+          <Text style={styles.headerText}>เนื้อ และผลิตภัณฑ์จากสัตว์</Text>
+            {renderFlatList(products)}
+          </View>
 
-                  <View style={styles.checkContainer}>
-                      <CheckBox
-                          // checked={}
-                          // onPress={}
-                          checkedColor='#547f53'
-                      />
-                  </View>
-
-                      <Text style={styles.ingredientName}>ปลา</Text>
-    
-               </View>
-                ) : null}
-                
-            
-            </View>
-            ) :null }
-            
-            {!checkedVegan ? (
-            <View style={styles.pararellContainer}>
-              {!checkedSea ? (
-                <View style={styles.checkboxContainer}>
-
-                <View style={styles.checkContainer}>
-                  <CheckBox
-                    // checked={}
-                    // onPress={}
-                    checkedColor='#547f53'
-                  />
-                </View>
-  
-              <Text style={styles.ingredientName}>กุ้ง</Text>
-              </View>
-              ):null}
-                
-
-                <View style={styles.checkboxContainer}>
-
-                    <View style={styles.checkContainer}>
-                        <CheckBox
-                            // checked={}
-                            // onPress={}
-                            checkedColor='#547f53'
-                        />
-                    </View>
-
-                        <Text style={styles.ingredientName}>เนื้อวัว</Text>
-      
-                 </View>
-            
-            </View>
-            ) :null }
-
-{!checkedVegan ? (
-            <View style={styles.pararellContainer}>
-              {!checkedEgg ? (
-                <View style={styles.checkboxContainer}>
-
-                <View style={styles.checkContainer}>
-                  <CheckBox
-                    // checked={}
-                    // onPress={}
-                    checkedColor='#547f53'
-                  />
-                </View>
-  
-              <Text style={styles.ingredientName}>ไข่ไก่</Text>
-              </View>
-              ):null}
-                
-
-                <View style={styles.checkboxContainer}>
-
-                    <View style={styles.checkContainer}>
-                        <CheckBox
-                            // checked={}
-                            // onPress={}
-                            checkedColor='#547f53'
-                        />
-                    </View>
-
-                        <Text style={styles.ingredientName}>นม</Text>
-      
-                 </View>
-            
-            </View>
-            ) :null }
-
-{!checkedVegan ? (
-            <View style={styles.pararellContainer}>
-                <View style={styles.checkboxContainer}>
-
-                  <View style={styles.checkContainer}>
-                    <CheckBox
-                      // checked={}
-                      // onPress={}
-                      checkedColor='#547f53'
-                    />
-                  </View>
-    
-                <Text style={styles.ingredientName}>หมึก</Text>
-                </View>
-
-                <View style={styles.checkboxContainer}>
-
-                    <View style={styles.checkContainer}>
-                        <CheckBox
-                            // checked={}
-                            // onPress={}
-                            checkedColor='#547f53'
-                        />
-                    </View>
-
-                        <Text style={styles.ingredientName}>หอยแมลงภู่</Text>
-      
-                 </View>
-            
-            </View>
-            ) :null }
-
-              {/* code เหมือนกับข้างบนนะ แค่ทดลองโชว์เฉยๆ*/}
-
-              {/* container ของผัก และผลไม้ */}
-              <Text style={styles.headerText}>ผัก และผลไม้</Text>
-              {/* checkbox ทั้ง 2 ฝั้ง */}
-                <View style={styles.pararellContainer}>
-
-                  {/* checkbox 1 อัน ฝั่งซ้าย */}
-                  <View style={styles.checkboxContainer}>
-
-                    <View style={styles.checkContainer}>
-                        <CheckBox
-                            checked={checked3}
-                            onPress={() => setchecked3(!checked3)}
-                            checkedColor='#547f53'
-                        />
-                    </View>
-                        
-                        <Text style={styles.ingredientName}>กะเพรา</Text>
-
-                  </View>
-                
-                  {/* checkbox 1 อัน ฝั่งขวา */}
-                  <View style={styles.checkboxContainer}>
-
-                    <View style={styles.checkContainer}>
-                        <CheckBox
-                            checked={checked4}
-                            onPress={() => setchecked4(!checked4)}
-                            checkedColor='#547f53'
-                        />
-                    </View>
-
-                        <Text style={styles.ingredientName}>กะหล่ำปลี</Text>
-      
-                  </View>
-
-                </View>
-
-          </ScrollView>
-        </View>
-
-
-
-            <View style={{flex:1, justifyContent:"flex-end",}}>
-
-                <View style={styles.btnContainer}>
-
-                <TouchableOpacity 
-                    // onPress={} 
-                    style={styles.btnBox1}>
-                    <Text style={styles.btnText}>ล้างทั้งหมด</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    // onPress={} 
-                    style={styles.btnBox2}>
-                    <Image style={styles.img} source={require("../assets/ingredient.png")}/>
-                    <Text style={styles.btnText}>: 2</Text>
-                </TouchableOpacity>
-
-                </View>
-
-            </View>      
+          <View style={{ flex: 1}}>
+          <Text style={styles.headerText}>ผัก และผลไม้</Text>
+            {renderFlatList(products2)}
+          </View>
           
         </View>
+       
+
+       
+
+
+        <View style={{flex:0.185, justifyContent:"flex-end",}}>
+
+          <View style={styles.btnContainer}>
+
+            <TouchableOpacity 
+               onPress={() => clear()} 
+              style={styles.btnBox1}>
+              <Text style={styles.btnText}>ล้างทั้งหมด</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              onPress={() => next()} 
+              style={styles.btnBox2}>
+              <Image style={styles.img} source={require("../assets/ingredient.png")}/>
+              <Text style={styles.btnText}>ยืนยัน</Text>
+    
+            </TouchableOpacity>
+          </View>
+
+        </View>   
+        </View>
+        
       )      
 };
     
@@ -311,21 +195,15 @@ const styles = StyleSheet.create({
     fontSize: 23,
     fontWeight: "bold",
     color: "#547f53",
-    paddingTop: 20,
+    paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: "5%"
   },
-  pararellContainer:{
-    flexDirection: "row",
-    paddingHorizontal: 20,     
-},
-  checkboxContainer:{
-    flex: 0.5,
-    flexDirection: "row",
-    marginTop: -20
-  },
+  
   checkContainer:{
-    flex: 0.4,
+    flexDirection: "row",
+    flex: 1,
+    marginTop: -15
   },
   ingredientName:{
     flex: 1,
