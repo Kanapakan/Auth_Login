@@ -11,12 +11,50 @@ const initState = {
         breakfastMeals: [],
         lunchMeals: [],
         dinnerMeals: [],
-    }
+    },
+    recipesByIngre: []
 
 }
 
 const recipeReducer = (state = initState, action) => {
     switch (action.type) {
+        case "FILTER_INGREDIENTS":
+            // const heroes = [
+            //     {
+            //       name: "warrior",
+            //       primary_skill: "greater bash",
+            //       attack_type: "melee",
+            //       attribute: "strength"
+            //     },
+            //     {
+            //       name: "ranger",
+            //       primary_skill: "focus fire",
+            //       attack_type: "range",
+            //       attribute: "agility"
+            //     },
+            //     {
+            //       name: "mage",
+            //       primary_skill: "oblivion",
+            //       attack_type: ["melee", "range"],
+            //       attribute: "intelligence"
+            //     }
+            //  ];
+            
+            // const filters = ["melee"]
+            
+            // const filteredHeroes = heroes.filter(hero => 
+            //    filters.every(ingre => hero.attack_type.includes(ingre))
+            // );
+            const filteredHeroes = state.recipes.filter(recipe => 
+                action.ingredients.every(ingre => recipe.ingredient_name.includes(ingre))
+             );
+             
+            //  console.log(filteredHeroes);
+            return {...state, recipesByIngre: filteredHeroes}
+                
+            
+            
+        //     console.log(action.ingredients)
         case "RECIPE_HISTORY":
             const fast = Object.keys(action.user_history.recipes).findIndex(recipe => recipe === "breakfastMeals")
             const find = Object.keys(action.user_history.recipes).findIndex(recipe => recipe === "lunchMeals")
