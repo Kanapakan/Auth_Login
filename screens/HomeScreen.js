@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'react-redux';
 // import { toggleUsers } from "../store/actions/UserAction";
 import PieGraph from '../components/dashboad/PieGraph';
-import BarChart from '../components/dashboad/BarChart';
+// import BarChart from '../components/dashboad/BarChart';
 import { createUser } from '../store/actions/UserAction';
 import { fetched_recipeHistory } from '../store/actions/recipeAction';
 import { fetch_userdetail } from '../store/actions/UserAction';
@@ -334,13 +334,15 @@ const Home = ({ navigation, route }, props) => {
           listData={userHistory}
           dataUser={userArr}
           date={datePick}
+          listData2={dateAllHis}
+          userTDEE={userArr.TDEE}
         />
-        <BarChart 
+        {/* <BarChart 
         listData={dateAllHis}
         dataUser={userArr}
         userTDEE={userArr.TDEE}
         userKcal={eatKcal}
-        />
+        /> */}
 
 
       </ScrollView>
