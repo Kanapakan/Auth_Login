@@ -17,7 +17,7 @@
     {"id": 24,"txt": "พริกหวาน", "isChecked": false, "type": "veg", "isGluten": false, "isSeafood": false},
     {"id": 26,"txt": "ปู", "isChecked": false, "type": "meat", "isGluten": false, "isSeafood": true},
     {"id": 27,"txt": "กระเทียม", "isChecked": false, "type": "veg", "isGluten": false, "isSeafood": false},
-    {"id": 30,"txt": "กระเพาะปลาแห้ง", "isChecked": false, "type": "meat", "isGluten": false, "isSeafood": true},
+    {"id": 30,"txt": "กระเพาะปลา", "isChecked": false, "type": "meat", "isGluten": false, "isSeafood": true},
     {"id": 31,"txt": "หน่อไม้สด", "isChecked": false, "type": "veg", "isGluten": false, "isSeafood": false},
     {"id": 32,"txt": "เลือดไก่", "isChecked": false, "type": "meat", "isGluten": false, "isSeafood": false},
     {"id": 36,"txt": "ถั่วงอก", "isChecked": false, "type": "veg", "isGluten": false, "isSeafood": false},

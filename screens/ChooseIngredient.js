@@ -3,6 +3,7 @@ import {Text, View, StyleSheet, Image, TextInput,FlatList, ScrollView, Touchable
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { CheckBox } from 'react-native-elements'
 
+
 const ChooseIngredient  = ({route, navigation},props) =>  {
   const {filtered} = route.params;
   const [products, setProducts] = useState(filtered.filter((item) => {return item.type == "meat"}));
@@ -11,6 +12,7 @@ const ChooseIngredient  = ({route, navigation},props) =>  {
 
   
   
+
   const handleChange = (id) => {
     let item = [...select]
     let temp = products.map((product) => {
@@ -48,10 +50,10 @@ const ChooseIngredient  = ({route, navigation},props) =>  {
       }
     })
     setSelect(item)
-
+      
   };
-
   
+  // console.log(select)
  
 
 const renderFlatList = (renderData) => {
@@ -83,6 +85,13 @@ const clear = () => {
       return { ...product, isChecked: false };
   });
   setProducts(temp);
+
+  let temp2 = products2.map((product) => {
+    return { ...product, isChecked: false };
+  });
+  setProducts2(temp2);
+
+  setSelect([])
 }
 
 const next = () =>{
@@ -102,9 +111,11 @@ const next = () =>{
     );
   }
   else{
+    
     navigation.navigate("ConfirmIngredient", {select: select})
   }
 }
+
 
   return (   
 

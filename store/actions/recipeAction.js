@@ -28,3 +28,7 @@ export const fetched_recipeHistory = (userHistory) => {
     return{ type: "RECIPE_HISTORY", sumNetrients: sumNutrient, sumEatCal: sumCal, user_history:userHistory}
 }
 
+export const toggleFilterIngredients = (ingredients) => {
+    return {type: "FILTER_INGREDIENTS", ingredients: ingredients}
+
+}

@@ -1,13 +1,36 @@
 import React, { useRef, useState } from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity, FlatList, ScrollView} from "react-native";
-
-
-
+import { Ionicons } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleFilterIngredients } from "../store/actions/recipeAction";
 
 const ConfirmIngredient  = ({route, navigation},props) =>  {
-  const{select} = route.params;
-
+  // const select = route.params.select;
+  const[select, setSelect] = useState(route.params.select)
+  const recipeByIngre = (useSelector((state) => state.recipes.recipesByIngre))
+  console.log(select)
   
+  const delRecipe = (item) => {
+    const index = select.findIndex(recipe => recipe == item)
+    console.log(index)
+    const updateSelect = [...select];
+    updateSelect.splice(index, 1);
+    
+    setSelect(updateSelect)
+    console.log('del', select)
+  }
+
+  const searchRecipe = (item) =>{
+    toggleFilterIngredientskHandler(item)
+    navigation.navigate("ResultFindRecipe")
+ }
+
+  const dispatch = useDispatch();
+  const toggleFilterIngredientskHandler = (ingedients) => {
+  console.log("addddddddddddddddddddddddd",ingedients)
+  dispatch(toggleFilterIngredients(ingedients));
+}
+
   const renderFlatList = (renderData) => {
     return(
       <FlatList
@@ -15,12 +38,15 @@ const ConfirmIngredient  = ({route, navigation},props) =>  {
           renderItem={({ item }) => (
             <View style={styles.checkContainer}>
                 <Text style={styles.ingredientName}>{item}</Text>
+                <TouchableOpacity onPress={() => delRecipe(item)}>
+                  <Ionicons name="ios-trash-bin-sharp" color="#000" style={styles.delIngredient} />
+                </TouchableOpacity>
            </View>
           )}
     />
     )
   }
-
+ 
   return (
     
     // ตรวจสอบวัตถุดิบที่เลือก
@@ -29,9 +55,9 @@ const ConfirmIngredient  = ({route, navigation},props) =>  {
             <View style={{flex: 3.4 }}>
                
                 <View style={styles.square}>
-                  <ScrollView>
-                <Text style={styles.ingredientName}>{renderFlatList(select)}</Text>   
-                 </ScrollView>  
+                  
+                {renderFlatList(select)}   
+                 
                 </View>
             
             </View>
@@ -40,7 +66,7 @@ const ConfirmIngredient  = ({route, navigation},props) =>  {
                 
             <View style={{flex:0.5, justifyContent:"center", backgroundColor: "#e4efe3"}}>
                 <TouchableOpacity 
-                    onPress={() => navigation.navigate("ResultFindRecipe", {select: select})} 
+                    onPress={() => searchRecipe(select)} 
                     style={styles.btnContainer}>
                     <Text style={styles.btnText}>ค้นหา</Text>
                 </TouchableOpacity>
@@ -79,31 +105,37 @@ const styles = StyleSheet.create({
   },
   square:{
       width: "90%",
-      backgroundColor: "#8ec18d",
+      // backgroundColor: "#8ec18d",
       borderRadius: 10,
       alignSelf: 'center',
       marginTop: 20,
       borderWidth: 5, 
       borderColor: '#8ec18d',
+      
   },
   checkContainer:{
-    flex: 0.17,
-    paddingLeft: 10
+    width: "100%",
+    flex: 1,
+    paddingLeft: 10,
+    flexDirection: 'row',
+    alignSelf: "center",
+    backgroundColor: '#8ec18d'
   },
   ingredientName:{
-    // flex: 1,
+    flex: 1,
     fontSize: 24,
     color: "#fff",
     alignSelf: "center",
-    paddingVertical:5
+    paddingLeft: 10
+    // paddingVertical:5
   },
-  // amount:{
-  //   fontSize: 20,
-  //   color: "#000",
-  //   fontWeight: "bold",
-  //   marginTop: 20,
-  //   paddingLeft: 20
-  // }
+  delIngredient:{
+    fontSize: 30,
+    fontWeight: "bold",
+    // marginTop: 2,
+    // marginLeft: 43,
+    // flex: 1
+  }
 
 
     

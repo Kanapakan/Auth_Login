@@ -1,38 +1,31 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState} from "react";
 import {Text, View, StyleSheet, Image, ScrollView, FlatList} from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons'; 
+import { useDispatch, useSelector } from 'react-redux';
 import RecipeList from "../components/Recipe/RecipeList";
-import { useSelector } from 'react-redux';
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons';
 
 
 
+
 const ResultFindRecipe  = ({route, navigation},props) =>  {
-  const{select} = route.params;
-  const renderFlatList = (renderData) => {
-    return(
-      <FlatList
-          data={renderData}
-          renderItem={({ item }) => (
-          
-            <View>
-
-             <Text>{item}</Text>
-
-           </View>
-
-          )}
-    />
-    )
-  }
-  return(
-    <RecipeList
-                    style={{ width: "100%", height: "100%" }}
-                    listData={select[0]}
-                    navigation={navigation}
-                  />
+  const result = (useSelector((state) => state.recipes.recipesByIngre))
+  // const select = route.params.foundRecipe;
+  console.log(result.length)
+  
+  return(      
+                <View style={styles.container}>
+                  {result.length > 0 ? 
+                  <RecipeList
+                      style={{ width: "100%", height: "100%" }}
+                      listData={result}
+                      navigation={navigation}
+                    /> : 
+                    <Text style={styles.headText}>ไม่พบเมนูอาหาร</Text>}
+              </View>
+                
   )
 
 };
@@ -110,7 +103,15 @@ const styles = StyleSheet.create({
   infoText:{
     fontSize: 18,
     color: "red",
-  }
+  },
+  headText:{
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#000",
+    paddingLeft: "33%",
+    paddingTop: "60%",
+    width: "100%", height: "100%"
+  },
 
 
 
