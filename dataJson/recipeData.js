@@ -17,9 +17,9 @@ export const RECIPES = [
         ],
         "https://www.lovefitt.com/system/wp-content/uploads/2013/07/diet-0036.jpg",
         "https://www.lovefitt.com/diet-menu/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%88%E0%B8%B7%E0%B8%94%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%99%E0%B9%89%E0%B8%B3-%E0%B9%80%E0%B8%A1%E0%B8%99%E0%B8%B9%E0%B8%97%E0%B8%B3%E0%B8%87%E0%B9%88%E0%B8%B2%E0%B8%A2-%E0%B9%80%E0%B8%AD%E0%B8%B2%E0%B9%83%E0%B8%88%E0%B8%84%E0%B8%99%E0%B8%AD%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%9C%E0%B8%AD%E0%B8%A1/",
-        9.2,
-        19.3,
-        20.1
+        0,
+        33.5,
+        21.7
    ),
    new Recipe(
     "m2",
@@ -37,9 +37,9 @@ export const RECIPES = [
      ],
      "https://www.naibann.com/wp-content/uploads/2016/08/tuna-spicy-salad-recipe-cover.jpg",
     "https://carechoicethailand.com/%e0%b8%a5%e0%b8%b2%e0%b8%9a%e0%b8%9b%e0%b8%a5%e0%b8%b2%e0%b8%97%e0%b8%b9%e0%b8%99%e0%b9%88%e0%b8%b2/",
-    20,
-      30,
-      40
+    3,
+      35.8,
+      0.2
 ),
 new Recipe(
   "m3",
@@ -58,9 +58,9 @@ new Recipe(
    ],
    "https://i.ytimg.com/vi/reH0KpDTNRw/maxresdefault.jpg",
     "https://carechoicethailand.com/%e0%b8%a3%e0%b8%b2%e0%b8%94%e0%b8%ab%e0%b8%99%e0%b9%89%e0%b8%b2%e0%b8%81%e0%b8%b8%e0%b9%89%e0%b8%87/",
-    50,
-    20,
-    30
+    23.2,
+    29.2,
+    0.5
     ),
 new Recipe(
   "m4",
@@ -79,9 +79,9 @@ new Recipe(
    ],
            "https://d12man5gwydfvl.cloudfront.net/wp-content/uploads/2020/01/shutterstock_1510194374.jpg",
         "https://carechoicethailand.com/%e0%b9%84%e0%b8%82%e0%b9%88%e0%b8%95%e0%b8%b8%e0%b9%8b%e0%b8%99/",
-        30,
-        20,
-        10
+        2.5,
+        73.2,
+        22.2
 ),
 new Recipe(
   "m5",
@@ -98,7 +98,7 @@ new Recipe(
    ],
    "https://image.makewebeasy.net/makeweb/0/jKFUCwieZ/lay/%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%9B%E0%B8%B9%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%95%E0%B9%89%E0%B8%99%E0%B8%AB%E0%B8%AD%E0%B8%A1.jpg",
     "https://carechoicethailand.com/%e0%b8%9b%e0%b8%b9%e0%b8%9c%e0%b8%b1%e0%b8%94%e0%b8%95%e0%b9%89%e0%b8%99%e0%b8%ab%e0%b8%ad%e0%b8%a1/",
-    20,10,20
+    0,26.9,5.7
 ),
 new Recipe(
   "m6",
@@ -115,7 +115,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1920x0/2017/06/13/113b86a6f9054b6ea4c30b8a4b47c6be.jpg",
   "https://www.wongnai.com/recipes/fish-maw-soup",
-  10,20,30
+  1,5,2
 ),
 new Recipe(
   "m7",
@@ -127,13 +127,13 @@ new Recipe(
   ["เนื้อ", "ผัก", "เนื้อ", "เครื่องปรง", "เครื่องปรุง", "เครื่องปรุง", "เครื่องปรง", "เครื่องปรุง", "เครื่องปรุง", "ผัก", "เครื่องปรง", "เครื่องปรุง", "ไข่"],
   [
       "ตั้งน้ำใส่วัตถุดิบทุกอย่างลงไป พอเดือดแล้วหรี่ไฟ ทยอยช้อนฟองออกเรื่อย ๆ จนหัวไชเท้าเปื่อย พักไว้",
-      "ผสมน้ำต้มยำ โดยใส่น้ำตาลมะพร้าว ตราบ้านตาลปึก พริกเผา กุ้งแห้งฝอย ถั่วลิสงบด กระเทียมเจียว หมูสับรวนสุก ตามด้วยน้ำซุป คนให้เข้ากันแล้วพักไว้",
+      "ผสมน้ำต้มยำ โดยใส่น้ำตาลมะพร้าว ตราบ้านตาลปึก พริกเผา กุ้งแห้งฝอย ถั่วลิสงบด กระเทียมเจียว หมูสับรวนสุก ตามด้วยน้ำซุป คนให้เข้ากันแล้วพักไว้",
       "ลวกถั่วงอกและเส้นบะหมี่ลงในชาม และราดด้วยน้ำต้มยำที่เตรียมไว้",
       "ตอกไข่ออนเซ็นใส่ลงไป จากนั้นโรยด้วยต้นหอม ผักชีซอย พร้อมจัดเสิร์ฟ"
   ],
   "https://img.wongnai.com/p/1600x0/2021/03/29/eb67f0ae92974e7897d9b5c64daba20f.jpg",
   "https://www.wongnai.com/recipes/tom-yum-noodles-with-onsen-tamago",
-  10,20,30
+  37.3,40,33.5
 ),
 new Recipe(
   "m8",
@@ -153,7 +153,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1600x0/2018/02/12/635c3ae826ab416cbf2352bb3d2ee94a.jpg",
   "https://www.wongnai.com/recipes/fried-shrimp-with-garlic",
-  10,20,30
+  2,40,12
 ),
 new Recipe(
   "m9",
@@ -181,7 +181,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1968x0/2019/03/09/5e348df29f8f4031a186f3aea40cd604.jpg",
   "https://www.wongnai.com/recipes/ugc/09180d2b49ad4e55a5d9ddff0e96704f",
-  10,20,30
+  35,50,30
 ),
 new Recipe(
   "m10",
@@ -200,7 +200,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1968x0/2020/05/10/6419bd7db20d4e7b99b593d053d0e51b.jpg",
   "https://www.wongnai.com/recipes/ugc/1e0671aa4fa94b2f94ffedb99e2adf4e",
-  10,20,30
+  3.8,33,8.3
 ),
 new Recipe(
   "m11",
@@ -219,7 +219,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1600x0/2018/04/17/42f2eb76baca4dc0921467d26d3f8e15.jpg",
   "https://www.wongnai.com/recipes/shrimp-and-glass-noodle-in-clay-pot",
-  10,20,30
+  80.8,16,20
 ),
 new Recipe(
   "m12",
@@ -239,7 +239,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1968x0/2017/12/08/92497d96619343188a6197fd6db24e0a.jpg",
   "https://www.wongnai.com/recipes/ugc/f7381ccae76b4f78b795c5251724dc14",
-  10,20,30
+  9,50,20
 ),
 new Recipe(
   "m13",
@@ -258,7 +258,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1968x0/2019/03/24/6ecee64337b44d0db51cc71ff18f90b6.jpg",
   "https://www.wongnai.com/recipes/ugc/6abc4d382a0741d5b1e153ae30c5bf72",
-  10,20,30
+  1.9,25,15
 ),
 new Recipe(
   "m14",
@@ -279,7 +279,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1968x0/2021/05/13/a9875b8584c04611ba799ace50ddd223.jpg",
   "https://www.wongnai.com/recipes/ugc/7b24897c9454415f88b68b65df6af26f",
-  10,20,30
+  47.1,60,26.8
 ),
 new Recipe(
   "m15",
@@ -301,7 +301,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1600x0/2017/09/13/9a307e446ff945dc84d7a2151aeb7ac6.jpg",
   "https://www.wongnai.com/recipes/grilled-pork-curry-with-cassia-leaves",
-  10,20,30
+  22.3,37.1,13
 ),
 new Recipe(
   "m16",
@@ -320,7 +320,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1600x0/2017/10/01/647fa4e976b2408fb314661eb7bed264.jpg",
   "https://www.wongnai.com/recipes/chicken-green-curry",
-  10,20,30
+  10.6,49.1,24
 ),
 new Recipe(
   "m17",
@@ -337,7 +337,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1968x0/2019/03/18/53c51b785b3d46c3a87a19cd64314652.jpg",
   "https://www.wongnai.com/recipes/ugc/2fa847328df642c3a52ff24b58c1d481",
-  10,20,30
+  0.3,37.3,22
 ),
 new Recipe(
   "m18",
@@ -359,7 +359,7 @@ new Recipe(
   ],
   "https://www.easycookingmenu.com/media/k2/items/cache/2c538c8f63a83e01bdc7778f40f54af9_XL.jpg",
   "https://www.wongnai.com/recipes/ugc/35676c9a319547c3973639943d9316ca",
-  10,20,30
+  10,39,25
 ),
 new Recipe(
   "m19",
@@ -376,7 +376,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1600x0/2017/06/21/309a7c53c0c343b8ba943791615ca028.jpg",
   "https://www.wongnai.com/recipes/kanom-jeen-nam-ngeaw",
-  10,20,30
+  67.5,49,20
 ),
 new Recipe(
   "m20",
@@ -393,7 +393,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1968x0/2018/05/02/781acd59acbe43efac9a089d6b5a73cf.jpg",
   "https://www.wongnai.com/recipes/ugc/c87d84918a2f44b1a9ba8665e219d9b3",
-  10,20,30
+  46.2,21.2,18.8
 ),
 new Recipe(
   "m21",
@@ -411,7 +411,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1600x0/2018/09/15/b6d20d502232447e828ff66af8ab191d.jpg",
   "https://www.wongnai.com/recipes/rice-seasoned-with-shrimp-paste-recipe",
-  10,20,30
+  64.4,38,19
 ),
 new Recipe(
   "m22",
@@ -431,7 +431,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1600x0/2017/10/03/41cca76dd9f94a1e92680a1a7af4cbd9.jpg",
   "https://www.wongnai.com/recipes/northern-thai-curried-noodles-soup",
-  10,20,30
+  62.3,45,21.5
 ),
 new Recipe(
   "m23",
@@ -449,7 +449,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1600x0/2017/07/31/c7e8d236596b48c3a8ebb9b95018a37a.jpg",
   "https://www.wongnai.com/recipes/fried-rice-with-prawns",
-  10,20,30
+  56.3,33.4,22
 ),
 new Recipe(
   "m24",
@@ -466,7 +466,7 @@ new Recipe(
   ],
   "https://img.wongnai.com/p/1600x0/2017/09/28/888c396d0c0e4ede81341f16adb7c03f.jpg",
   "https://www.wongnai.com/recipes/fried-rice-with-salted-fish-and-chinese-kale",
-  10,20,30
+  55,21.9,11.8
 ),
 new Recipe(
   "m25",
@@ -489,7 +489,7 @@ new Recipe(
   // ["อาหารทะเล", "Nut free"],
   "https://img.wongnai.com/p/1600x0/2017/10/01/3137d4cbb57d436992286d48fc788e5e.jpg",
   "https://www.wongnai.com/recipes/singapore-chicken-rice",
-  10,20,30
+  60.2,30.8,18.9
 ),
 new Recipe(
   "m26",
@@ -508,7 +508,7 @@ new Recipe(
   // ["Daily free"],
   "https://img.wongnai.com/p/1920x0/2017/12/05/c9f81ea7122f4e06a977c0fe9baec3d7.jpg",
   "https://www.wongnai.com/recipes/microwave-roasted-red-pork-with-rice",
-  10,20,30
+  57.5,37.6,29.9
 ),
 new Recipe(
   "m27",
@@ -533,7 +533,7 @@ new Recipe(
   // ["Gluten free", "Nut free"],
   "https://img.wongnai.com/p/1968x0/2021/02/08/ef978a413d17470782d59e3f77fe673d.jpg",
   "https://www.wongnai.com/recipes/ugc/f73dda7be8204a1b83a6635a14624c1b",
-  10,20,30
+  62.5,49.7,18.9
 ),
 new Recipe(
   "m28",
@@ -554,7 +554,7 @@ new Recipe(
   // ["Gluten free", "Egg free"],
   "https://img.wongnai.com/p/1600x0/2020/03/02/ca24f8093fe649138467c7e859ac62b7.jpg",
   "https://www.wongnai.com/recipes/congee-with-pork-bounce",
-  10,20,30
+  59.2,32,26.3
 ),
 new Recipe(
   "m29",
@@ -572,6 +572,6 @@ new Recipe(
   // ["Gluten free", "Vegan"],
   "https://img.wongnai.com/p/1968x0/2019/06/08/853a85bcae0842b98d42d9adf3d7092d.jpg",
   "https://www.wongnai.com/recipes/ugc/b3f293e7deda48cdbd413b3f16791699",
-  10,20,30
+  11.2,42.5,17.8
 )
 ]

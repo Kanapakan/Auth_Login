@@ -32,3 +32,8 @@ export const toggleFilterIngredients = (ingredients) => {
     return {type: "FILTER_INGREDIENTS", ingredients: ingredients}
 
 }
+
+export const createNewRecipe = (newrecipe, set) => {
+    return {type: "CREATE_RECIPE", newrecipe: newrecipe, set:set}
+
+}

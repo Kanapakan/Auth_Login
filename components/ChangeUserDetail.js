@@ -133,7 +133,8 @@ const ChangeUserDetail = ({navigation, route}) => {
           Alert.alert("เปลี่ยนรหัสผ่านสำเร็จ")
             console.log("Edit Password success!");
             navigation.navigate('MyProfile');
-      }).then(() => {
+      })
+      .then(() => {
           setOldPassword("");
           setNewPassword("");
           setConfirmPassword("");
@@ -141,7 +142,7 @@ const ChangeUserDetail = ({navigation, route}) => {
       .catch((err) => {
         console.log("Error:", err)
         Alert.alert("รหัสผ่านเก่าไม่ถูกต้อง")
-        // setisLoading(false)
+        setisLoading(false)
     })
 
     })
@@ -297,14 +298,14 @@ const ChangeUserDetail = ({navigation, route}) => {
       <View style={styles.headBox} >
         <Text style={styles.headText}>ข้อมูลเข้าสู่ระบบ</Text>
       </View>
-      <Text style={styles.btnTextAll}>อีเมลผู้ใช้</Text>
+      <Text style={styles.btnTextAll2}>อีเมลผู้ใช้</Text>
 
       <View style={styles.Box}>
         <Text style={styles.BoxText}>{email}</Text>
       </View >
       
 
-      <Text style={styles.btnTextAll}>รหัสผ่านเก่า</Text>
+      <Text style={styles.btnTextAll2}>รหัสผ่านเก่า</Text>
       <TextInput
         style={styles.Box}
         placeholder="รหัสผ่านเก่า"
@@ -315,7 +316,7 @@ const ChangeUserDetail = ({navigation, route}) => {
       />
       
 
-    <Text style={styles.btnTextAll}>รหัสผ่านใหม่</Text>
+    <Text style={styles.btnTextAll2}>รหัสผ่านใหม่</Text>
     <TextInput
         style={styles.Box}
         placeholder="รหัสผ่านใหม่"
@@ -328,7 +329,7 @@ const ChangeUserDetail = ({navigation, route}) => {
         <Text style={{color: "red", paddingLeft: "50%", marginTop: 3, marginBottom: -15 }}>
           ความยาวอย่างน้อย 6 ตัวอักษร
         </Text>) : null}
-    <Text style={styles.btnTextAll}>ยืนยันรหัสผ่านใหม่</Text>
+    <Text style={styles.btnTextAll2}>ยืนยันรหัสผ่านใหม่</Text>
     <TextInput
         style={styles.Box}
         placeholder="ยืนยันรหัสผ่านใหม่"
@@ -388,6 +389,12 @@ const styles = StyleSheet.create({
     marginLeft: 50,
     marginTop: 35
   },
+  btnTextAll2: {
+    fontSize: 18,
+    color: "#000",
+    marginLeft: 30,
+    marginTop: 35
+  },
   pickerBorder:{
     width: "40%",
     height: 45,
@@ -400,7 +407,7 @@ const styles = StyleSheet.create({
   Box:{
     marginTop: -35,
     marginLeft: 200,
-    width: "40%",
+    width: "50%",
     height: 45,
     borderColor: '#adacac',
     borderWidth: 2,

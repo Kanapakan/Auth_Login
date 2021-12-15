@@ -22,11 +22,7 @@ const SearchScreen = ({ navigation, route }) => {
   const searchHandler = (text) => {
     if (text !== "") {
       const newMenuList = recipes.filter((recipe) => {
-        const itemData = recipe.name
-          ? recipe.name.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
+        return recipe.name.indexOf(text) > -1;
       });
       setSearchResult(newMenuList)
       setSearchWord()

@@ -10,6 +10,8 @@ const ConfirmIngredient  = ({route, navigation},props) =>  {
   const recipeByIngre = (useSelector((state) => state.recipes.recipesByIngre))
   console.log(select)
   
+  
+
   const delRecipe = (item) => {
     const index = select.findIndex(recipe => recipe == item)
     console.log(index)
@@ -27,7 +29,7 @@ const ConfirmIngredient  = ({route, navigation},props) =>  {
 
   const dispatch = useDispatch();
   const toggleFilterIngredientskHandler = (ingedients) => {
-  console.log("addddddddddddddddddddddddd",ingedients)
+  // console.log("addddddddddddddddddddddddd",ingedients)
   dispatch(toggleFilterIngredients(ingedients));
 }
 
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     // paddingVertical:5
   },
   delIngredient:{
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: "bold",
     // marginTop: 2,
     // marginLeft: 43,

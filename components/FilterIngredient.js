@@ -9,8 +9,8 @@ const data = require('../dataJson/menu.json');
  const sensitiveType = [
 
   {id:1, txt: "มังสวิรัติ", isChecked: false},
-  {id:2, txt: "ผลิตภัณฑ์จากน้ำตาล", isChecked: false},
-  {id:3, txt: "ผลิตภัณฑ์จากทะเล", isChecked: false},
+  {id:2, txt: "ปราศจากผลิตภัณฑ์จากน้ำตาล", isChecked: false},
+  {id:3, txt: "ปราศจากผลิตภัณฑ์จากทะเล", isChecked: false},
 
 ];
 
@@ -184,7 +184,7 @@ const FilterIngredient  = ({navigation}, props) =>  {
     
         <View style={styles.container}>
     
-            <Text style={styles.sensitiveText}>การแพ้</Text>
+            <Text style={styles.sensitiveText}>การกรอง</Text>
 
 
             {renderFlatList(senType)}
