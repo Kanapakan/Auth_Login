@@ -128,12 +128,12 @@ const MenuDetail = ({ navigation, route }, props) => {
   const pushUserHistory = (datePick) => {
     let data;
     dbrealTime.ref("user_History/userRecipe/" + auth.currentUser?.uid + "/" + datePick).on('value', snapshot => {
-      console.log('user date :', snapshot.val())
+      // console.log('user date :', snapshot.val())
       data = snapshot.val()
       // console.log("hideee : ", data.dateKey)
       
     if (data == null) {
-      const keyDate = dbrealTime.ref("user_History/Recepy_of_day").push().getKey();
+      const keyDate = dbrealTime.ref("user_History/Recipe_of_day").push().getKey();
       dbrealTime.ref("user_History/userRecipe/" + auth.currentUser?.uid + "/" + datePick).update({
         date: datePick,
         dateKey: keyDate

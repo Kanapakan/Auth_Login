@@ -12,39 +12,45 @@ const initState = {
         lunchMeals: [],
         dinnerMeals: [],
     },
-    recipesByIngre: []
+    recipesByIngre: [],
+    myRecipe: [],
 
 }
 
 const recipeReducer = (state = initState, action) => {
     switch (action.type) {
+        case "CREATE_RECIPE":
+            
+            if(action.set == "del"){
+                const indexRecipe = state.myRecipe.findIndex(recipe => recipe.id === action.newrecipe.id)
+                const indexRecipeAll = state.recipes.findIndex(recipe => recipe.id === action.newrecipe.id)
+                if(indexRecipe >= 0 && indexRecipeAll>= 0){
+                const updateMyRecipe= [...state.myRecipe];
+                const updateAll= [...state.recipes];
+                updateMyRecipe.splice(indexRecipe, 1);
+                updateAll.splice(indexRecipeAll, 1);
+                return {...state, recipes: updateAll,
+                    myRecipe: updateMyRecipe} 
+            }
+            }else if (action.set == "update"){
+                const indexRecipe2 = state.myRecipe.findIndex(recipe => recipe.id === action.newrecipe.id)
+                const indexRecipeAll2 = state.recipes.findIndex(recipe => recipe.id === action.newrecipe.id)
+                if(indexRecipe2 >= 0 && indexRecipeAll2>= 0){
+                    const updateMyRecipe2= [...state.myRecipe];
+                    const updateAll2= [...state.recipes];
+                    updateMyRecipe2.splice(indexRecipe2, 1);
+                    updateAll2.splice(indexRecipeAll2, 1);
+                    updateAll2.push(action.newrecipe)
+                    updateMyRecipe2.push(action.newrecipe)
+                    return {...state, recipes: updateAll2,
+                        myRecipe: updateMyRecipe2} 
+                }
+            }
+            // else if (action.set == "add"){
+            return{...state, recipes: state.recipes.concat(action.newrecipe),
+                myRecipe: state.myRecipe.concat(action.newrecipe)}
+            // }
         case "FILTER_INGREDIENTS":
-            // const heroes = [
-            //     {
-            //       name: "warrior",
-            //       primary_skill: "greater bash",
-            //       attack_type: "melee",
-            //       attribute: "strength"
-            //     },
-            //     {
-            //       name: "ranger",
-            //       primary_skill: "focus fire",
-            //       attack_type: "range",
-            //       attribute: "agility"
-            //     },
-            //     {
-            //       name: "mage",
-            //       primary_skill: "oblivion",
-            //       attack_type: ["melee", "range"],
-            //       attribute: "intelligence"
-            //     }
-            //  ];
-            
-            // const filters = ["melee"]
-            
-            // const filteredHeroes = heroes.filter(hero => 
-            //    filters.every(ingre => hero.attack_type.includes(ingre))
-            // );
             const filteredHeroes = state.recipes.filter(recipe => 
                 action.ingredients.every(ingre => recipe.ingredient_name.includes(ingre))
              );

@@ -1,20 +1,24 @@
 import React from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity,FlatList, } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'; 
-import RecipeItem from "./RecipeItem";
+import NewRecipe from "./NewRecipe";
 
-const RecipeList = (props) => {
+
+const NewRecipeList = (props) => {
     const renderRecipeItem = (itemData) => {
         const {id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type,steps, imageURL, originalURL, carbs, protein, fats} = itemData.item
 
         return (
             <View>
-                <RecipeItem 
-                
+                <NewRecipe 
+                data={itemData.item}
+                id={id}
                 name={name}
                 kcal={kcal}
                 time={time}
                 image={imageURL}
+                objIn={props.objIn}
+                navigation={props.navigation}
                 onSelectRecipe={() => {
                     // เขียนโค้ดเพิ่ม
                     props.navigation.navigate("MenuDetail", { id, name, kcal, time, ingredient_quantity, ingredient_name,ingredient_type, steps, imageURL,originalURL, carbs, protein, fats,})
@@ -43,4 +47,4 @@ const RecipeList = (props) => {
         },
       });
 
-export default RecipeList;
+export default NewRecipeList;

@@ -30,7 +30,8 @@ const PieGraph = (props) => {
   const [fri, setfri] = useState(0)
   const [sat, setSat] = useState(0)
   const [sun, setsun] = useState(0)
-  const back = Math.abs(parseInt(date_day) - parseInt(datePick))
+  // const back = Math.abs(parseInt(date_day) - parseInt(datePick))
+  const back =parseInt(date_day) - parseInt(datePick)
 
   // const back =   Math.abs(parseInt(date_day) - parseInt(datePick))
   const userTDEE = props.userTDEE

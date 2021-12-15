@@ -17,6 +17,10 @@ const ResultFindRecipe  = ({route, navigation},props) =>  {
   
   return(      
                 <View style={styles.container}>
+                  <Text style={{color: "#000",fontSize: 16,
+    fontWeight: "bold",
+    paddingLeft: 10,
+    marginTop: 5}}>พบเมนูทั้งหมด : {result.length} เมนู</Text>
                   {result.length > 0 ? 
                   <RecipeList
                       style={{ width: "100%", height: "100%" }}

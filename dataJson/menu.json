@@ -85,5 +85,5 @@
     {"id": 142, "txt": "ใบเตย", "isChecked": false, "type": "veg", "isGluten": false, "isSeafood": false},
     {"id": 143, "txt": "สันในหมู", "isChecked": false, "type": "meat", "isGluten": false, "isSeafood": false},
     {"id": 148, "txt": "เนื้อหมูสันนอก", "isChecked": false, "type": "meat", "isGluten": false, "isSeafood": false},
-    {"id": 156, "txt": "ปลาหมึก", "isChecked": false, "type": "meat", "isGluten": false, "isSeafood": false}
+    {"id": 156, "txt": "ปลาหมึก", "isChecked": false, "type": "meat", "isGluten": false, "isSeafood": true}
 ]

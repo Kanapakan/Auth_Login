@@ -12,10 +12,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import BookmarkScreen from "../screens/BookmarkScreen";
 import HomeScreen from "../screens/HomeScreen";
 import ThreeTimeMeals from "../screens/ThreeTimeMealScreen";
-
+import AddMenuScreen from "../screens/AddNewMenu";
 import MenuDetail from "../screens/MenuDetail";
 import MyProfile from  '../screens/MyProfile';
 import ChangeUserDetail from "../components/ChangeUserDetail";
+import UpdateNewMenu from "../screens/UpdateNewMenu";
 
 import FindRecipe from "../screens/SearchScreen";
 import ChooseIngredient from "../screens/ChooseIngredient";
@@ -65,6 +66,14 @@ function MainNavigator() {
               return <AntDesign name="search1" size={28} color={color} />;
             },
           }} />
+          <Tab.Screen name="AddMenu" component={AddMenuNavigator}
+          options={{
+            tabBarActiveBackgroundColor: "#8EC18D",
+            tabBarLabel: '',
+            tabBarIcon: ({ color}) => {
+              return <AntDesign name="pluscircle" size={35} color={color} />;
+            },
+          }} />
         <Tab.Screen name="Favorites" component={FavNavigator}
           options={{
             tabBarActiveBackgroundColor: "#8EC18D",
@@ -84,6 +93,27 @@ function MainNavigator() {
       </Tab.Navigator>
     );
   }
+
+  function AddMenuNavigator() { 
+    return(
+        <Stack.Navigator screenOptions={{ 
+            // headerShown: false,
+            headerStyle: { backgroundColor: "#E4EFE3"},
+            headerTintColor: "#547F53",
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              // fontSize:  "25px",
+            },
+             }}>
+            <Stack.Screen name="AddMenuScreen" component={AddMenuScreen} 
+            options={{
+              title: 'สร้างเมนูอาหารของคุณ'
+          }} />
+           <Stack.Screen name="MenuDetail" options={{ headerShown: false }} component={MenuDetail} />
+           <Stack.Screen name="UpdateNewMenu" component={UpdateNewMenu} />
+        </Stack.Navigator>
+    )
+}
 
 function UserNavigator() { 
     return(
@@ -108,13 +138,9 @@ function UserNavigator() {
 function HomeNavigator() { 
     return(
         <Stack.Navigator screenOptions={{ 
-            // headerShown: false,
             headerStyle: { backgroundColor: "#E4EFE3"},
             headerTintColor: "#547F53",
-            // headerTitleStyle: {
-            //   fontWeight: 'bold',
-            //   fontSize:  "25px",
-            // },
+
              }}>
             {/* <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} /> */}
             <Stack.Screen name="HomeScreen" options={{ headerShown: false }} component={HomeScreen}/>
@@ -167,6 +193,7 @@ function FavNavigator() {
             <Stack.Screen name="MenuDetail" options={{
             headerShown: false }}
               component={MenuDetail} />
+
         </Stack.Navigator>
     )
 }

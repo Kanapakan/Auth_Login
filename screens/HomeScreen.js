@@ -105,6 +105,7 @@ const Home = ({ navigation, route }, props) => {
       
       
     })
+    
     dbrealTime.ref("user_History/userRecipe/" + auth.currentUser?.uid + "/" + date).on('value', snapshot => {
       // console.log('user date :', snapshot.val())
       data = snapshot.val()
