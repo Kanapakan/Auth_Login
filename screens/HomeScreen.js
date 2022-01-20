@@ -184,9 +184,9 @@ const Home = ({ navigation, route }, props) => {
     setDate(currentDate);
 
     let tempDate = new Date(currentDate);
-    let fDate = tempDate.getDate() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getFullYear();
+    let fDate = ((tempDate.getDate() < 10) ? '0' + tempDate.getDate() : tempDate.getDate() ) + '-' + ((tempDate.getMonth() +1) < 10 ? '0'+(tempDate.getMonth()+1) : tempDate.getMonth()+1)+ '-' + tempDate.getFullYear();
     // let fTime = 'Hours: ' + tempDate.getHours() + '| Minutes: ' + tempDate.getMinutes() ;
-
+    console.log(tempDate.getMonth() + 1)
     setDatePick(fDate)
 
     getUserHistory(fDate)
@@ -205,23 +205,23 @@ const Home = ({ navigation, route }, props) => {
 
   const checkMonth = (month) =>{
     switch (month) {
-      case "1":
+      case "01":
           return "มกราคม"
-      case "2":
+      case "02":
           return "กุมภาพันธ์"
-      case "3":
+      case "03":
           return "มีนาคม"
-      case "4":
+      case "04":
           return "เมษายน"
-      case "5":
+      case "05":
           return "พฤษภาคม"
-      case "6":
+      case "06":
           return "มิถุนายน"
-      case "7":
+      case "07":
           return "กรกฏาคม"
-      case "8":
+      case "08":
           return "สิงหาคม"
-      case "9":
+      case "09":
           return "กันยายน"
       case "10":
           return "ตุลาคม"
