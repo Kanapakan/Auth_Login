@@ -79,7 +79,6 @@ const renderFlatList = (renderData) => {
   )
 }
 
-
 const clear = () => {
   let temp = products.map((product) => {
       return { ...product, isChecked: false };
@@ -118,8 +117,6 @@ const next = () =>{
 
 
   return (   
-
-    
         <View style={styles.container}>
        
         <View style={{ flex: 1,flexDirection: "row"}}>
@@ -136,15 +133,9 @@ const next = () =>{
           </View>
           
         </View>
-       
-
-       
-
-
+ 
         <View style={{flex:0.185, justifyContent:"flex-end",}}>
-
           <View style={styles.btnContainer}>
-
             <TouchableOpacity 
                onPress={() => clear()} 
               style={styles.btnBox1}>
@@ -155,10 +146,8 @@ const next = () =>{
               style={styles.btnBox2}>
               <Image style={styles.img} source={require("../assets/ingredient.png")}/>
               <Text style={styles.btnText}>ยืนยัน</Text>
-    
             </TouchableOpacity>
           </View>
-
         </View>   
         </View>
         
@@ -170,8 +159,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
   },
   btnContainer:{
     flexDirection: "row",

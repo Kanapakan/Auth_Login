@@ -15,7 +15,7 @@ const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 300;
 
 const MenuDetail = ({ navigation, route }, props) => {
-  console.log("----- Bookmark : ",(useSelector((state) => state.recipes.bookmarkRecipes)))
+  // console.log("----- Bookmark : ",(useSelector((state) => state.recipes.bookmarkRecipes)))
   const allMeal = (useSelector((state) => state.recipes.allMeals))
   const sumNutrient = (useSelector((state) => state.recipes.sumNutrient))
   const sumEatKcals = (useSelector((state) => state.recipes.sumEatKcals))
@@ -23,11 +23,11 @@ const MenuDetail = ({ navigation, route }, props) => {
 
 
 
-  const { id, name, kcal, time, ingredient_quantity, ingredient_name, ingredient_type, steps, imageURL, originalURL, carbs, protein, fats, } = route.params;
+  const { id, name, kcal, time, ingredient_quantity, ingredient_name, steps, imageURL, carbs, protein, fats, } = route.params;
   const bookmark_recipe = (useSelector((state) => state.recipes.bookmarkRecipes));
 
   const datePick = (useSelector((state) => state.user.datePick));
-  console.log("Pick date : ", datePick)
+  // console.log("Pick date : ", datePick)
   const existingIndex = bookmark_recipe.findIndex(recipe => recipe.id === id)
   const [bookmark, setBookmark] = useState(existingIndex >= 0)
   const [mealTime, setMealTime] = useState("")

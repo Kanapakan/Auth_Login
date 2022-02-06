@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {KeyboardAvoidingView, StyleSheet, ScrollView, ActivityIndicator, View,Text, Image, TextInput, TouchableOpacity, useWindowDimensions, Dimensions,Animated, Alert } from "react-native";
 import {Picker} from '@react-native-picker/picker';
-import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import  {firebase} from '../database/firebaseDb'
-import { auth, getAuth, reauthenticateWithCredential } from '../database/Auth';
 const db = firebase.firestore()
 
 const ChangeUserDetail = ({navigation, route}) => {
@@ -20,9 +18,7 @@ const ChangeUserDetail = ({navigation, route}) => {
     const[confirmPassword, setConfirmPassword] = useState('')
     const[isLoading, setisLoading] = useState(true);
     const userKey = route.params.userKey;
-    const [titleBar, setTitleBar] = useState("กรอกด้วยตัวเอง");
     const [showTab1, setShowTab1] = useState(true)
-    const [active, setactive] = useState(true)
 
   // -------------------- จัดแถบข้างบน -----------------------------]
     
@@ -55,7 +51,6 @@ const ChangeUserDetail = ({navigation, route}) => {
 
         dbRef.get().then((res) => {
             //check ว่ามีข้อมูลอยู่ใน Doc ไหม
-            console.log(userKey);
             if (res.exists){
               //ดึงค่าออกมาจาก firebase
                 const user = res.data();
@@ -117,18 +112,23 @@ const ChangeUserDetail = ({navigation, route}) => {
         })
   }
 
+
+  // ----------- แก้ไขรหัสผ่าน -----------
   const reauthrnticate = (currentPass) =>{
-    
      const user = firebase.auth().currentUser;
       const cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPass);
+      // console.log(cred)
       return user.reauthenticateWithCredential(cred);
   }
-  //  const updatePassword = () => {
+
+
     const updatePassword = (oldPassword, newPassword) => {
       setisLoading(true);
-      reauthrnticate(oldPassword).then(() => {
+      reauthrnticate(oldPassword)
+      .then(() => {
         const user = firebase.auth().currentUser;
-        user.updatePassword(newPassword).then(() => {
+        user.updatePassword(newPassword)
+        .then(() => {
           setisLoading(false)
           Alert.alert("เปลี่ยนรหัสผ่านสำเร็จ")
             console.log("Edit Password success!");
@@ -139,13 +139,18 @@ const ChangeUserDetail = ({navigation, route}) => {
           setNewPassword("");
           setConfirmPassword("");
       })
-      .catch((err) => {
-        console.log("Error:", err)
-        Alert.alert("รหัสผ่านเก่าไม่ถูกต้อง")
-        setisLoading(false)
-    })
+      
 
     })
+    .catch((err) => {
+      Alert.alert("รหัสผ่านเก่าไม่ถูกต้อง")
+      setisLoading(false)
+      console.log("Error:", err)
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+  })
+    
   }
 
 

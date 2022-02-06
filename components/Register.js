@@ -7,7 +7,6 @@ const Register = ({navigation, route}) => {
     const [password, setPassword] = useState('')
     const [confirmpass, setConfirmpass] = useState('')
     const [isLoading, setisLoading] = useState(false);
-    // const[confirmPassword, setConfirmPassword] = useState('')
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
@@ -17,18 +16,11 @@ const Register = ({navigation, route}) => {
         })
         return unsubscribe
       }, [])
+
     //สมัคร
     const handleSignUp = () => {
         setisLoading(true);
         navigation.navigate('RegisterUserDetail', {email:  email, password:  password});
-        // auth
-        // .createUserWithEmailAndPassword(email, password)
-        // .then(userCredentials => {
-        //     const user = userCredentials.user;
-        //     console.log('Registered with:', user.email);
-        //     navigation.navigate('RegisterUserDetail', {email: email, password: password});
-        // })
-        // .catch(error => alert(error.message))
     }
     
     if(isLoading) {
@@ -103,8 +95,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fff",
-        // alignItems: "center",
-        // justifyContent: "center",
     },
     preloader:{
         position: 'absolute',

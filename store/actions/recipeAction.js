@@ -1,7 +1,3 @@
-import {firebase} from "../../database/firebaseDb";
-import { auth } from "../../database/Auth";
-
-const db = firebase.firestore()
 
 export const toggleBookmark = (id) => {
     return { type: "BOOKMARK", recipeId: id };
@@ -21,10 +17,7 @@ export const toggleEatKcals = (kcals, order) => {
 
 export const fetched_recipeHistory = (userHistory) => {
     const sumNutrient = userHistory.sumNutrient
-    const allRecipes = userHistory.recipes
     const sumCal = userHistory.sumCal
-    // console.log("ooooooooooo", Object.keys(allRecipes))
-    // return{ type: "RECIPE_HISTORY", sumNetrients: sumNutrient, sumEatCal: sumCal, breakfast: breakfast, lunch: lunch, dinner:dinner,}
     return{ type: "RECIPE_HISTORY", sumNetrients: sumNutrient, sumEatCal: sumCal, user_history:userHistory}
 }
 

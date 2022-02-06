@@ -1,34 +1,27 @@
 import React, { useRef, useState} from "react";
 import {Text, View, StyleSheet, Image, ScrollView, FlatList} from "react-native";
-import { MaterialIcons } from '@expo/vector-icons'; 
-import { Ionicons } from '@expo/vector-icons'; 
 import { useDispatch, useSelector } from 'react-redux';
 import RecipeList from "../components/Recipe/RecipeList";
-import { AntDesign } from "@expo/vector-icons";
-import { Entypo } from '@expo/vector-icons';
-
-
 
 
 const ResultFindRecipe  = ({route, navigation},props) =>  {
   const result = (useSelector((state) => state.recipes.recipesByIngre))
-  // const select = route.params.foundRecipe;
   console.log(result.length)
   
   return(      
-                <View style={styles.container}>
-                  <Text style={{color: "#000",fontSize: 16,
-    fontWeight: "bold",
-    paddingLeft: 10,
-    marginTop: 5}}>พบเมนูทั้งหมด : {result.length} เมนู</Text>
-                  {result.length > 0 ? 
-                  <RecipeList
-                      style={{ width: "100%", height: "100%" }}
-                      listData={result}
-                      navigation={navigation}
-                    /> : 
-                    <Text style={styles.headText}>ไม่พบเมนูอาหาร</Text>}
-              </View>
+    <View style={styles.container}>
+      <Text style={{color: "#000",fontSize: 16,
+      fontWeight: "bold",
+      paddingLeft: 10,
+      marginTop: 5}}>พบเมนูทั้งหมด : {result.length} เมนู</Text>
+      {result.length > 0 ? 
+        <RecipeList
+          style={{ width: "100%", height: "100%" }}
+          listData={result}
+          navigation={navigation}
+          /> : 
+      <Text style={styles.headText}>ไม่พบเมนูอาหาร</Text>}
+    </View>
                 
   )
 
@@ -36,11 +29,8 @@ const ResultFindRecipe  = ({route, navigation},props) =>  {
     
 const styles = StyleSheet.create({
     container: {
-    // flexDirection: "column",
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
   },
   amount:{
     fontSize: 20,

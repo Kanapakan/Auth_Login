@@ -5,7 +5,6 @@ import { auth } from '../database/Auth';
 
 const Logout = () => {
   const navigation = useNavigation()
-
   const handleSignOut = () => {
     auth
       .signOut()
@@ -16,15 +15,12 @@ const Logout = () => {
   }
 
   return (
-    // <View style={styles.container}>
-    //   <Text>Email: {auth.currentUser?.email}</Text>
       <TouchableOpacity
         onPress={handleSignOut}
         style={styles.btnContainer}
       >
         <Text style={styles.btnText}>ออกจากระบบ</Text>
       </TouchableOpacity>
-    // </View>
   )
 }
 

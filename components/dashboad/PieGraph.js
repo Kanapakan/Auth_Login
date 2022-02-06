@@ -30,10 +30,8 @@ const PieGraph = (props) => {
   const [fri, setfri] = useState(0)
   const [sat, setSat] = useState(0)
   const [sun, setsun] = useState(0)
-  // const back = Math.abs(parseInt(date_day) - parseInt(datePick))
   const back =parseInt(date_day) - parseInt(datePick)
 
-  // const back =   Math.abs(parseInt(date_day) - parseInt(datePick))
   const userTDEE = props.userTDEE
   const userEatKcal = props.userKcal
 
@@ -60,15 +58,14 @@ const PieGraph = (props) => {
   const checkCalDate = (thatDate) => {
     let data = 0
     const index = Object.keys(dateAllHis).findIndex(date => date == thatDate)
-    // console.log(index)
+
     if (index >= 0) {
       const datekey = Object.values(dateAllHis)[index].dateKey
-      // console.log("kkkkkkkkkkk", (Object.values(dateAllHis))[index])
+
       dbrealTime.ref("user_History/Recipe_of_day/" + datekey).on('value', snapshot => {
 
         data = (snapshot.val()).sumCal
-        // console.log("dataaaa", data)
-        // return data
+
       })
 
     } else[
@@ -85,14 +82,12 @@ const PieGraph = (props) => {
     setthu(checkCalDate(moment().subtract((backweek + 3 + back), 'days').format('DD-MM-YYYY')))
     setfri(checkCalDate(moment().subtract((backweek + 2 + back), 'days').format('DD-MM-YYYY')))
     setSat(checkCalDate(moment().subtract((backweek + 1 + back), 'days').format('DD-MM-YYYY')))
-    // && datePick == moment().format('DD-MM-YYYY')
     if (backweek == 0 ) {
       setsun(sumCal)
     } else {
       setsun(checkCalDate(moment().subtract((backweek + back), 'days').format('DD-MM-YYYY')))
     }
 
-    // setBack(0)
     setGraphicData(sumNutient ? [
       { y: carbs * 100, x: "คาร์บ" },
       { y: proteins * 100, x: "โปรตีน" },
@@ -121,12 +116,10 @@ const PieGraph = (props) => {
 
         <View style={styles.headContainer}>
           <Text style={styles.boldText}>สารอาหารที่ได้รับต่อวัน</Text>
-          {/* <Text>{props.listData.day}</Text> */}
-          {/* <Text>{userday}</Text> */}
         </View>
 
         <View style={styles.infoContainer}>
-          <Text style={styles.pieHead}>{sumCal} กิโลแคลอรี่</Text>
+          <Text style={styles.pieHead}>{sumCal} แคลอรี่</Text>
           <Text style={styles.piefade}>{percentEat}% ของแคลอรี่ที่ควรได้รับต่อวัน</Text>
 
           <View style={styles.pieChartContainer}>
@@ -183,24 +176,21 @@ const PieGraph = (props) => {
 
         <View style={styles.headContainer}>
           <View style={styles.textContainer}>
-            <Ionicons style={{ paddingRight: 13, paddingTop: 5 }} name="chevron-back" size={24} color="black" onPress={backWeek} />
+            <Ionicons style={{ paddingRight: 15, paddingTop: 5 }} name="chevron-back" size={24} color="black" onPress={backWeek} />
             <Text style={styles.boldText}>ปริมาณแคลอรี่ที่ได้รับต่อวัน</Text>
-            <Ionicons style={{ paddingLeft: 13, paddingTop: 5 }} name="chevron-forward-outline" size={24} color="black" onPress={foreWeek} />
+            <Ionicons style={{ paddingLeft: 15, paddingTop: 5 }} name="chevron-forward-outline" size={24} color="black" onPress={foreWeek} />
           </View>
-
         </View>
 
-        <View style={styles.infoContainer}>
 
+        <View style={styles.infoContainer}>
           <View style={styles.BarChartContainer}>
             <VictoryChart
               width={380}
               height={250}
               theme={VictoryTheme.material}
               maxDomain={{ y: userTDEE }}
-
             >
-
 
 
               <VictoryGroup offset={15}>
@@ -210,7 +200,6 @@ const PieGraph = (props) => {
                     onLoad: { duration: 1000 },
                     duration: 500,
                     easing: "bounce",
-
                   }}
                   data={
                     [
@@ -222,8 +211,6 @@ const PieGraph = (props) => {
                       { x: moment().subtract(backweek + 1 + back, 'days').format('DD/MM'), y: sat },
                       { x: moment().subtract(backweek + back, 'days').format('DD/MM'), y: sun }
                     ]}
-                  // labels={(data) => (data.datum.y)
-                  // }
 
                   style={{
                     labels: {

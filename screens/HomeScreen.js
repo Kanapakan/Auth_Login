@@ -21,13 +21,11 @@ const db = firebase.firestore()
 LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 const Home = ({ navigation, route }, props) => {
   const [userArr, setUserArr] = useState([]);
-  const [uHistoryArr, setUHistoryArr] = useState([]);
   const scrollYAnimatedValue = useRef(new Animated.Value(0)).current;
   const HEADER_MIN_HEIGHT = 100;
   const HEADER_MAX_HEIGHT = 100
   const [isLoading, setisLoading] = useState(true);
   const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
-  // const userData = (useSelector((state) => state.user.userData))
   const userDetailFB = db.collection('userDetail');
 
 
@@ -43,16 +41,14 @@ const Home = ({ navigation, route }, props) => {
   // ---------------- pie Graph --------------------------
   const [userHistory, setUserHistory] = useState([]);
   const [dateKey, setDateKey] = useState("");
-  // console.log("hiiiiii", (useSelector((state) => state.recipes.allMeals)))
   const dispatch = useDispatch();
 
+
+  // ------ Add in store -------
   const toggleRecipeHistory = (history) => {
     dispatch(fetched_recipeHistory(history));
-
   }
-  // const toggleUserDeail = (data) => {
-  //   dispatch(fetch_userdetail(data));
-  // }
+
   const toggleDatePick = (data) => {
     dispatch(date_pickup(data));
   }
@@ -60,13 +56,9 @@ const Home = ({ navigation, route }, props) => {
 
 
   useEffect(() => {
-
     const unsubscribe = userDetailFB.onSnapshot(getuser);
-    // getUserHistory();
-
     return () => {
       unsubscribe();
-
     }
   }, [datePick]);
 
@@ -77,14 +69,10 @@ const Home = ({ navigation, route }, props) => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
-
           if (auth.currentUser?.uid === documentSnapshot.data().userId) {
-
             const userArr2 = [];
             userArr2.push(documentSnapshot.data())
             setUserArr(userArr2[0])
-
-            // toggleUserDeail(userArr2[0])
             onChange(date_today)
           }
         });
@@ -109,12 +97,10 @@ const Home = ({ navigation, route }, props) => {
     dbrealTime.ref("user_History/userRecipe/" + auth.currentUser?.uid + "/" + date).on('value', snapshot => {
       // console.log('user date :', snapshot.val())
       data = snapshot.val()
-      // console.log("addddd : ", data)
       if (data !== null) {
         dbrealTime.ref("user_History/Recipe_of_day/" + data.dateKey).on('value', snapshot => {
           setDateKey(data.dateKey)
           const user_history = snapshot.val()
-
           // console.log('user recipes :', user_history.recipes)
 
           if (!(user_history.recipes == null)) {
@@ -147,7 +133,7 @@ const Home = ({ navigation, route }, props) => {
 
       }
       else {
-        console.log('Nothinggggggg :')
+        // console.log('Nothinggggggg :')
 
         const space = Object.create({
           date: "",
@@ -178,20 +164,18 @@ const Home = ({ navigation, route }, props) => {
 
   // ---------------------------- Pick Date ---------------------------------
   const onChange = (event, selectedDate) => {
-
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
 
     let tempDate = new Date(currentDate);
     let fDate = ((tempDate.getDate() < 10) ? '0' + tempDate.getDate() : tempDate.getDate() ) + '-' + ((tempDate.getMonth() +1) < 10 ? '0'+(tempDate.getMonth()+1) : tempDate.getMonth()+1)+ '-' + tempDate.getFullYear();
-    // let fTime = 'Hours: ' + tempDate.getHours() + '| Minutes: ' + tempDate.getMinutes() ;
-    console.log(tempDate.getMonth() + 1)
+    
+    // console.log(tempDate.getMonth() + 1)
     setDatePick(fDate)
 
     getUserHistory(fDate)
     toggleDatePick(fDate)
-
 
   };
   const showMode = (currentMode) => {
@@ -218,7 +202,7 @@ const Home = ({ navigation, route }, props) => {
       case "06":
           return "มิถุนายน"
       case "07":
-          return "กรกฏาคม"
+          return "กรกฎาคม"
       case "08":
           return "สิงหาคม"
       case "09":
@@ -242,7 +226,7 @@ const Home = ({ navigation, route }, props) => {
     )
   }
 
-  // const { navigation } = this.props;
+
   const headerHeight = scrollYAnimatedValue.interpolate(
     {
       inputRange: [0, (HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT)],
@@ -276,7 +260,7 @@ const Home = ({ navigation, route }, props) => {
 {/* -------------------------- calendar -------------------------------- */}
             <View  style={styles.headcard1}>
               <Text style={styles.boldText}>ตารางอาหาร</Text>
-              <Entypo style={{flex: 0.15,paddingTop:1}} name="calendar" size={30} color="black" onPress={showDatepicker} title="Show date picker!" />
+              <Entypo style={{flex: 0.15,paddingTop:1}} name="calendar" size={30} color="black" onPress={showDatepicker} title="Show date picker!" /> 
               {/* <Button onPress={showDatepicker} title="Show date picker!" /> */}
             </View>
 
@@ -296,31 +280,31 @@ const Home = ({ navigation, route }, props) => {
 
             {/* <Text style={styles.boldText}>{date_create}</Text> */}
             <View style={{ marginTop: 10, alignItems: "center" }}>
-              <Text style={{fontSize: 15}}>{datePick.slice(0, 2)} {checkMonth(datePick.slice(3, 5))} {parseInt(datePick.slice(6)) + 543}</Text>
+            <Text style={{fontSize: 15}}>{parseInt(datePick.slice(0, 2))} {checkMonth(datePick.slice(3, 5))} {parseInt(datePick.slice(6)) + 543}</Text> 
             </View>
 
           </View>
 
           <View style={[styles.Card]}>
 
-            {/* กดไปหน้า มื้ออาหาร */}
-            <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("ThreeTimeMeals", { mealTime: "breakfast", mealTimeThai: "มื้อเช้า", dateKey: dateKey }) }}>
-              <Image style={styles.foodImage} source={require("../assets/egg.png")} />
-              <Text style={styles.typeFood}>มื้อเช้า</Text>
-
-
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("ThreeTimeMeals", { mealTime: "lunch", mealTimeThai: "มื้อกลางวัน", dateKey: dateKey }) }}>
-              <Image style={styles.foodImage} source={require("../assets/sanwich.png")} />
-              <Text style={styles.typeFood}>มื้อกลางวัน</Text>
-
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("ThreeTimeMeals", { mealTime: "dinner", mealTimeThai: "มื้อเย็น", dateKey: dateKey }) }}>
-              <Image style={styles.foodImage} source={require("../assets/pasta.png")} />
-              <Text style={styles.typeFood}>มื้อเย็น</Text>
-
+            {/* กดไปหน้า มื้ออาหาร */} 
+            <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("ThreeTimeMeals", { mealTime: "breakfast", mealTimeThai: "มื้อเช้า", dateKey: dateKey }) }}> 
+              <Image style={styles.foodImage} source={require("../assets/egg.png")} /> 
+              <Text style={styles.typeFood}>มื้อเช้า</Text> 
+ 
+ 
+            </TouchableOpacity> 
+ 
+            <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("ThreeTimeMeals", { mealTime: "lunch", mealTimeThai: "มื้อกลางวัน", dateKey: dateKey }) }}> 
+              <Image style={styles.foodImage} source={require("../assets/sanwich.png")} /> 
+              <Text style={styles.typeFood}>มื้อกลางวัน</Text> 
+ 
+            </TouchableOpacity> 
+ 
+            <TouchableOpacity style={styles.square} onPress={() => { navigation.navigate("ThreeTimeMeals", { mealTime: "dinner", mealTimeThai: "มื้อเย็น", dateKey: dateKey }) }}> 
+              <Image style={styles.foodImage} source={require("../assets/pasta.png")} /> 
+              <Text style={styles.typeFood}>มื้อเย็น</Text> 
+ 
             </TouchableOpacity>
 
           </View>
@@ -356,28 +340,28 @@ const Home = ({ navigation, route }, props) => {
                 </View> */}
         <View style={styles.item2}>
           {/* แอดค่า cal แล้ว */}
-          <View style={styles.left}>
-            <Text style={styles.hearderText}>{userArr.TDEE}</Text>
-            <Text style={styles.hearderText2}>แคลอรี่ที่ควรได้รับ</Text>
-          </View>
-
-          <View style={{ flex: 0.1 }}>
-            <Text style={styles.hearderText}>-</Text>
-          </View>
-
-          <View style={styles.middle}>
-            <Text style={styles.hearderText}>{eatKcal}</Text>
-            <Text style={styles.hearderText2}>แคลอรี่อาหาร</Text>
-          </View>
-
-          <View style={{ flex: 0.1 }}>
-            <Text style={styles.hearderText}>=</Text>
-          </View>
-
-          <View style={styles.right}>
-            <Text style={styles.hearderText}>{userArr.TDEE - eatKcal}</Text>
-            <Text style={styles.hearderText2}>เหลือทานได้อีก</Text>
-          </View>
+          <View style={styles.left}> 
+            <Text style={styles.hearderText}>{userArr.TDEE}</Text> 
+            <Text style={styles.hearderText2}>แคลอรี่ที่ควรได้รับ</Text> 
+          </View> 
+ 
+          <View style={{ flex: 0.1 }}> 
+            <Text style={styles.hearderText}>-</Text> 
+          </View> 
+ 
+          <View style={styles.middle}> 
+            <Text style={styles.hearderText}>{eatKcal}</Text> 
+            <Text style={styles.hearderText2}>แคลอรี่อาหาร</Text> 
+          </View> 
+ 
+          <View style={{ flex: 0.1 }}> 
+            <Text style={styles.hearderText}>=</Text> 
+          </View> 
+ 
+          <View style={styles.right}> 
+            <Text style={styles.hearderText}>{userArr.TDEE - eatKcal}</Text> 
+            <Text style={styles.hearderText2}>เหลือทานได้อีก</Text> 
+          </View> 
 
         </View>
 
@@ -472,14 +456,14 @@ const styles = StyleSheet.create(
       flexDirection: "row",
       alignSelf: "center",
     },
-    boldText: {
-      fontSize: 22,
-      fontWeight: "bold",
-      alignSelf: "center",
-      flex: 1,
-      paddingLeft: 105
-      // flexDirection: "column",
-    },
+    boldText: { 
+      fontSize: 22, 
+      fontWeight: "bold", 
+      alignSelf: "center", 
+      flex: 1, 
+      paddingLeft: 105 
+      // flexDirection: "column", 
+    }, 
     square: {
       width: 120,
       height: 85,

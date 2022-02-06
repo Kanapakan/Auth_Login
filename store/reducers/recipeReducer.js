@@ -46,21 +46,19 @@ const recipeReducer = (state = initState, action) => {
                         myRecipe: updateMyRecipe2} 
                 }
             }
-            // else if (action.set == "add"){
+
             return{...state, recipes: state.recipes.concat(action.newrecipe),
                 myRecipe: state.myRecipe.concat(action.newrecipe)}
-            // }
+
         case "FILTER_INGREDIENTS":
             const filteredHeroes = state.recipes.filter(recipe => 
                 action.ingredients.every(ingre => recipe.ingredient_name.includes(ingre))
              );
              
-            //  console.log(filteredHeroes);
             return {...state, recipesByIngre: filteredHeroes}
                 
             
             
-        //     console.log(action.ingredients)
         case "RECIPE_HISTORY":
             const fast = Object.keys(action.user_history.recipes).findIndex(recipe => recipe === "breakfastMeals")
             const find = Object.keys(action.user_history.recipes).findIndex(recipe => recipe === "lunchMeals")
@@ -69,7 +67,7 @@ const recipeReducer = (state = initState, action) => {
           let moning = [];
           let  afternoon = [];
           let night = [];
-          console.log(fast,find,din)
+        //   console.log(fast,find,din)
             if(fast >= 0){
                 moning = action.user_history.recipes.breakfastMeals
             } if(find >= 0){
@@ -121,7 +119,7 @@ const recipeReducer = (state = initState, action) => {
 
                         } 
                 } else {
-                // const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
+                
                     return {...state, allMeals:{breakfastMeals: breakfast.concat(recipe),
                                                 lunchMeals: lunch,
                                                 dinnerMeals: dinner},
@@ -145,7 +143,7 @@ const recipeReducer = (state = initState, action) => {
                             fats: state.sumNutrient.fats-action.fats},
                     } 
                 } else {
-                // const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
+                
                     return {...state,  allMeals: {breakfastMeals: breakfast,
                                                     lunchMeals: state.allMeals.lunchMeals.concat(recipe),
                                                     dinnerMeals: dinner},
@@ -168,7 +166,7 @@ const recipeReducer = (state = initState, action) => {
                             fats: state.sumNutrient.fats-action.fats},
                     } 
                 } else {
-                // const recipe = state.recipes.find(recipe => recipe.id === action.recipeId);
+                
                     return {...state, allMeals:{breakfastMeals: breakfast,
                                                 lunchMeals: lunch
                                                 ,dinnerMeals: dinner.concat(recipe),

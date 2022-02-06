@@ -7,15 +7,12 @@ import RecipeList from "../components/Recipe/RecipeList";
 import FilterIngredient from "../components/FilterIngredient";
 
 
-
 const SearchScreen = ({ navigation, route }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [searchWord, setSearchWord] = useState("");
   const [titleBar, setTitleBar] = useState("กรอกด้วยตัวเอง");
   const [showFilter, setShowFilter] = useState(true)
   const recipes = useSelector(state => state.recipes.recipes)
-
-
 
 
   // ---------------- funtion filter จากชื่อ

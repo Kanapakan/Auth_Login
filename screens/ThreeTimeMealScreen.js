@@ -1,15 +1,10 @@
 import React, { useRef, useState } from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
-// import RecipeList from "../components/Recipe/RecipeList";
 import RecipeMealList from "../components/Recipe/RecipeMealList";
 import { useDispatch, useSelector } from 'react-redux';
-// import { toggleEatKcals } from '../store/actions/recipeAction';
 
 const ThreeTimeMeals = ({navigation, route}, props) => {
-    // const [sumKcals, setSumkcals] = useState(0);
     let timeMeals;
-    // , allMeal: allMeal
-    // const recipe = (useSelector((state) => state.recipes.allMeals)
 
     switch (route.params.mealTime) {
         case "breakfast":
@@ -23,24 +18,17 @@ const ThreeTimeMeals = ({navigation, route}, props) => {
             timeMeals = (useSelector((state) => state.recipes.allMeals.dinnerMeals));
         break;  
     }
-    // if(!timeMeals){
-    //   timeMeals =[];
-    // }
 
 
   return (
 // รายการที่เลือก
     <View style={styles.container}>
-        {/* ----------- tab บอกปริมาณที่กินรวม ----------------------- */}
-    {/* <Text style={{backgroundColor: "gray"}}>ปริมาณแคลอรี่ที่กิน รวม </Text> */}
-    {/* <RecipeMealList parentCallback = {callbackFunction }/> */}
 
         <RecipeMealList
         dateKey={route.params.dateKey}
         mealTime={route.params.mealTime}
         style={{ width: "100%", height: "100%" }}
         listData={timeMeals}
-        // parentCallback = {callbackFunction }
         navigation={navigation}
         />
 

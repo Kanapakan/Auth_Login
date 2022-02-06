@@ -3,26 +3,18 @@ import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, Text, TextInput, T
 import { auth } from '../database/Auth'
 import  {firebase} from '../database/firebaseDb'
 import {Picker} from '@react-native-picker/picker';
-// import {connect} from 'react-redux';
 
 const db = firebase.firestore()
- 
-
 
 const RegisterUserDetail = ({navigation, route}, props) => {
-
     const dbRef = db.collection('userDetail');
-    const[userId, setUserId] = useState("");
     const[gender, setGender] = useState("");
     const[age, setAge] = useState(0);
     const[height, setHeight] = useState(0);
     const[weight, setWeight] = useState(0);
     const[activity, setActivity] = useState("");
-
     const[isLoading, setisLoading] = useState(false);
 
-
-    
     let bmr;
     let dailyCalVal;
     let dailyCal;
@@ -42,10 +34,8 @@ const RegisterUserDetail = ({navigation, route}, props) => {
           break;
         case "เป็นนักกีฬาหรือใช้แรงงานหนัก":
             dailyCalVal = 1.9;
-          break;
-        
+          break;    
       }
-
 
     const storeUser = () => {
         if (gender == '' || age <= 0 || height <= 0 || weight <= 0 || activity == '') {
@@ -86,7 +76,6 @@ const RegisterUserDetail = ({navigation, route}, props) => {
                 setisLoading(false)
                 navigation.navigate('BottomTabScreen');
                 //สร้างบัญชีผู้ใช้
-            
             })
                 
             }).catch((err) => {
@@ -106,22 +95,17 @@ const RegisterUserDetail = ({navigation, route}, props) => {
     
     return (
         <View style={styles.container}>
-           
            <Image style={styles.leafLeft} source={require("../assets/leaf_left-removebg.png")}/>
                 <Text style={styles.baseText} >
                     <Text style={styles.headText}>ข้อมูลส่วนตัว</Text>
-                   
                 </Text>
            
-          
             <View style={{alignItems: "center" , marginTop: 40,}}>
-    
                 <View style={styles.pickerBorder}>
                     <Picker
                         selectedValue={gender}
                         style={styles.pickerdropdown}
                         onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
-                    
                     >
                     {/* อย่าลืม disable  และจัดให้ตรงกลาง*/}
                         <Picker.Item label="เพศ" />
@@ -153,11 +137,9 @@ const RegisterUserDetail = ({navigation, route}, props) => {
                     <Picker
                         selectedValue={activity}
                         style={styles.pickerdropdown}
-                        onValueChange={(itemValue, itemIndex) => setActivity(itemValue)}
-                    
+                        onValueChange={(itemValue, itemIndex) => setActivity(itemValue)}                  
                     >
                     {/* อย่าลืม disable  และจัดให้ตรงกลาง*/}
-                        
                         <Picker.Item label="พฤติกรรมการออกกำลังกาย" />
                         <Picker.Item label="ออกกำลังกายน้อยมาก" value="ออกกำลังกายน้อยมาก" />
                         <Picker.Item label="ออกกำลังกายน้อย (อาทิตย์ละ 1 – 3 วัน)" value="ออกกำลังกายน้อย" />
@@ -169,7 +151,6 @@ const RegisterUserDetail = ({navigation, route}, props) => {
                 </View>
                 
             </View>
-    
             <View style={{alignItems: "center" , marginTop: 50,}}>
                 <TouchableOpacity 
                     onPress={() => storeUser()}
@@ -177,7 +158,6 @@ const RegisterUserDetail = ({navigation, route}, props) => {
                     <Text style={styles.btnText}>ลงทะเบียน</Text>
                 </TouchableOpacity>
             </View>
-            
         </View>
       );
     };
@@ -186,8 +166,6 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: "#fff",
-      // alignItems: "center",
-      // justifyContent: "center",
     },
     preloader:{
         position: 'absolute',

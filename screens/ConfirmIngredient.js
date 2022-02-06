@@ -5,10 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleFilterIngredients } from "../store/actions/recipeAction";
 
 const ConfirmIngredient  = ({route, navigation},props) =>  {
-  // const select = route.params.select;
   const[select, setSelect] = useState(route.params.select)
-  const recipeByIngre = (useSelector((state) => state.recipes.recipesByIngre))
-  console.log(select)
+  // console.log(select)
   
   
 
@@ -19,7 +17,7 @@ const ConfirmIngredient  = ({route, navigation},props) =>  {
     updateSelect.splice(index, 1);
     
     setSelect(updateSelect)
-    console.log('del', select)
+    // console.log('del', select)
   }
 
   const searchRecipe = (item) =>{
@@ -29,7 +27,6 @@ const ConfirmIngredient  = ({route, navigation},props) =>  {
 
   const dispatch = useDispatch();
   const toggleFilterIngredientskHandler = (ingedients) => {
-  // console.log("addddddddddddddddddddddddd",ingedients)
   dispatch(toggleFilterIngredients(ingedients));
 }
 
@@ -52,16 +49,11 @@ const ConfirmIngredient  = ({route, navigation},props) =>  {
   return (
     
     // ตรวจสอบวัตถุดิบที่เลือก
-    
         <View style={styles.container}>    
             <View style={{flex: 3.4 }}>
-               
-                <View style={styles.square}>
-                  
+                <View style={styles.square}>           
                 {renderFlatList(select)}   
-                 
                 </View>
-            
             </View>
 
             
@@ -72,9 +64,7 @@ const ConfirmIngredient  = ({route, navigation},props) =>  {
                     style={styles.btnContainer}>
                     <Text style={styles.btnText}>ค้นหา</Text>
                 </TouchableOpacity>
-    
             </View>      
-          
         </View>
       )      
 
@@ -87,8 +77,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
   },
 // css ตรวจสอบวัตถุดิบที่เลือก
   btnContainer: {

@@ -1,5 +1,5 @@
 // import { TOGGLE_USERS } from "../actions/UserAction"
-import moment from "moment";
+
 const initialState ={
     // meals: MEALS,
     isLoading: false,
@@ -21,7 +21,7 @@ const UserReducer = (state= initialState, action) => {
         //     console.log('created user', action.data);
         //     return {userDetail: action.data};
         case "DATE_PICKUP" :
-            console.log('Pick date : ', action.date);
+            // console.log('Pick date : ', action.date);
             return {datePick: action.date};
         default:
             return state

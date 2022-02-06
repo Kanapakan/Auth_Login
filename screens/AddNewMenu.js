@@ -57,10 +57,6 @@ const AddMenuScreen = ({route, navigation},props) =>{
       fats: fats,
       protein:protein
     }
-    // dbrealTime.ref("user_History/user_recipe_created/"+auth.currentUser?.uid+"/").push({
-    //   newMenu
-    //   // userId: auth.currentUser?.uid
-    // })
 
     dispatch(createNewRecipe(newMenu));
     setname("")
@@ -110,7 +106,6 @@ const AddMenuScreen = ({route, navigation},props) =>{
         ingredient_name: ingred_name,
         ingredient_quantity: ingredient_quan
       }
-      // const obj = Object.create(ingedient)
       const objList = [...objIn]
       objList.push(ingedient)
       setObjIn(objList)
@@ -134,7 +129,6 @@ const AddMenuScreen = ({route, navigation},props) =>{
     const index = objIn.findIndex(recipe => recipe == item)
     const indexNameList = ingredient_name.findIndex(recipe => recipe == item.ingredient_name)
     const indexQuanList = ingredient_name.findIndex(recipe => recipe == item.ingredient_quantity)
-    // console.log(indexNameList)
     const updateobjIn = [...objIn];
     const updateobjInName= [...ingredient_name];
     const updateobjInQuan= [...ingredient_quantity];
@@ -175,12 +169,7 @@ const AddMenuScreen = ({route, navigation},props) =>{
   }
 
   const renderFlatList = (ingredient_name, ingredient_quantity, objIn) => {
-    // const ingedient = {
-    //   ingredient_name: ingredient_name,
-    //   ingredient_quantity: ingredient_quantity
-    // }
-    // const data = Object.create(ingedient)
-    // console.log("ingredient_name : ", ingedient.ingred_name)
+
     return(
       <FlatList
       
@@ -220,8 +209,6 @@ const AddMenuScreen = ({route, navigation},props) =>{
             style={{
               height: 500, //Fixed View size
               width: 350, //Fixed View size
-              // justifyContent: "center",
-              // alignItems: "center",
               backgroundColor: "#fff",
               
             }}
@@ -293,8 +280,6 @@ const AddMenuScreen = ({route, navigation},props) =>{
             style={{
               height: 500, //Fixed View size
               width: 350, //Fixed View size
-              // justifyContent: "center",
-              // alignItems: "center",
               backgroundColor: "#fff",
               
             }}

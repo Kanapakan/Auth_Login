@@ -2,13 +2,10 @@ import React, { useRef } from "react";
 import {Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
 import RecipeList from "../components/Recipe/RecipeList";
 import { useSelector } from 'react-redux';
-// import { RECIPES } from "../dataJson/recipeData";
 
 const BookmarkScreen = ({navigation, route}) => {
     const bookmark = (useSelector((state) => state.recipes.bookmarkRecipes))
-    // console.log("lenghtttt",bookmark.length)
     return (
-
         <View style={styles.container}>
           <Text style={styles.headText}>{bookmark.length == 0 ? "ยังไม่มีรายการอาหาร" : "มีรายการอาหาร : "+bookmark.length   }</Text>
             <RecipeList
@@ -17,8 +14,6 @@ const BookmarkScreen = ({navigation, route}) => {
           navigation={navigation}
           />
         </View>
-        
-          
       );
 }
 
@@ -26,12 +21,9 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: "#fff",
-      // alignItems: "center",
-      // justifyContent: "center",
     },
     headBox:{
       backgroundColor: "#e3e3e3",
-      //ตอนเอาลง tab เอา marginTop ออกด้วยนะ
       alignItems: "flex-start",
       padding: 8
     },
@@ -62,7 +54,6 @@ const styles = StyleSheet.create({
     foodTime:{
       flex: 1,
       marginLeft: 10,
-      // marginTop: -180,
     },
     timeText:{
       fontSize: 18,

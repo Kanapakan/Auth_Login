@@ -1,6 +1,5 @@
-// import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Image,  ActivityIndicator} from 'react-native'
+import { Alert, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Image,  ActivityIndicator} from 'react-native'
 import { auth } from '../database/Auth'
 
 
@@ -30,11 +29,11 @@ const LoginScreen = ({navigation, route}) => {
         console.log('Logged in with:', user.email);
       })
       .catch(error => {
+        Alert.alert("อีเมล หรือรหัสผ่านไม่ถูกต้อง")
         navigation.navigate('LogIn');
-        
         setisLoading(false);
         setEmail('');
-        alert(error.message);
+        // alert(error.message);
         
       })
   }
@@ -106,8 +105,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
   preloader:{
     position: 'absolute',

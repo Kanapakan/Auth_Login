@@ -1,18 +1,14 @@
 import React, { useRef, useState } from "react";
 import {KeyboardAvoidingView,Text, View, StyleSheet, Image, TextInput, TouchableOpacity ,ScrollView, Alert, FlatList} from "react-native";
-import {Picker} from '@react-native-picker/picker';
 import Modal from "react-native-modal";
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { createNewRecipe } from "../store/actions/recipeAction";
-import NewRecipeList from "../components/Recipe/NewRecipeList";
-import firebase from 'firebase';
-import { auth } from '../database/Auth';
-const dbrealTime = firebase.app().database('https://fir-react-example-1e215-default-rtdb.asia-southeast1.firebasedatabase.app/');
+
 
 const UpdateNewMenu = ({route, navigation},props) =>{
-    console.log(route.params.objIn)
-    const data = route.params.data
+  console.log(route.params.objIn)
+  const data = route.params.data
   const[name, setname] = useState(data.name);
   const[time, settime] = useState(data.time);
   const[protein, setprotein] = useState(data.protein);
@@ -22,7 +18,6 @@ const UpdateNewMenu = ({route, navigation},props) =>{
   const[imageURL, setimageURL] = useState(data.imageURL);
   const[modal, setmodal] = useState(false);
   const[modal2, setmodal2] = useState(false);
-  // const[modal3, setmodal3] = useState(false);
   const[ingred_name, setingred_name] = useState("");
   const[ingredient_quan, setingredient_quan] = useState("");
   const[ingredient_name, setingredient_name] = useState(data.ingredient_name);
@@ -33,14 +28,11 @@ const UpdateNewMenu = ({route, navigation},props) =>{
   const[steps, setsteps] = useState(data.steps);
   // ---------------- tab --------------------------
 
-  const myRecipe = (useSelector((state) => state.recipes.myRecipe))
 
   const dispatch = useDispatch();
   // ----------------- กด ปุ่ม add -----------------
   const updateRecipe = () => {
     if (name != "" && time != 0 && protein != 0 && fats != 0 && carbs != 0 && imageURL != "" && ingredient_name != [] && ingredient_quantity != [] && steps != [] && kcal != 0) {
-    //   const id = Math.random()
-    // navigation.navigate("MenuDetail", { id, name, kcal, time, ingredient_quantity, ingredient_name, steps, imageURL, carbs, protein, fats,})
     const newMenu = {
       id: data.id,
       name: name,
@@ -56,10 +48,6 @@ const UpdateNewMenu = ({route, navigation},props) =>{
       fats: fats,
       protein:protein
     }
-    // dbrealTime.ref("user_History/user_recipe_created/"+auth.currentUser?.uid+"/").push({
-    //   newMenu
-    //   // userId: auth.currentUser?.uid
-    // })
 
     dispatch(createNewRecipe(newMenu, "update"));
     setname("")
@@ -73,6 +61,8 @@ const UpdateNewMenu = ({route, navigation},props) =>{
     setfats(0),
     setimageURL("")
     setObjIn([])
+    Alert.alert("แก้ไขเมนูสำเร็จ")
+    navigation.navigate('AddMenuScreen');
     }
     else {
       Alert.alert("กรุณากรอกข้อมูลให้ครบถ้วน")
@@ -87,7 +77,6 @@ const UpdateNewMenu = ({route, navigation},props) =>{
   }
   const openModal2 = () => {
     setmodal2(true);
-    // renderFlatList(ingredient_name, ingredient_quantity)
   }
 
   const addHowto = (howto) => {
@@ -107,7 +96,6 @@ const UpdateNewMenu = ({route, navigation},props) =>{
         ingredient_name: ingred_name,
         ingredient_quantity: ingredient_quan
       }
-      // const obj = Object.create(ingedient)
       const objList = [...objIn]
       objList.push(ingedient)
       setObjIn(objList)
@@ -115,7 +103,6 @@ const UpdateNewMenu = ({route, navigation},props) =>{
       const listquan = [...ingredient_quantity]
       listname.push(ingred_name)
       setingredient_name(listname)
-    
       listquan.push(ingredient_quan)
       setingredient_quantity(listquan)
       
@@ -131,7 +118,6 @@ const UpdateNewMenu = ({route, navigation},props) =>{
     const index = objIn.findIndex(recipe => recipe == item)
     const indexNameList = ingredient_name.findIndex(recipe => recipe == item.ingredient_name)
     const indexQuanList = ingredient_name.findIndex(recipe => recipe == item.ingredient_quantity)
-    // console.log(indexNameList)
     const updateobjIn = [...objIn];
     const updateobjInName= [...ingredient_name];
     const updateobjInQuan= [...ingredient_quantity];
@@ -142,7 +128,6 @@ const UpdateNewMenu = ({route, navigation},props) =>{
     setObjIn(updateobjIn)
     setingredient_name(updateobjInName)
     setingredient_quantity(updateobjInQuan)
-    // console.log('del', objIn)
   }
   const delHowto = (howto) => {
     const index = steps.findIndex(recipe => recipe == howto)
@@ -172,12 +157,6 @@ const UpdateNewMenu = ({route, navigation},props) =>{
   }
 
   const renderFlatList = (ingredient_name, ingredient_quantity, objIn) => {
-    // const ingedient = {
-    //   ingredient_name: ingredient_name,
-    //   ingredient_quantity: ingredient_quantity
-    // }
-    // const data = Object.create(ingedient)
-    // console.log("ingredient_name : ", ingedient.ingred_name)
     return(
       <FlatList
       
@@ -186,7 +165,6 @@ const UpdateNewMenu = ({route, navigation},props) =>{
             <View style={styles.checkContainer}>
                 <Text style={styles.ingredientName}>{item.ingredient_name}</Text>
                 <Text style={styles.ingredientName}>{item.ingredient_quantity}</Text>
-                {/* <Text style={styles.ingredientName}>{data}</Text> */}
                 <TouchableOpacity onPress={() => delIngedient(item)}>
                   <Ionicons name="ios-trash-bin-sharp" color="#000" style={styles.delIngredient} />
                 </TouchableOpacity>
@@ -196,9 +174,6 @@ const UpdateNewMenu = ({route, navigation},props) =>{
     />
     )
   }
-
-  // console.log(Object.values(objIn))
-
 
   return(
     <View style={styles.container}>
@@ -217,8 +192,6 @@ const UpdateNewMenu = ({route, navigation},props) =>{
             style={{
               height: 500, //Fixed View size
               width: 350, //Fixed View size
-              // justifyContent: "center",
-              // alignItems: "center",
               backgroundColor: "#fff",
               
             }}

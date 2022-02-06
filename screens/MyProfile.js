@@ -4,7 +4,6 @@ import  {firebase} from '../database/firebaseDb'
 import { auth } from '../database/Auth';
 import Logout from "../components/Logout";
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleUsers } from "../store/actions/UserAction";
 
 const db = firebase.firestore()
 
@@ -13,14 +12,7 @@ const MyProfile = ({navigation, route}) => {
   const[isLoading, setisLoading] = useState(true);
   const[userArr, setUserArr] = useState([]);
   const[docId, setDocId] = useState("");
-  const eatKcal = (useSelector((state) => state.recipes.sumEatKcals))
 
-  // const dispatch = useDispatch();
-  // const toggleUserHandler = (UsersData) => {
-    
-  //   console.log(UsersData)
-  //   dispatch(toggleUsers(UsersData));
-  // }
 
   useEffect(() => {
 
@@ -46,12 +38,12 @@ const MyProfile = ({navigation, route}) => {
           setUserArr(userArr2[0]),
           
           setisLoading(false);
-          // toggleUserHandler(userArr[0])
+
         }
       });
   });
 }
-// console.log(userData)
+
 
 //ตัวโหลดหน้า
    if (isLoading) {
@@ -134,10 +126,8 @@ const MyProfile = ({navigation, route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#fff",
     flexDirection: "column"
-    // alignItems: "center",
-    // justifyContent: "center",
+
   },
   preloader:{
     position: 'absolute',
@@ -162,7 +152,6 @@ const styles = StyleSheet.create({
     color: "#547f53"
     },
   baseText:{
-        // fontFamily: 'Roboto',
     textAlign: "center",
     marginTop: 40
   },
@@ -177,7 +166,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#cecece",
     borderRadius: 10,
     paddingVertical: 5,
-    // paddingHorizontal: 20,
   },
   btnText: {
     fontSize: 18,
@@ -197,7 +185,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#8ec18e",
     borderRadius: 10,
     padding: 10,
-    // paddingHorizontal: 20,
   },
   btnTextAll2: {
     fontSize: 18,
