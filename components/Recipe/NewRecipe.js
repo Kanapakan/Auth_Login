@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         marginTop: 8
       },
       foodName: {
-        width: 230,
+        width: 180,
         fontSize: 20,
         fontWeight: "bold",
         flex: 2,
