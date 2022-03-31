@@ -18,6 +18,8 @@ yarn install
 ```
 yarn start
 ```
+### **Design**
+[Figma](https://www.figma.com/file/jb5jwFyXKgHFx2iMU9a51l/Find-Food-Fit-Me?node-id=0%3A1)
 
 ### **Video Demo**
 * https://youtu.be/f-ySfgBrxvc
