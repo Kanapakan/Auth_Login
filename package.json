@@ -38,7 +38,7 @@
     "react-native-pager-view": "5.4.6",
     "react-native-picker-select": "^8.0.4",
     "react-native-pie": "^1.1.2",
-    "react-native-reanimated": "^2.2.3",
+    "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "~3.8.0",
     "react-native-sticky-parallax-header": "^0.4.1",
